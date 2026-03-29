@@ -47,15 +47,18 @@ export const Sidebar = () => {
     );
 };
 
-export const Topbar = () => {
+export const Topbar = ({ rightIcon = 'settings', onRightIconClick }: { rightIcon?: string, onRightIconClick?: () => void }) => {
     return (
         <header className="flex justify-between items-center w-full px-4 md:px-6 py-3 md:py-4 max-w-none bg-background/95 backdrop-blur-sm shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] z-50 fixed top-0 left-0 right-0">
             <div className="text-primary font-headline text-base md:text-xl font-black uppercase tracking-widest leading-none">
                 대도의 비밀 장부
             </div>
             <div className="flex items-center gap-4">
-                <button className="text-on-surface/60 hover:text-primary transition-colors duration-300 p-1 -mr-1">
-                    <span className="material-symbols-outlined text-[22px]">settings</span>
+                <button 
+                  onClick={onRightIconClick}
+                  className="text-on-surface/60 hover:text-primary transition-colors duration-300 p-2 -mr-2"
+                >
+                    <span className="material-symbols-outlined text-[24px]">{rightIcon}</span>
                 </button>
             </div>
         </header>

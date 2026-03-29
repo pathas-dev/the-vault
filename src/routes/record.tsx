@@ -39,6 +39,8 @@ function RecordScreen() {
   const navigate = useNavigate()
   const [currentRound, setCurrentRound] = useState(1)
   const [viewMode, setViewMode] = useState<'input' | 'summary'>('input')
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false)
+  const [historyRounds, setHistoryRounds] = useState<RoundData[]>([])
 
   const [targetHouse, setTargetHouse] = useState('A')
   const [startPoint, setStartPoint] = useState('A')
@@ -58,9 +60,16 @@ function RecordScreen() {
       const data = JSON.parse(saved)
       if (Array.isArray(data)) {
         setCurrentRound(data.length + 1)
+        setHistoryRounds(data)
       }
     }
   }, [])
+
+  const toggleHistory = () => {
+    const saved = sessionStorage.getItem('vault_rounds')
+    if (saved) setHistoryRounds(JSON.parse(saved))
+    setIsHistoryOpen(!isHistoryOpen)
+  }
 
   const handleHouseValueChange = (house: string, key: 'v1' | 'v2', val: string) => {
     setHouseValues((prev) => ({
@@ -130,6 +139,8 @@ function RecordScreen() {
     allRounds.push(currentData)
     sessionStorage.setItem('vault_rounds', JSON.stringify(allRounds))
 
+    setHistoryRounds(allRounds)
+
     if (currentRound < 7) {
       setCurrentRound((prev) => prev + 1)
       setViewMode('input')
@@ -174,7 +185,103 @@ function RecordScreen() {
 
   return (
     <div className="flex-1 flex flex-col w-full min-w-0 pt-16 md:pt-20">
-      <Topbar />
+      <Topbar rightIcon="history" onRightIconClick={toggleHistory} />
+      
+      {/* 작전 이력 패널 (History Panel) */}
+      <div 
+        className={`fixed inset-0 z-[100] transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${isHistoryOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+      >
+        <div 
+          className="absolute inset-0 bg-background/60 backdrop-blur-sm"
+          onClick={() => setIsHistoryOpen(false)}
+        />
+        <div 
+          className={`absolute top-0 right-0 h-full w-full max-w-md bg-surface-container-high/90 backdrop-blur-[20px] shadow-2xl border-l border-outline-variant/10 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${isHistoryOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        >
+          <div className="flex flex-col h-full bg-linear-to-b from-surface-container-high/40 to-transparent">
+            {/* Panel Header */}
+            <div className="flex justify-between items-center px-6 py-8 border-b border-outline-variant/5">
+              <div>
+                <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase block opacity-60 mb-1">Mission Log</span>
+                <h2 className="serif-text text-2xl font-black text-primary tracking-tight">작전 이력 요약</h2>
+              </div>
+              <button 
+                onClick={() => setIsHistoryOpen(false)}
+                className="p-2 hover:bg-white/5 rounded-full transition-colors group"
+              >
+                <span className="material-symbols-outlined text-on-surface/40 group-hover:text-primary">close</span>
+              </button>
+            </div>
+
+            {/* Panel Content */}
+            <div className="flex-1 overflow-y-auto custom-scrollbar px-6 py-8">
+              {historyRounds.length === 0 ? (
+                <div className="h-full flex flex-col items-center justify-center opacity-20 space-y-4">
+                  <span className="material-symbols-outlined text-6xl">inventory</span>
+                  <p className="serif-text text-sm font-black tracking-widest text-center leading-relaxed">
+                    확보된 정보가 없습니다.<br />1라운드 작전을 시작하십시오.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-8">
+                  {historyRounds.map((round, idx) => (
+                    <div key={idx} className="relative group animate-in fade-in slide-in-from-right-4 duration-500" style={{ animationDelay: `${idx * 100}ms` }}>
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="h-0.5 w-6 bg-primary/40"></div>
+                        <span className="serif-text text-lg font-black text-on-surface/80 group-hover:text-primary transition-colors">PHASE {String(idx + 1).padStart(2, '0')}</span>
+                      </div>
+
+                      <div className="bg-surface-container-highest/50 rounded-sm p-4 space-y-4 border border-outline-variant/10 shadow-lg">
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="space-y-1">
+                            <p className="text-[8px] font-bold text-on-surface/30 uppercase tracking-widest">Target Site</p>
+                            <p className="serif-text text-xl font-black text-primary">{round.targetHouse}</p>
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-[8px] font-bold text-on-surface/30 uppercase tracking-widest">Infiltration</p>
+                            <p className="serif-text text-xl font-black text-primary">{round.startPoint}</p>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4 pt-3 border-t border-outline-variant/5">
+                          <div className="space-y-1">
+                            <p className="text-[8px] font-bold text-on-surface/30 uppercase tracking-widest">H-Barrier</p>
+                            <p className="serif-text text-sm font-black text-tertiary">{round.horizontalWall || 'None'}</p>
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-[8px] font-bold text-on-surface/30 uppercase tracking-widest">V-Pillar</p>
+                            <p className="serif-text text-sm font-black text-tertiary">{round.verticalWall || 'None'}</p>
+                          </div>
+                        </div>
+
+                        <div className="pt-3 border-t border-outline-variant/5">
+                          <p className="text-[8px] font-bold text-on-surface/30 uppercase tracking-widest mb-2">Secured Loot (Units)</p>
+                          <div className="flex flex-wrap gap-2">
+                            {Object.entries(round.houseValues)
+                              .filter(([_, val]) => val.v1 !== '' || val.v2 !== '')
+                              .map(([house, val]) => (
+                                <div key={house} className="bg-surface-container-low px-2 py-1 rounded-sm border border-outline-variant/5 flex items-center gap-2">
+                                  <span className="text-[10px] font-black text-on-surface-variant">{house}</span>
+                                  <span className="text-[10px] font-black text-primary">{val.v1}/{val.v2}</span>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            
+            {/* Panel Footer */}
+            <div className="p-8 border-t border-outline-variant/5 opacity-30">
+              <p className="text-[9px] font-black tracking-[0.4em] uppercase text-center">Protocol V-7 Active</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <main className="flex-1 px-4 md:px-12 py-8 md:py-12 max-w-7xl mx-auto w-full pb-24 md:pb-12 text-on-surface">
         <section className="mb-6 md:mb-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8">
