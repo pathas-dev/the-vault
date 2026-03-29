@@ -44,14 +44,14 @@ function SummaryScreen() {
   const [rounds, setRounds] = useState<RoundData[]>([])
 
   useEffect(() => {
-    const saved = localStorage.getItem('vault_rounds')
+    const saved = sessionStorage.getItem('vault_rounds')
     if (saved) {
       setRounds(JSON.parse(saved))
     }
   }, [])
 
   const handleReset = () => {
-    localStorage.removeItem('vault_rounds')
+    sessionStorage.removeItem('vault_rounds')
     navigate({ to: '/' })
   }
 
@@ -75,7 +75,7 @@ function SummaryScreen() {
   }
 
   return (
-    <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden w-full">
+    <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden w-full pt-16 md:pt-20">
       <Topbar />
       <main className="flex-1 px-4 md:px-12 py-8 md:py-20 max-w-7xl mx-auto w-full pb-24 md:pb-12">
         {/* 헤더 섹션 */}

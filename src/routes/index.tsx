@@ -9,7 +9,7 @@ function HomeScreen() {
   const navigate = useNavigate()
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen relative overflow-hidden blueprint-bg w-full">
+    <div className="flex-1 flex flex-col min-h-screen relative overflow-hidden blueprint-bg w-full pt-16 md:pt-20">
       <Topbar />
       <main className="flex-1 flex flex-col items-start justify-center px-5 md:px-24 py-10 md:py-20 relative z-10">
         <div className="absolute top-0 right-0 w-1/2 h-full pointer-events-none opacity-20 hidden lg:block">

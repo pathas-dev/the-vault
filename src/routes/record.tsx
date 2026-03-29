@@ -51,9 +51,9 @@ function RecordScreen() {
     ),
   )
 
-  // Load existing progress if any
+  // Load existing progress if any (using sessionStorage as requested)
   useEffect(() => {
-    const saved = localStorage.getItem('vault_rounds')
+    const saved = sessionStorage.getItem('vault_rounds')
     if (saved) {
       const data = JSON.parse(saved)
       if (Array.isArray(data)) {
@@ -86,10 +86,10 @@ function RecordScreen() {
       houseValues,
     }
 
-    const saved = localStorage.getItem('vault_rounds')
+    const saved = sessionStorage.getItem('vault_rounds')
     const allRounds = saved ? JSON.parse(saved) : []
     allRounds.push(currentData)
-    localStorage.setItem('vault_rounds', JSON.stringify(allRounds))
+    sessionStorage.setItem('vault_rounds', JSON.stringify(allRounds))
 
     if (currentRound < 7) {
       setCurrentRound((prev) => prev + 1)
@@ -124,7 +124,7 @@ function RecordScreen() {
   )
 
   return (
-    <div className="flex-1 flex flex-col w-full min-w-0">
+    <div className="flex-1 flex flex-col w-full min-w-0 pt-16 md:pt-20">
       <Topbar />
       <main className="flex-1 px-4 md:px-12 py-8 md:py-12 max-w-7xl mx-auto w-full pb-24 md:pb-12">
         {/* 라운드 헤더 섹션 */}
@@ -224,7 +224,7 @@ function RecordScreen() {
                         ))}
                       </div>
                       <div className="flex gap-2 items-stretch">
-                        {['a', 'b'].map((w) => (
+                        {['a', 'b', 'c'].map((w) => (
                           <button
                             key={w}
                             onClick={() =>
