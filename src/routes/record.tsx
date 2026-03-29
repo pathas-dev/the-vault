@@ -366,9 +366,7 @@ function RecordScreen() {
                     : 'bg-surface-container-highest text-on-surface/20 cursor-not-allowed opacity-50'
                 } text-xl font-black rounded-sm transition-all`}
               >
-                <span className="serif-text">
-                  단계 결과 제출 (Submit Phase)
-                </span>
+                  결과 제출
                 <span className="material-symbols-outlined font-bold">
                   {isFormValid ? 'send' : 'block'}
                 </span>
@@ -378,11 +376,7 @@ function RecordScreen() {
                 onClick={handleNextRound}
                 className="relative flex items-center gap-4 px-12 py-6 bg-linear-to-br from-tertiary to-tertiary-container text-on-tertiary text-xl font-black rounded-sm shadow-2xl hover:scale-[1.02] active:scale-95 transition-all"
               >
-                <span className="serif-text">
-                  {isFinalRound
-                    ? '최종 결과 확인 (Final Recap)'
-                    : '다음 라운드 (Next Round)'}
-                </span>
+                  {isFinalRound ? '결과 확인' : '다음 라운드'}
                 <span className="material-symbols-outlined font-bold">
                   {isFinalRound ? 'analytics' : 'arrow_forward'}
                 </span>

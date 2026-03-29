@@ -195,13 +195,13 @@ function SummaryScreen() {
             onClick={handleReset}
             className="w-full sm:w-auto px-16 py-5 bg-linear-to-br from-primary to-primary-container text-on-primary font-black text-lg rounded-sm hover:scale-[1.02] active:scale-95 transition-all shadow-2xl"
           >
-            새로운 작전 시작 (Initiate New Heist)
+            새 작전 시작
           </button>
           <button
             onClick={() => window.print()}
             className="w-full sm:w-auto px-10 py-5 border border-outline-variant/20 font-bold text-sm tracking-widest uppercase hover:bg-surface-container transition-colors"
           >
-            기록 출력 (Print Ledger)
+            기록 출력
           </button>
         </footer>
       </main>

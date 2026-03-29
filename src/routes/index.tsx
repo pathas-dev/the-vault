@@ -45,11 +45,11 @@ function HomeScreen() {
               >
                 play_arrow
               </span>
-              작전 시작 (Start Mission)
+              작전 시작
             </button>
             <button className="border border-outline-variant bg-surface-container-low/40 backdrop-blur-md text-primary px-10 py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-lg hover:bg-surface-container-high transition-all">
               <span className="material-symbols-outlined">menu_book</span>
-              기밀 문서 (Field Manual)
+              기밀 문서
             </button>
           </div>
         </div>
