@@ -68,6 +68,8 @@
     font-family: var(--font-body);
     background-color: var(--color-background);
     color: var(--color-on-surface);
+    /* iOS 스크롤 관성 */
+    -webkit-overflow-scrolling: touch;
   }
   
   .serif-text, .noto-serif {
@@ -77,6 +79,17 @@
   .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     vertical-align: middle;
+  }
+
+  /* 모바일 input 자동 확대 방지 (iOS Safari) */
+  input, select, textarea {
+    font-size: max(16px, 1em);
+  }
+
+  /* 터치 피드백 최적화 */
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 }
 

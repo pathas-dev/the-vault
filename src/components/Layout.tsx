@@ -1,4 +1,4 @@
-import { Link, useLocation, useRouter } from '@tanstack/react-router';
+import { Link, useLocation } from '@tanstack/react-router';
 
 export const Sidebar = () => {
     const location = useLocation();
@@ -49,46 +49,17 @@ export const Sidebar = () => {
 
 export const Topbar = () => {
     return (
-        <header className="flex justify-between items-center w-full px-6 py-4 max-w-none bg-background shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] z-50 sticky top-0">
-            <div className="text-primary font-headline text-xl font-black uppercase tracking-widest">
+        <header className="flex justify-between items-center w-full px-4 md:px-6 py-3 md:py-4 max-w-none bg-background/95 backdrop-blur-sm shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] z-50 sticky top-0">
+            <div className="text-primary font-headline text-base md:text-xl font-black uppercase tracking-widest leading-none">
                 대도의 비밀 장부
             </div>
-            <div className="flex items-center gap-6">
-                <button className="text-on-surface/60 hover:text-primary transition-colors duration-300">
-                    <span className="material-symbols-outlined">settings</span>
+            <div className="flex items-center gap-4">
+                <button className="text-on-surface/60 hover:text-primary transition-colors duration-300 p-1 -mr-1">
+                    <span className="material-symbols-outlined text-[22px]">settings</span>
                 </button>
             </div>
         </header>
     );
 };
 
-export const MobileNav = () => {
-    const location = useLocation();
-    
-    const getLinkClass = (path: string) => {
-        const isActive = location.pathname === path;
-        return `flex flex-col items-center gap-1 ${isActive ? 'text-primary' : 'text-on-surface/40'}`;
-    };
 
-    return (
-        <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-background flex justify-around items-center py-4 px-2 z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
-            <Link className={getLinkClass("/")} to="/">
-                <span className="material-symbols-outlined">description</span>
-                <span className="text-[10px] font-medium">개요</span>
-            </Link>
-            <Link className={getLinkClass("/record")} to="/record">
-                <span className="material-symbols-outlined">inventory_2</span>
-                <span className="text-[10px] font-medium">기록</span>
-            </Link>
-            <div className="relative -top-6">
-                <Link to="/record" className="gold-gradient w-14 h-14 rounded-full flex items-center justify-center shadow-xl shadow-primary/40 border-4 border-background">
-                    <span className="material-symbols-outlined text-on-primary text-3xl">add</span>
-                </Link>
-            </div>
-            <Link className={getLinkClass("/summary")} to="/summary">
-                <span className="material-symbols-outlined">payments</span>
-                <span className="text-[10px] font-medium">결산</span>
-            </Link>
-        </nav>
-    );
-};

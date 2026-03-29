@@ -126,22 +126,24 @@ function RecordScreen() {
   return (
     <div className="flex-1 flex flex-col w-full min-w-0">
       <Topbar />
-      <main className="flex-1 px-6 md:px-12 py-12 max-w-7xl mx-auto w-full pb-24 md:pb-12">
-        <section className="mb-16">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+      <main className="flex-1 px-4 md:px-12 py-8 md:py-12 max-w-7xl mx-auto w-full pb-24 md:pb-12">
+        {/* 라운드 헤더 섹션 */}
+        <section className="mb-8 md:mb-16">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8">
             <div className="max-w-4xl w-full">
-              <span className="text-primary text-xs font-bold tracking-[0.4em] uppercase mb-4 block opacity-60">
+              <span className="text-primary text-xs font-bold tracking-[0.4em] uppercase mb-2 md:mb-4 block opacity-60">
                 {viewMode === 'input'
                   ? 'Mission Briefing'
                   : 'Secure Phase Results'}
               </span>
-              <h1 className="serif-text text-5xl md:text-6xl font-black text-primary tracking-tight leading-tight mb-8">
+              <h1 className="serif-text text-4xl md:text-6xl font-black text-primary tracking-tight leading-tight mb-5 md:mb-8">
                 제 0{currentRound}라운드 / 07
               </h1>
 
               {viewMode === 'input' ? (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-on-surface-variant">
-                  <div className="space-y-3">
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-8 text-on-surface-variant">
+                  {/* 터는 집 */}
+                  <div className="space-y-2 md:space-y-3">
                     <label className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary/60 flex items-center gap-2">
                       <span className="material-symbols-outlined text-sm">
                         location_on
@@ -153,7 +155,7 @@ function RecordScreen() {
                         <button
                           key={house}
                           onClick={() => setTargetHouse(house)}
-                          className={`flex-1 py-2 text-sm font-bold transition-all rounded-sm border ${
+                          className={`flex-1 py-3 md:py-2 text-sm font-bold transition-all rounded-sm border ${
                             targetHouse === house
                               ? 'bg-primary text-on-primary border-primary'
                               : 'bg-surface-container-low text-on-surface/40 border-outline-variant/20 hover:border-primary/40'
@@ -165,7 +167,8 @@ function RecordScreen() {
                     </div>
                   </div>
 
-                  <div className="space-y-3">
+                  {/* 시작 위치 */}
+                  <div className="space-y-2 md:space-y-3">
                     <label className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary/60 flex items-center gap-2">
                       <span className="material-symbols-outlined text-sm">
                         login
@@ -177,7 +180,7 @@ function RecordScreen() {
                         <button
                           key={point}
                           onClick={() => setStartPoint(point)}
-                          className={`flex-1 py-2 text-sm font-bold transition-all rounded-sm border ${
+                          className={`flex-1 py-3 md:py-2 text-sm font-bold transition-all rounded-sm border ${
                             startPoint === point
                               ? 'bg-linear-to-br from-primary to-primary-container text-on-primary border-primary'
                               : 'bg-surface-container-low text-on-surface/40 border-outline-variant/20 hover:border-primary/40'
@@ -189,22 +192,23 @@ function RecordScreen() {
                     </div>
                   </div>
 
-                  <div className="space-y-3">
+                  {/* 벽 위치 */}
+                  <div className="space-y-2 md:space-y-3">
                     <label className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary/60 flex items-center gap-2">
                       <span className="material-symbols-outlined text-sm">
                         encrypted
                       </span>
                       벽 위치 (Security)
                     </label>
-                    <div className="grid grid-cols-2 gap-4 content-stretch">
-                      <div className="flex flex-col gap-1 justify-stretch">
+                    <div className="grid grid-cols-2 gap-3 content-stretch">
+                      <div className="flex flex-col gap-2 justify-stretch">
                         {['ㄱ', 'ㄴ', 'ㄷ'].map((w) => (
                           <button
                             key={w}
                             onClick={() =>
                               setHorizontalWall(horizontalWall === w ? null : w)
                             }
-                            className={`flex-1 w-full min-h-8 text-xs font-bold transition-all rounded-sm border ${
+                            className={`flex-1 w-full min-h-10 text-xs font-bold transition-all rounded-sm border ${
                               horizontalWall === w
                                 ? 'bg-tertiary text-on-tertiary border-tertiary shadow-[0_0_15px_rgba(241,201,125,0.3)]'
                                 : 'bg-surface-container-low text-on-surface/40 border-outline-variant/10 hover:border-primary/20'
@@ -212,21 +216,21 @@ function RecordScreen() {
                           >
                             <div className="flex items-center justify-center gap-3">
                               <div
-                                className={`h-0.5 w-8 ${horizontalWall === w ? 'bg-on-tertiary' : 'bg-on-surface/20'}`}
+                                className={`h-0.5 w-6 ${horizontalWall === w ? 'bg-on-tertiary' : 'bg-on-surface/20'}`}
                               ></div>
                               {w}
                             </div>
                           </button>
                         ))}
                       </div>
-                      <div className="flex gap-1 items-stretch">
+                      <div className="flex gap-2 items-stretch">
                         {['a', 'b'].map((w) => (
                           <button
                             key={w}
                             onClick={() =>
                               setVerticalWall(verticalWall === w ? null : w)
                             }
-                            className={`flex-1 py-10 text-xs font-bold transition-all rounded-sm border border-dashed ${
+                            className={`flex-1 py-6 md:py-10 text-xs font-bold transition-all rounded-sm border border-dashed ${
                               verticalWall === w
                                 ? 'bg-tertiary text-on-tertiary border-tertiary shadow-[0_0_15px_rgba(241,201,125,0.3)] border-solid'
                                 : 'bg-surface-container-low text-on-surface/40 border-outline-variant/20 hover:border-primary/20'
@@ -234,7 +238,7 @@ function RecordScreen() {
                           >
                             <div className="flex flex-col items-center gap-2">
                               <div
-                                className={`w-0.5 h-8 ${verticalWall === w ? 'bg-on-tertiary' : 'bg-on-surface/20'}`}
+                                className={`w-0.5 h-6 ${verticalWall === w ? 'bg-on-tertiary' : 'bg-on-surface/20'}`}
                               ></div>
                               {w}
                             </div>
@@ -245,7 +249,7 @@ function RecordScreen() {
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-wrap gap-8 py-6 px-8 bg-surface-container-low border-l-4 border-primary rounded-r-lg">
+                <div className="flex flex-wrap gap-5 md:gap-8 py-4 px-5 md:py-6 md:px-8 bg-surface-container-low border-l-4 border-primary rounded-r-lg">
                   <div className="space-y-1">
                     <p className="text-[10px] font-bold text-primary/40 uppercase tracking-widest">
                       Target House
@@ -276,31 +280,32 @@ function RecordScreen() {
           </div>
         </section>
 
+        {/* 가옥 입력 테이블 */}
         <section className="bg-surface-container-low rounded-sm overflow-hidden border border-outline-variant/10 shadow-2xl">
-          <div className="grid grid-cols-3 md:grid-cols-3 border-b border-outline-variant/15 bg-surface-container-high text-[10px] font-bold uppercase tracking-widest py-4 px-6 text-primary">
+          <div className="grid grid-cols-3 border-b border-outline-variant/15 bg-surface-container-high text-[10px] font-bold uppercase tracking-widest py-3 md:py-4 px-4 md:px-6 text-primary">
             <div className="serif-text">가옥 호수</div>
-            <div className="text-center serif-text">가치 01 (20~100)</div>
-            <div className="text-center serif-text">가치 02 (20~100)</div>
+            <div className="text-center serif-text">가치 01</div>
+            <div className="text-center serif-text">가치 02</div>
           </div>
-          <div className="divide-y divide-outline-variant/5 max-h-150 overflow-y-auto custom-scrollbar">
+          <div className="divide-y divide-outline-variant/5 max-h-[55vh] md:max-h-150 overflow-y-auto custom-scrollbar">
             {HOUSE_NUMBERS.map((house) => (
               <div
                 key={house}
-                className="grid grid-cols-3 md:grid-cols-3 items-center py-4 px-6 hover:bg-surface-container-high transition-colors group"
+                className="grid grid-cols-3 items-center py-3 md:py-4 px-4 md:px-6 hover:bg-surface-container-high transition-colors group"
               >
-                <div className="serif-text text-lg font-bold text-on-surface group-hover:text-primary transition-colors">
+                <div className="serif-text text-base md:text-lg font-bold text-on-surface group-hover:text-primary transition-colors">
                   {house}
                 </div>
                 {viewMode === 'input' ? (
                   <>
-                    <div className="px-2">
+                    <div className="px-1.5 md:px-2">
                       <input
                         className={`w-full bg-surface-container-lowest border ${
                           !isValidValue(houseValues[house].v1)
                             ? 'border-error ring-1 ring-error/20'
                             : 'border-outline-variant/10'
-                        } text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2 outline-none transition-all placeholder:text-on-surface/10`}
-                        placeholder="None"
+                        } text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2.5 md:py-2 outline-none transition-all placeholder:text-on-surface/10 text-sm`}
+                        placeholder="—"
                         type="number"
                         min="20"
                         max="100"
@@ -311,18 +316,18 @@ function RecordScreen() {
                       />
                       {!isValidValue(houseValues[house].v1) && (
                         <p className="text-[9px] text-error mt-1 font-bold animate-pulse text-center">
-                          20-100 사이 입력
+                          20-100
                         </p>
                       )}
                     </div>
-                    <div className="px-2">
+                    <div className="px-1.5 md:px-2">
                       <input
                         className={`w-full bg-surface-container-lowest border ${
                           !isValidValue(houseValues[house].v2)
                             ? 'border-error ring-1 ring-error/20'
                             : 'border-outline-variant/10'
-                        } text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2 outline-none transition-all placeholder:text-on-surface/10`}
-                        placeholder="None"
+                        } text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2.5 md:py-2 outline-none transition-all placeholder:text-on-surface/10 text-sm`}
+                        placeholder="—"
                         type="number"
                         min="20"
                         max="100"
@@ -333,7 +338,7 @@ function RecordScreen() {
                       />
                       {!isValidValue(houseValues[house].v2) && (
                         <p className="text-[9px] text-error mt-1 font-bold animate-pulse text-center">
-                          20-100 사이 입력
+                          20-100
                         </p>
                       )}
                     </div>
@@ -353,7 +358,8 @@ function RecordScreen() {
           </div>
         </section>
 
-        <section className="mt-20 flex flex-col items-center justify-center">
+        {/* 데스크톱용 제출 버튼 */}
+        <section className="mt-12 md:mt-20 hidden md:flex flex-col items-center justify-center">
           <div className="relative group">
             <div className="absolute -inset-1 bg-linear-to-r from-primary to-primary-container rounded blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
             {viewMode === 'input' ? (
@@ -388,6 +394,40 @@ function RecordScreen() {
           </p>
         </section>
       </main>
+
+      {/* 모바일 전용 고정 제출 버튼 */}
+      <div className="md:hidden fixed bottom-6 left-0 right-0 px-4 z-40 pointer-events-none">
+        <div className="pointer-events-auto">
+          {viewMode === 'input' ? (
+            <button
+              onClick={handlePhaseSubmit}
+              disabled={!isFormValid}
+              className={`w-full flex items-center justify-center gap-3 py-4 font-black text-base rounded-sm transition-all shadow-2xl ${
+                isFormValid
+                  ? 'bg-linear-to-br from-primary to-primary-container text-on-primary active:scale-95'
+                  : 'bg-surface-container-highest text-on-surface/20 cursor-not-allowed opacity-50'
+              }`}
+            >
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
+                {isFormValid ? 'send' : 'block'}
+              </span>
+              결과 제출
+              <span className="text-xs opacity-60 font-medium ml-1">PHASE 0{currentRound}/07</span>
+            </button>
+          ) : (
+            <button
+              onClick={handleNextRound}
+              className="w-full flex items-center justify-center gap-3 py-4 bg-linear-to-br from-tertiary to-tertiary-container text-on-tertiary font-black text-base rounded-sm shadow-2xl active:scale-95 transition-all"
+            >
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
+                {isFinalRound ? 'analytics' : 'arrow_forward'}
+              </span>
+              {isFinalRound ? '결과 확인' : '다음 라운드'}
+            </button>
+          )}
+        </div>
+      </div>
+
       <div
         className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]"
         style={{
