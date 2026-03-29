@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { Topbar } from '../components/Layout'
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/' as any)({
   component: HomeScreen,
 })
 

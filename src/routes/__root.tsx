@@ -1,7 +1,6 @@
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
-import { MobileNav } from '../components/Layout'
 
 import appCss from '../styles.css?url'
 
@@ -31,7 +30,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body className="bg-background text-on-surface min-h-screen selection:bg-primary/30">
         <div className="flex w-full min-h-screen">
           {children}
-          <MobileNav />
         </div>
         <TanStackDevtools
           config={{ position: 'bottom-right' }}
