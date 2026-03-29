@@ -44,6 +44,7 @@ function RecordScreen() {
   const [startPoint, setStartPoint] = useState('A')
   const [horizontalWall, setHorizontalWall] = useState<string | null>(null)
   const [verticalWall, setVerticalWall] = useState<string | null>(null)
+  const [selectedHouses, setSelectedHouses] = useState<string[]>([])
   const [houseValues, setHouseValues] = useState<Record<string, HouseValue>>(
     HOUSE_NUMBERS.reduce(
       (acc, h) => ({ ...acc, [h]: { v1: '', v2: '' } }),
@@ -73,6 +74,69 @@ function RecordScreen() {
     }))
   }
 
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    house: string,
+    key: 'v1' | 'v2',
+    visibleHouses: string[],
+  ) => {
+    const currentIndex = visibleHouses.indexOf(house)
+
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      if (key === 'v1') {
+        const nextInput = document.querySelector(
+          `input[name="${house}-v2"]`,
+        ) as HTMLInputElement
+        nextInput?.focus()
+      } else {
+        const nextHouse = visibleHouses[currentIndex + 1]
+        if (nextHouse) {
+          const nextInput = document.querySelector(
+            `input[name="${nextHouse}-v1"]`,
+          ) as HTMLInputElement
+          nextInput?.focus()
+        }
+      }
+    }
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      const nextHouse = visibleHouses[currentIndex + 1]
+      if (nextHouse) {
+        const nextInput = document.querySelector(
+          `input[name="${nextHouse}-${key}"]`,
+        ) as HTMLInputElement
+        nextInput?.focus()
+      }
+    }
+
+    if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      const prevHouse = visibleHouses[currentIndex - 1]
+      if (prevHouse) {
+        const prevInput = document.querySelector(
+          `input[name="${prevHouse}-${key}"]`,
+        ) as HTMLInputElement
+        prevInput?.focus()
+      }
+    }
+
+    if (e.key === 'ArrowRight' && key === 'v1') {
+      const nextInput = document.querySelector(
+        `input[name="${house}-v2"]`,
+      ) as HTMLInputElement
+      nextInput?.focus()
+    }
+
+    if (e.key === 'ArrowLeft' && key === 'v2') {
+      const prevInput = document.querySelector(
+        `input[name="${house}-v1"]`,
+      ) as HTMLInputElement
+      prevInput?.focus()
+    }
+  }
+
   const handlePhaseSubmit = () => {
     setViewMode('summary')
   }
@@ -99,6 +163,7 @@ function RecordScreen() {
       setStartPoint('A')
       setHorizontalWall(null)
       setVerticalWall(null)
+      setSelectedHouses([])
       setHouseValues(
         HOUSE_NUMBERS.reduce(
           (acc, h) => ({ ...acc, [h]: { v1: '', v2: '' } }),
@@ -119,9 +184,28 @@ function RecordScreen() {
     return num >= 20 && num <= 100
   }
 
-  const isFormValid = Object.values(houseValues).every(
-    (h) => isValidValue(h.v1) && isValidValue(h.v2),
+  const isFormValid =
+    selectedHouses.length > 0 &&
+    selectedHouses.every(
+      (h) => isValidValue(houseValues[h].v1) && isValidValue(houseValues[h].v2),
+    )
+
+  // 가옥번호 층별 그룹화
+  const groupedHouses = HOUSE_NUMBERS.reduce(
+    (acc, house) => {
+      const floor = house[0] // '1', '2', '3', '4'
+      if (!acc[floor]) acc[floor] = []
+      acc[floor].push(house)
+      return acc
+    },
+    {} as Record<string, string[]>,
   )
+
+  const toggleHouse = (house: string) => {
+    setSelectedHouses((prev) =>
+      prev.includes(house) ? prev.filter((h) => h !== house) : [...prev, house],
+    )
+  }
 
   return (
     <div className="flex-1 flex flex-col w-full min-w-0 pt-16 md:pt-20">
@@ -214,9 +298,9 @@ function RecordScreen() {
                                 : 'bg-surface-container-low text-on-surface/40 border-outline-variant/10 hover:border-primary/20'
                             }`}
                           >
-                            <div className="flex items-center justify-center gap-3">
+                            <div className="flex items-center justify-center gap-2">
                               <div
-                                className={`h-0.5 w-6 ${horizontalWall === w ? 'bg-on-tertiary' : 'bg-on-surface/20'}`}
+                                className={`h-0.5 w-4 ${horizontalWall === w ? 'bg-on-tertiary' : 'bg-on-surface/20'}`}
                               ></div>
                               {w}
                             </div>
@@ -230,15 +314,15 @@ function RecordScreen() {
                             onClick={() =>
                               setVerticalWall(verticalWall === w ? null : w)
                             }
-                            className={`flex-1 py-6 md:py-10 text-xs font-bold transition-all rounded-sm border border-dashed ${
+                            className={`flex-1 py-4 md:py-6 text-xs font-bold transition-all rounded-sm border border-dashed ${
                               verticalWall === w
                                 ? 'bg-tertiary text-on-tertiary border-tertiary shadow-[0_0_15px_rgba(241,201,125,0.3)] border-solid'
                                 : 'bg-surface-container-low text-on-surface/40 border-outline-variant/20 hover:border-primary/20'
                             }`}
                           >
-                            <div className="flex flex-col items-center gap-2">
+                            <div className="flex flex-col items-center gap-1.5">
                               <div
-                                className={`w-0.5 h-6 ${verticalWall === w ? 'bg-on-tertiary' : 'bg-on-surface/20'}`}
+                                className={`w-0.5 h-4 ${verticalWall === w ? 'bg-on-tertiary' : 'bg-on-surface/20'}`}
                               ></div>
                               {w}
                             </div>
@@ -280,15 +364,58 @@ function RecordScreen() {
           </div>
         </section>
 
+        {/* 가옥 선택 섹션 (New) */}
+        {viewMode === 'input' && (
+          <section className="mb-8 md:mb-12">
+            <label className="text-[10px] font-bold tracking-[0.4em] uppercase text-primary/60 mb-4 block">
+              가옥 선택 (Target Houses)
+            </label>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
+              {Object.entries(groupedHouses).map(([floor, houses]) => (
+                <div
+                  key={floor}
+                  className="bg-surface-container-low/40 p-4 rounded-sm border border-outline-variant/5"
+                >
+                  <p className="text-[10px] font-bold text-primary/30 mb-3 tracking-widest">
+                    {floor}F SECTOR
+                  </p>
+                  <div className="grid grid-cols-3 gap-2">
+                    {houses.map((house) => (
+                      <button
+                        key={house}
+                        onClick={() => toggleHouse(house)}
+                        className={`py-2 text-xs font-bold transition-all rounded-sm border ${
+                          selectedHouses.includes(house)
+                            ? 'bg-primary text-on-primary border-primary shadow-[0_4px_12px_rgba(255,198,55,0.2)]'
+                            : 'bg-surface-container-lowest text-on-surface/30 border-outline-variant/10 hover:border-primary/30'
+                        }`}
+                      >
+                        {house}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* 가옥 입력 테이블 */}
-        <section className="bg-surface-container-low rounded-sm overflow-hidden border border-outline-variant/10 shadow-2xl">
-          <div className="grid grid-cols-3 border-b border-outline-variant/15 bg-surface-container-high text-[10px] font-bold uppercase tracking-widest py-3 md:py-4 px-4 md:px-6 text-primary">
-            <div className="serif-text">가옥 호수</div>
-            <div className="text-center serif-text">가치 01</div>
-            <div className="text-center serif-text">가치 02</div>
-          </div>
-          <div className="divide-y divide-outline-variant/5 max-h-[55vh] md:max-h-150 overflow-y-auto custom-scrollbar">
-            {HOUSE_NUMBERS.map((house) => (
+        {(viewMode === 'summary' || selectedHouses.length > 0) && (
+          <section className="bg-surface-container-low rounded-sm overflow-hidden border border-outline-variant/10 shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="grid grid-cols-3 border-b border-outline-variant/15 bg-surface-container-high text-[10px] font-bold uppercase tracking-widest py-3 md:py-4 px-4 md:px-6 text-primary">
+              <div className="serif-text">가옥 번호</div>
+              <div className="text-center serif-text">가치 01</div>
+              <div className="text-center serif-text">가치 02</div>
+            </div>
+            <div className="divide-y divide-outline-variant/5 max-h-[55vh] md:max-h-150 overflow-y-auto custom-scrollbar">
+              {(viewMode === 'input'
+                ? HOUSE_NUMBERS.filter((h) => selectedHouses.includes(h))
+                : HOUSE_NUMBERS.filter(
+                    (h) =>
+                      houseValues[h].v1 !== '' || houseValues[h].v2 !== '',
+                  )
+              ).map((house) => (
               <div
                 key={house}
                 className="grid grid-cols-3 items-center py-3 md:py-4 px-4 md:px-6 hover:bg-surface-container-high transition-colors group"
@@ -300,18 +427,30 @@ function RecordScreen() {
                   <>
                     <div className="px-1.5 md:px-2">
                       <input
+                        name={`${house}-v1`}
                         className={`w-full bg-surface-container-lowest border ${
                           !isValidValue(houseValues[house].v1)
                             ? 'border-error ring-1 ring-error/20'
                             : 'border-outline-variant/10'
                         } text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2.5 md:py-2 outline-none transition-all placeholder:text-on-surface/10 text-sm`}
                         placeholder="—"
+                        inputMode="numeric"
                         type="number"
                         min="20"
                         max="100"
                         value={houseValues[house].v1}
                         onChange={(e) =>
                           handleHouseValueChange(house, 'v1', e.target.value)
+                        }
+                        onKeyDown={(e) =>
+                          handleKeyDown(
+                            e,
+                            house,
+                            'v1',
+                            HOUSE_NUMBERS.filter((h) =>
+                              selectedHouses.includes(h),
+                            ),
+                          )
                         }
                       />
                       {!isValidValue(houseValues[house].v1) && (
@@ -322,18 +461,30 @@ function RecordScreen() {
                     </div>
                     <div className="px-1.5 md:px-2">
                       <input
+                        name={`${house}-v2`}
                         className={`w-full bg-surface-container-lowest border ${
                           !isValidValue(houseValues[house].v2)
                             ? 'border-error ring-1 ring-error/20'
                             : 'border-outline-variant/10'
                         } text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2.5 md:py-2 outline-none transition-all placeholder:text-on-surface/10 text-sm`}
                         placeholder="—"
+                        inputMode="numeric"
                         type="number"
                         min="20"
                         max="100"
                         value={houseValues[house].v2}
                         onChange={(e) =>
                           handleHouseValueChange(house, 'v2', e.target.value)
+                        }
+                        onKeyDown={(e) =>
+                          handleKeyDown(
+                            e,
+                            house,
+                            'v2',
+                            HOUSE_NUMBERS.filter((h) =>
+                              selectedHouses.includes(h),
+                            ),
+                          )
                         }
                       />
                       {!isValidValue(houseValues[house].v2) && (
@@ -356,7 +507,18 @@ function RecordScreen() {
               </div>
             ))}
           </div>
+          {viewMode === 'input' && selectedHouses.length === 0 && (
+            <div className="py-20 text-center text-on-surface/20">
+              <span className="material-symbols-outlined text-4xl mb-3 block opacity-20">
+                apartment
+              </span>
+              <p className="text-sm font-medium tracking-widest uppercase">
+                Select target houses to record values
+              </p>
+            </div>
+          )}
         </section>
+      )}
 
         {/* 데스크톱용 제출 버튼 */}
         <section className="mt-12 md:mt-20 hidden md:flex flex-col items-center justify-center">
