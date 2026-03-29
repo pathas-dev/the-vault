@@ -82,21 +82,21 @@ function SummaryScreen() {
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-12 mb-10 md:mb-20 items-end">
           <div className="lg:col-span-8">
             <span className="text-primary text-sm font-bold tracking-[0.3em] uppercase mb-3 md:mb-4 block">
-              Operation: Extraction Complete
+              Operation: Loot Extraction Complete
             </span>
             <h2 className="noto-serif text-4xl md:text-7xl font-black gold-text-gradient leading-tight mb-4 md:mb-8">
-              최종 작전 보고서
+              대도(大盜)의 비밀 장부
             </h2>
             <p className="text-on-surface-variant text-sm md:text-base max-w-lg leading-relaxed border-l border-outline-variant/30 pl-4 md:pl-6">
-              총 07단계의 보안 침투 작전이 종료되었습니다. 아래 목록은 각 단계별
-              침투 경로와 확보한 자산의 가치에 대한 최종 기록입니다. 본 문서는
-              자동 파기되지 않으므로 보안에 유의하십시오.
+              총 07단계의 보물 약탈 작전이 성료되었습니다. 아래 목록은 각 단계별
+              잠입 경로와 확보한 전리품 가치에 대한 최종 기록입니다. 본 문서는
+              자동 파기되지 않으므로 보안에 각별히 유의하십시오.
             </p>
           </div>
           <div className="lg:col-span-4 flex flex-col items-start lg:items-end">
             <div className="bg-surface-container-high/50 border border-outline-variant/20 p-5 md:p-8 rounded-sm w-full lg:max-w-[320px]">
               <p className="text-[10px] font-bold text-primary/40 uppercase tracking-widest mb-2">
-                Total Combined Value
+                Total Extraction Value
               </p>
               <p className="noto-serif text-4xl md:text-5xl font-black gold-text-gradient">
                 {calculateTotal().toLocaleString()}{' '}
@@ -118,7 +118,7 @@ function SummaryScreen() {
                 <div className="flex items-center justify-between flex-wrap gap-3">
                   <h3 className="noto-serif text-xl md:text-2xl font-black tracking-tight text-primary flex items-center gap-3">
                     <span className="text-xs opacity-40 font-bold uppercase tracking-widest">
-                      Phase
+                      Op Phase
                     </span>
                     0{idx + 1}
                   </h3>
@@ -129,7 +129,7 @@ function SummaryScreen() {
                 <div className="flex gap-x-5 gap-y-1.5 flex-wrap mt-3">
                   <div className="flex items-center gap-1.5">
                     <span className="text-[9px] uppercase font-bold text-on-surface-variant/40 tracking-widest">
-                      Target:
+                      Target Site:
                     </span>
                     <span className="text-xs font-bold">
                       {round.targetHouse}
@@ -137,7 +137,7 @@ function SummaryScreen() {
                   </div>
                   <div className="flex items-center gap-1.5">
                     <span className="text-[9px] uppercase font-bold text-on-surface-variant/40 tracking-widest">
-                      Entry:
+                      Infiltration:
                     </span>
                     <span className="text-xs font-bold">
                       {round.startPoint}
@@ -167,7 +167,7 @@ function SummaryScreen() {
                         className={`px-4 py-3 ${hasValue ? 'bg-surface-container' : 'bg-surface-container-low'}`}
                       >
                         <p className="text-[9px] font-bold uppercase text-primary/50 tracking-widest mb-1">
-                          {h}
+                          {h} SITE
                         </p>
                         <div className="flex gap-3 items-baseline">
                           <span className="noto-serif font-black text-primary text-sm">
@@ -190,7 +190,7 @@ function SummaryScreen() {
                   <thead>
                     <tr className="bg-surface-container-highest/20 text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
                       <th className="p-4 border-r border-outline-variant/5">
-                        가옥 호수
+                        단위 구역 (Unit)
                       </th>
                       {HOUSE_NUMBERS.map((h) => (
                         <th
@@ -205,7 +205,7 @@ function SummaryScreen() {
                   <tbody className="divide-y divide-outline-variant/5">
                     <tr>
                       <td className="p-4 text-[10px] font-bold uppercase text-on-surface-variant/40 border-r border-outline-variant/5 whitespace-nowrap">
-                        Value 01
+                        은닉 가치 I
                       </td>
                       {HOUSE_NUMBERS.map((h) => (
                         <td
@@ -218,7 +218,7 @@ function SummaryScreen() {
                     </tr>
                     <tr>
                       <td className="p-4 text-[10px] font-bold uppercase text-on-surface-variant/40 border-r border-outline-variant/5 whitespace-nowrap">
-                        Value 02
+                        은닉 가치 II
                       </td>
                       {HOUSE_NUMBERS.map((h) => (
                         <td
@@ -242,13 +242,13 @@ function SummaryScreen() {
             onClick={handleReset}
             className="w-full sm:w-auto px-16 py-5 bg-linear-to-br from-primary to-primary-container text-on-primary font-black text-lg rounded-sm hover:scale-[1.02] active:scale-95 transition-all shadow-2xl"
           >
-            새 작전 시작
+            새로운 털이 계획
           </button>
           <button
             onClick={() => window.print()}
-            className="w-full sm:w-auto px-10 py-5 border border-outline-variant/20 font-bold text-sm tracking-widest uppercase hover:bg-surface-container transition-colors"
+            className="w-full sm:w-auto px-10 py-5 border border-outline-variant/20 font-bold text-sm tracking-widest uppercase hover:bg-surface-container transition-colors rounded-sm"
           >
-            기록 출력
+            장부 보관 (Print)
           </button>
         </footer>
       </main>
@@ -261,7 +261,7 @@ function SummaryScreen() {
             className="flex-1 py-4 bg-linear-to-br from-primary to-primary-container text-on-primary font-black text-sm rounded-sm active:scale-95 transition-all shadow-2xl flex items-center justify-center gap-2"
           >
             <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>refresh</span>
-            새 작전 시작
+            새로운 털이 계획
           </button>
           <button
             onClick={() => window.print()}
