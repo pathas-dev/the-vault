@@ -147,7 +147,7 @@ function RecordScreen() {
 
   const isFinalRound = currentRound === 7
   const isValidValue = (val: string) => val === '' || (Number(val) >= 20 && Number(val) <= 100)
-  const isFormValid = selectedHouses.length > 0 && selectedHouses.every((h) => {
+  const isFormValid = selectedHouses.every((h) => {
     const v1 = houseValues[h].v1
     const v2 = houseValues[h].v2
     return (v1 !== '' || v2 !== '') && isValidValue(v1) && isValidValue(v2)
@@ -327,7 +327,15 @@ function RecordScreen() {
                 </div>
               ))}
             </div>
-            {viewMode === 'input' && selectedHouses.length === 0 && <div className="py-20 text-center opacity-10 space-y-3"><span className="material-symbols-outlined text-4xl block">database</span><p className="text-[10px] font-bold tracking-[0.4em] uppercase">Data Stream Empty</p></div>}
+            {((viewMode === 'input' && selectedHouses.length === 0) || 
+              (viewMode === 'summary' && !HOUSE_NUMBERS.some(h => houseValues[h].v1 !== '' || houseValues[h].v2 !== ''))) && (
+              <div className="py-20 text-center opacity-10 space-y-3">
+                <span className="material-symbols-outlined text-4xl block">database</span>
+                <p className="text-[10px] font-bold tracking-[0.4em] uppercase">
+                  {viewMode === 'input' ? 'Data Stream Empty' : 'No Activity Recorded'}
+                </p>
+              </div>
+            )}
           </section>
         )}
 
