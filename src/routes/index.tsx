@@ -1,87 +1,106 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { Topbar } from '../components/Layout'
 
-export const Route = createFileRoute('/')({ component: App })
+export const Route = createFileRoute('/')({
+  component: HomeScreen,
+})
 
-function App() {
+function HomeScreen() {
+  const navigate = useNavigate()
+
   return (
-    <main className="page-wrap px-4 pb-8 pt-14">
-      <section className="island-shell rise-in relative overflow-hidden rounded-[2rem] px-6 py-10 sm:px-10 sm:py-14">
-        <div className="pointer-events-none absolute -left-20 -top-24 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(79,184,178,0.32),transparent_66%)]" />
-        <div className="pointer-events-none absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(47,106,74,0.18),transparent_66%)]" />
-        <p className="island-kicker mb-3">TanStack Start Base Template</p>
-        <h1 className="display-title mb-5 max-w-3xl text-4xl leading-[1.02] font-bold tracking-tight text-[var(--sea-ink)] sm:text-6xl">
-          Start simple, ship quickly.
-        </h1>
-        <p className="mb-8 max-w-2xl text-base text-[var(--sea-ink-soft)] sm:text-lg">
-          This base starter intentionally keeps things light: two routes, clean
-          structure, and the essentials you need to build from scratch.
-        </p>
-        <div className="flex flex-wrap gap-3">
-          <a
-            href="/about"
-            className="rounded-full border border-[rgba(50,143,151,0.3)] bg-[rgba(79,184,178,0.14)] px-5 py-2.5 text-sm font-semibold text-[var(--lagoon-deep)] no-underline transition hover:-translate-y-0.5 hover:bg-[rgba(79,184,178,0.24)]"
-          >
-            About This Starter
-          </a>
-          <a
-            href="https://tanstack.com/router"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full border border-[rgba(23,58,64,0.2)] bg-white/50 px-5 py-2.5 text-sm font-semibold text-[var(--sea-ink)] no-underline transition hover:-translate-y-0.5 hover:border-[rgba(23,58,64,0.35)]"
-          >
-            Router Guide
-          </a>
+    <div className="flex-1 flex flex-col min-h-screen relative overflow-hidden blueprint-bg w-full">
+      <Topbar />
+      <main className="flex-1 flex flex-col items-start justify-center px-8 md:px-24 py-20 relative z-10">
+        <div className="absolute top-0 right-0 w-1/2 h-full pointer-events-none opacity-20 hidden lg:block">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-primary/20 rounded-full"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] border border-primary/10 rounded-full"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] border border-primary/30 rounded-full flex items-center justify-center">
+            <span
+              className="material-symbols-outlined text-primary/40 text-8xl"
+              style={{ fontVariationSettings: "'wght' 100" }}
+            >
+              lock_open
+            </span>
+          </div>
         </div>
-      </section>
 
-      <section className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {[
-          [
-            'Type-Safe Routing',
-            'Routes and links stay in sync across every page.',
-          ],
-          [
-            'Server Functions',
-            'Call server code from your UI without creating API boilerplate.',
-          ],
-          [
-            'Streaming by Default',
-            'Ship progressively rendered responses for faster experiences.',
-          ],
-          [
-            'Tailwind Native',
-            'Design quickly with utility-first styling and reusable tokens.',
-          ],
-        ].map(([title, desc], index) => (
-          <article
-            key={title}
-            className="island-shell feature-card rise-in rounded-2xl p-5"
-            style={{ animationDelay: `${index * 90 + 80}ms` }}
-          >
-            <h2 className="mb-2 text-base font-semibold text-[var(--sea-ink)]">
-              {title}
-            </h2>
-            <p className="m-0 text-sm text-[var(--sea-ink-soft)]">{desc}</p>
-          </article>
-        ))}
-      </section>
+        <div className="max-w-2xl">
+          <h1 className="font-headline font-black text-6xl md:text-8xl text-primary leading-tight mb-6 tracking-tighter">
+            대도의 <br />
+            비밀 장부
+          </h1>
+          <p className="text-on-surface-variant text-lg md:text-xl leading-relaxed mb-12 max-w-lg border-l-2 border-primary/40 pl-6 italic">
+            조용히 침입하여 최고의 보물을 선점하십시오. 모든 기록은 비밀이며,
+            결과는 오직 명성으로 증명됩니다.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 mb-24">
+            <button
+              onClick={() => navigate({ to: '/record' })}
+              className="gold-gradient text-on-primary px-10 py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-lg hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary/20"
+            >
+              <span
+                className="material-symbols-outlined"
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              >
+                play_arrow
+              </span>
+              작전 시작 (Start Mission)
+            </button>
+            <button className="border border-outline-variant bg-surface-container-low/40 backdrop-blur-md text-primary px-10 py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-lg hover:bg-surface-container-high transition-all">
+              <span className="material-symbols-outlined">menu_book</span>
+              기밀 문서 (Field Manual)
+            </button>
+          </div>
+        </div>
 
-      <section className="island-shell mt-8 rounded-2xl p-6">
-        <p className="island-kicker mb-2">Quick Start</p>
-        <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-[var(--sea-ink-soft)]">
-          <li>
-            Edit <code>src/routes/index.tsx</code> to customize the home page.
-          </li>
-          <li>
-            Update <code>src/components/Header.tsx</code> and{' '}
-            <code>src/components/Footer.tsx</code> for brand links.
-          </li>
-          <li>
-            Add routes in <code>src/routes</code> and tweak visual tokens in{' '}
-            <code>src/styles.css</code>.
-          </li>
-        </ul>
-      </section>
-    </main>
+        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-auto">
+          <div className="bg-surface-container-low p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-colors">
+            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <span className="material-symbols-outlined text-6xl">
+                visibility_off
+              </span>
+            </div>
+            <p className="text-primary text-xs font-bold tracking-[0.2em] mb-2 uppercase">
+              Protocol
+            </p>
+            <h3 className="font-headline text-2xl text-on-surface">
+              프로토콜: 완전 은폐
+            </h3>
+          </div>
+          <div className="bg-surface-container-low p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-colors">
+            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <span className="material-symbols-outlined text-6xl">sensors</span>
+            </div>
+            <p className="text-tertiary text-xs font-bold tracking-[0.2em] mb-2 uppercase">
+              Status
+            </p>
+            <h3 className="font-headline text-2xl text-on-surface">
+              상태: 미탐지
+            </h3>
+          </div>
+          <div className="bg-surface-container-low p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-colors">
+            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <span className="material-symbols-outlined text-6xl">
+                account_balance_wallet
+              </span>
+            </div>
+            <p className="text-primary-fixed-dim text-xs font-bold tracking-[0.2em] mb-2 uppercase">
+              Assets
+            </p>
+            <h3 className="font-headline text-2xl text-on-surface">
+              자산: 99.8% 회수율
+            </h3>
+          </div>
+        </div>
+      </main>
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]">
+        <img
+          alt="abstract geometry background"
+          className="w-full h-full object-cover"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHWEPZEfqgDNU0CqKRlARyDhMqA6qoLNFHlxyHkbtLwjQTPMhY5qNFg8LVtQMqorQ_BlOnMUTjUmpm0IBujdkGcQ6gBHeH646oJBPggC0-hMwGIROF7Ei4BVfnpOMdmEKOVbMMQa-3Jbb7ZFYOKAlBrNm3oOu6DcqIB1ScyFGFpfbITt5fal-D-IrrhgpF48Sh2jnFat3iHIg4ZHqL9e9c6-4WAwOjNooVSq5wF3kriG5C_9t3wMxk2DgjZ_5yrRichHM0O2RYf1n8"
+        />
+      </div>
+    </div>
   )
 }
