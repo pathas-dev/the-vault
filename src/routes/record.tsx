@@ -113,6 +113,16 @@ function RecordScreen() {
 
   const isFinalRound = currentRound === 7
 
+  const isValidValue = (val: string) => {
+    if (val === '') return true
+    const num = Number(val)
+    return num >= 20 && num <= 100
+  }
+
+  const isFormValid = Object.values(houseValues).every(
+    (h) => isValidValue(h.v1) && isValidValue(h.v2),
+  )
+
   return (
     <div className="flex-1 flex flex-col w-full min-w-0">
       <Topbar />
@@ -285,7 +295,11 @@ function RecordScreen() {
                   <>
                     <div className="px-2">
                       <input
-                        className="w-full bg-surface-container-lowest border border-outline-variant/10 text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2 outline-none transition-all placeholder:text-on-surface/10"
+                        className={`w-full bg-surface-container-lowest border ${
+                          !isValidValue(houseValues[house].v1)
+                            ? 'border-error ring-1 ring-error/20'
+                            : 'border-outline-variant/10'
+                        } text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2 outline-none transition-all placeholder:text-on-surface/10`}
                         placeholder="None"
                         type="number"
                         min="20"
@@ -295,10 +309,19 @@ function RecordScreen() {
                           handleHouseValueChange(house, 'v1', e.target.value)
                         }
                       />
+                      {!isValidValue(houseValues[house].v1) && (
+                        <p className="text-[9px] text-error mt-1 font-bold animate-pulse text-center">
+                          20-100 사이 입력
+                        </p>
+                      )}
                     </div>
                     <div className="px-2">
                       <input
-                        className="w-full bg-surface-container-lowest border border-outline-variant/10 text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2 outline-none transition-all placeholder:text-on-surface/10"
+                        className={`w-full bg-surface-container-lowest border ${
+                          !isValidValue(houseValues[house].v2)
+                            ? 'border-error ring-1 ring-error/20'
+                            : 'border-outline-variant/10'
+                        } text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2 outline-none transition-all placeholder:text-on-surface/10`}
                         placeholder="None"
                         type="number"
                         min="20"
@@ -308,6 +331,11 @@ function RecordScreen() {
                           handleHouseValueChange(house, 'v2', e.target.value)
                         }
                       />
+                      {!isValidValue(houseValues[house].v2) && (
+                        <p className="text-[9px] text-error mt-1 font-bold animate-pulse text-center">
+                          20-100 사이 입력
+                        </p>
+                      )}
                     </div>
                   </>
                 ) : (
@@ -331,13 +359,18 @@ function RecordScreen() {
             {viewMode === 'input' ? (
               <button
                 onClick={handlePhaseSubmit}
-                className="relative flex items-center gap-4 px-12 py-6 bg-linear-to-br from-primary to-primary-container text-on-primary text-xl font-black rounded-sm shadow-2xl hover:scale-[1.02] active:scale-95 transition-all"
+                disabled={!isFormValid}
+                className={`relative flex items-center gap-4 px-12 py-6 ${
+                  isFormValid
+                    ? 'bg-linear-to-br from-primary to-primary-container text-on-primary hover:scale-[1.02] active:scale-95 shadow-2xl'
+                    : 'bg-surface-container-highest text-on-surface/20 cursor-not-allowed opacity-50'
+                } text-xl font-black rounded-sm transition-all`}
               >
                 <span className="serif-text">
                   단계 결과 제출 (Submit Phase)
                 </span>
                 <span className="material-symbols-outlined font-bold">
-                  send
+                  {isFormValid ? 'send' : 'block'}
                 </span>
               </button>
             ) : (
