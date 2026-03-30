@@ -66,14 +66,14 @@ The full spec lives in `DESIGN.md`. These are the hard constraints agents must f
 
 ### Colors
 
-| Token | Value | Use |
-|---|---|---|
-| Primary (gold) | `#ffc637` | CTAs, accents, highlights |
-| Surface base | `#10141a` | Page background |
-| Surface 1 | `#181c22` | Cards, panels |
-| Surface 2 | `#262a31` | Elevated surfaces |
-| Surface 3 | `#31353c` | Highest elevation |
-| On-surface | `#dfe2eb` | Body text — never use `#FFFFFF` |
+| Token          | Value     | Use                             |
+| -------------- | --------- | ------------------------------- |
+| Primary (gold) | `#ffc637` | CTAs, accents, highlights       |
+| Surface base   | `#10141a` | Page background                 |
+| Surface 1      | `#181c22` | Cards, panels                   |
+| Surface 2      | `#262a31` | Elevated surfaces               |
+| Surface 3      | `#31353c` | Highest elevation               |
+| On-surface     | `#dfe2eb` | Body text — never use `#FFFFFF` |
 
 - **No-Line Rule:** Do not use `border` / `1px solid` for visual sectioning. Use surface color stacking instead.
 - **Glass & Gold Rule:** Floating elements use glassmorphism: `backdrop-blur-[20px]` + 60% opacity background.
@@ -92,23 +92,23 @@ The full spec lives in `DESIGN.md`. These are the hard constraints agents must f
 
 ### Radius tokens (from `@theme`)
 
-| Token | Value |
-|---|---|
-| `sm` | `0.125rem` |
-| `md` | `0.25rem` |
-| `lg` | `0.5rem` |
-| `xl` | `0.75rem` |
+| Token | Value      |
+| ----- | ---------- |
+| `sm`  | `0.125rem` |
+| `md`  | `0.25rem`  |
+| `lg`  | `0.5rem`   |
+| `xl`  | `0.75rem`  |
 
 ### Utility classes (defined in `styles.css`)
 
-| Class | Purpose |
-|---|---|
-| `gold-gradient` | Gold gradient background for primary CTAs |
-| `gold-text-gradient` | Gold gradient applied as text fill |
-| `blueprint-bg` | Dot-pattern background |
-| `custom-scrollbar` | Styled scrollbar |
-| `label-micro` | 9px uppercase metadata label |
-| `label-small` | 10px uppercase metadata label |
+| Class                | Purpose                                   |
+| -------------------- | ----------------------------------------- |
+| `gold-gradient`      | Gold gradient background for primary CTAs |
+| `gold-text-gradient` | Gold gradient applied as text fill        |
+| `blueprint-bg`       | Dot-pattern background                    |
+| `custom-scrollbar`   | Styled scrollbar                          |
+| `label-micro`        | 9px uppercase metadata label              |
+| `label-small`        | 10px uppercase metadata label             |
 
 ---
 

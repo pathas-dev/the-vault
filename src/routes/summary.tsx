@@ -1,7 +1,9 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Fragment } from 'react'
 import { FloatingActions } from '../components/Layout'
 import { WallMiniMap } from '../components/WallMiniMap'
+import { type RoundData } from '../lib/schemas'
+import { clearSavedRounds, getSavedRounds } from '../lib/storage'
 
 export const Route = createFileRoute('/summary' as any)({
   component: SummaryScreen,
@@ -30,27 +32,16 @@ const VAULT_CONFIG: Record<string, number> = {
 const VAULT_NUMBERS = Object.keys(VAULT_CONFIG)
 const MAX_CAPACITY = 3
 
-type RoundData = {
-  targetHouse: string
-  startPoint: string
-  horizontalWall: string | null
-  verticalWall: string | null
-  vaultValues: Record<string, string[]>
-}
-
 function SummaryScreen() {
   const navigate = useNavigate()
   const [rounds, setRounds] = useState<RoundData[]>([])
 
   useEffect(() => {
-    const saved = sessionStorage.getItem('vault_rounds')
-    if (saved) {
-      setRounds(JSON.parse(saved))
-    }
+    setRounds(getSavedRounds())
   }, [])
 
   const handleReset = () => {
-    sessionStorage.removeItem('vault_rounds')
+    clearSavedRounds()
     navigate({ to: '/' })
   }
 
@@ -164,26 +155,18 @@ function SummaryScreen() {
                                 {Array.from(
                                   { length: VAULT_CONFIG[v] },
                                   (_, i) => (
-                                    <span
-                                      key={i}
-                                      className="noto-serif font-black text-primary text-sm"
-                                    >
-                                      {vals[i] || '—'}
-                                    </span>
+                                    <Fragment key={i}>
+                                      {i > 0 && (
+                                        <span className="text-on-surface-variant/30 text-xs">
+                                          /
+                                        </span>
+                                      )}
+                                      <span className="noto-serif font-black text-primary text-sm">
+                                        {vals[i] || '—'}
+                                      </span>
+                                    </Fragment>
                                   ),
-                                ).reduce((acc: React.ReactNode[], el, i) => {
-                                  if (i > 0)
-                                    acc.push(
-                                      <span
-                                        key={`sep-${i}`}
-                                        className="text-on-surface-variant/30 text-xs"
-                                      >
-                                        /
-                                      </span>,
-                                    )
-                                  acc.push(el)
-                                  return acc
-                                }, [])}
+                                )}
                               </div>
                             </div>
                           )
@@ -200,7 +183,10 @@ function SummaryScreen() {
                               금고
                             </th>
                             {Array.from({ length: MAX_CAPACITY }, (_, i) => (
-                              <th key={i} className="p-3 text-center border-r border-outline-variant/5">
+                              <th
+                                key={i}
+                                className="p-3 text-center border-r border-outline-variant/5"
+                              >
                                 {['I', 'II', 'III'][i]}
                               </th>
                             ))}
@@ -219,14 +205,19 @@ function SummaryScreen() {
                                 <td className="p-4 text-[0.625rem] font-bold uppercase text-primary/60 border-r border-outline-variant/5 tracking-widest whitespace-nowrap">
                                   {v}
                                 </td>
-                                {Array.from({ length: MAX_CAPACITY }, (_, i) => (
-                                  <td
-                                    key={i}
-                                    className="p-3 text-center text-sm font-black border-r border-outline-variant/5"
-                                  >
-                                    {i < VAULT_CONFIG[v] ? (vals[i] || '-') : ''}
-                                  </td>
-                                ))}
+                                {Array.from(
+                                  { length: MAX_CAPACITY },
+                                  (_, i) => (
+                                    <td
+                                      key={i}
+                                      className="p-3 text-center text-sm font-black border-r border-outline-variant/5"
+                                    >
+                                      {i < VAULT_CONFIG[v]
+                                        ? vals[i] || '-'
+                                        : ''}
+                                    </td>
+                                  ),
+                                )}
                               </tr>
                             )
                           })}
