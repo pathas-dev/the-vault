@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
 import { Topbar } from '../components/Layout'
+import { WallMiniMap } from '../components/WallMiniMap'
 
 export const Route = createFileRoute('/summary' as any)({
   component: SummaryScreen,
@@ -132,12 +133,7 @@ function SummaryScreen() {
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[9px] uppercase font-bold text-on-surface-variant/40 tracking-widest">
-                      Walls:
-                    </span>
-                    <span className="text-xs font-bold">
-                      {round.horizontalWall || '-'}/{round.verticalWall || '-'}
-                    </span>
+                    <WallMiniMap horizontalWall={round.horizontalWall} verticalWall={round.verticalWall} />
                   </div>
                 </div>
               </div>
@@ -221,15 +217,15 @@ function SummaryScreen() {
         <footer className="mt-20 hidden md:flex flex-col sm:flex-row gap-6 items-center justify-center">
           <button
             onClick={handleReset}
-            className="w-full sm:w-auto px-16 py-5 bg-linear-to-br from-primary to-primary-container text-on-primary font-black text-lg rounded-sm hover:scale-[1.02] active:scale-95 transition-all shadow-2xl"
+            className="w-full sm:w-auto px-16 py-5 bg-linear-to-br from-primary to-primary-container text-on-primary font-black text-lg rounded-sm hover:scale-[1.02] active:scale-95 transition-all shadow-2xl flex items-center justify-center gap-3"
           >
-            새로운 털이 계획
+            <span className="material-symbols-outlined text-xl">refresh</span> 새 작전 시작
           </button>
           <button
             onClick={() => window.print()}
-            className="w-full sm:w-auto px-10 py-5 border border-outline-variant/20 font-bold text-sm tracking-widest uppercase hover:bg-surface-container transition-colors rounded-sm"
+            className="w-full sm:w-auto px-10 py-5 border border-outline-variant/20 font-bold text-sm tracking-widest hover:bg-surface-container transition-colors rounded-sm flex items-center justify-center gap-3"
           >
-            장부 보관 (Print)
+            <span className="material-symbols-outlined text-xl">print</span> 장부 보관
           </button>
         </footer>
       </main>
@@ -241,8 +237,8 @@ function SummaryScreen() {
             onClick={handleReset}
             className="flex-1 py-4 bg-linear-to-br from-primary to-primary-container text-on-primary font-black text-sm rounded-sm active:scale-95 transition-all shadow-2xl flex items-center justify-center gap-2"
           >
-            <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>refresh</span>
-            새로운 털이 계획
+            <span className="material-symbols-outlined text-[18px]">refresh</span>
+            새 작전 시작
           </button>
           <button
             onClick={() => window.print()}

@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
 import { Topbar } from '../components/Layout'
+import { WallMiniMap } from '../components/WallMiniMap'
 
 const VAULT_CONFIG: Record<string, number> = {
   '101': 1, '102': 1, '103': 2,
@@ -303,15 +304,9 @@ function RecordScreen() {
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4 pt-3 border-t border-outline-variant/5">
-                          <div className="space-y-1">
-                            <p className="text-[8px] font-bold text-on-surface/30 uppercase tracking-widest">H-Barrier</p>
-                            <p className="serif-text text-sm font-black text-tertiary">{round.horizontalWall || 'None'}</p>
-                          </div>
-                          <div className="space-y-1">
-                            <p className="text-[8px] font-bold text-on-surface/30 uppercase tracking-widest">V-Pillar</p>
-                            <p className="serif-text text-sm font-black text-tertiary">{round.verticalWall || 'None'}</p>
-                          </div>
+                        <div className="pt-3 border-t border-outline-variant/5">
+                          <p className="text-[8px] font-bold text-on-surface/30 uppercase tracking-widest mb-2">벽 위치</p>
+                          <WallMiniMap horizontalWall={round.horizontalWall} verticalWall={round.verticalWall} />
                         </div>
 
                         <div className="pt-3 border-t border-outline-variant/5">
@@ -379,37 +374,19 @@ function RecordScreen() {
                   </div>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5 py-6 px-5 md:px-10 bg-surface-container-low rounded-sm relative overflow-hidden shadow-xl border border-outline-variant/5">
+                <div className="grid grid-cols-3 gap-3 md:gap-5 py-6 px-5 md:px-10 bg-surface-container-low rounded-sm relative overflow-hidden shadow-xl border border-outline-variant/5">
                   <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-primary/40 via-primary to-primary/40"></div>
                   <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-surface-container-lowest rounded-sm border border-outline-variant/10 relative">
-                    <div className="absolute top-1 left-2 text-[7px] font-black text-primary/30 uppercase tracking-widest leading-none">Target Site</div>
+                    <div className="absolute top-1 left-2 text-[7px] font-black text-primary/30 uppercase tracking-widest leading-none">터는 집</div>
                     <span className="serif-text text-3xl md:text-4xl font-black text-primary leading-none mt-1">{targetHouse}</span>
                   </div>
                   <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-surface-container-lowest rounded-sm border border-outline-variant/10 relative">
-                    <div className="absolute top-1 left-2 text-[7px] font-black text-primary/30 uppercase tracking-widest leading-none">Infiltration</div>
+                    <div className="absolute top-1 left-2 text-[7px] font-black text-primary/30 uppercase tracking-widest leading-none">침투 지점</div>
                     <span className="serif-text text-3xl md:text-4xl font-black text-primary leading-none mt-1">{startPoint}</span>
                   </div>
-                  <div className="flex flex-col bg-surface-container-lowest p-2 md:p-3 rounded-sm border border-outline-variant/10 items-center justify-center space-y-2">
-                    <div className="text-[7px] font-black text-on-surface/30 uppercase tracking-widest self-start px-1 leading-none">Security H</div>
-                    <div className="flex flex-col gap-1.5 w-full px-2">
-                      {['ㄱ', 'ㄴ', 'ㄷ'].map((w) => (
-                        <div key={w} className="flex items-center gap-2 w-full">
-                          <div className={`h-1 flex-1 rounded-full ${horizontalWall === w ? 'bg-tertiary shadow-[0_0_6px_rgba(241,201,125,0.6)]' : 'bg-on-surface/5'}`}></div>
-                          <span className={`serif-text text-[9px] font-bold leading-none w-2 text-center ${horizontalWall === w ? 'text-tertiary' : 'text-on-surface/10'}`}>{w}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex flex-col bg-surface-container-lowest p-2 md:p-3 rounded-sm border border-outline-variant/10 items-center justify-center space-y-2">
-                    <div className="text-[7px] font-black text-on-surface/30 uppercase tracking-widest self-start px-1 leading-none">Security V</div>
-                    <div className="flex items-center justify-between w-full h-8 md:h-10 px-3 pt-0.5">
-                      {['a', 'b', 'c'].map((w) => (
-                        <div key={w} className="flex flex-col items-center gap-1.5 h-full">
-                          <div className={`w-1 flex-1 rounded-full ${verticalWall === w ? 'bg-tertiary shadow-[0_0_6px_rgba(241,201,125,0.6)]' : 'bg-on-surface/5'}`}></div>
-                          <span className={`serif-text text-[9px] font-bold leading-none ${verticalWall === w ? 'text-tertiary' : 'text-on-surface/10'}`}>{w}</span>
-                        </div>
-                      ))}
-                    </div>
+                  <div className="flex flex-col bg-surface-container-lowest p-3 md:p-4 rounded-sm border border-outline-variant/10 items-center justify-center space-y-2 relative">
+                    <div className="absolute top-1 left-2 text-[7px] font-black text-primary/30 uppercase tracking-widest leading-none">벽 위치</div>
+                    <WallMiniMap horizontalWall={horizontalWall} verticalWall={verticalWall} />
                   </div>
                 </div>
               )}
@@ -422,11 +399,11 @@ function RecordScreen() {
           <section className="mb-8 md:mb-12">
             <div className="flex items-center gap-2.5 mb-4 md:mb-6">
               <div className="h-px w-6 bg-primary/40"></div>
-              <label className="text-[9px] font-bold tracking-[0.4em] uppercase text-primary/60 tracking-widest">목표 금고 (Target Vault)</label>
+              <label className="text-[9px] font-bold tracking-[0.4em] uppercase text-primary/60 tracking-widest">은닉 금고</label>
             </div>
 
             <div className="bg-surface-container-low p-3 md:p-6 rounded-sm border border-outline-variant/10 overflow-x-auto">
-              <div className="flex min-w-[520px] mx-auto" style={{ maxWidth: '740px' }}>
+              <div className="flex min-w-[340px] mx-auto" style={{ maxWidth: '740px' }}>
                 {/* Room 401 */}
                 <div className="self-center border-2 border-r-0 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3">
                   <VaultCell vault="401" className="w-full min-w-[64px] md:min-w-[80px] min-h-[80px] md:min-h-[100px]" />
@@ -599,14 +576,14 @@ function RecordScreen() {
                 disabled={!isFormValid}
                 className={`relative flex items-center gap-4 px-12 py-5 ${isFormValid ? 'bg-linear-to-br from-primary to-primary-container text-on-primary hover:scale-[1.02] shadow-xl' : 'bg-surface-container-highest text-on-surface/10 cursor-not-allowed opacity-40'} text-lg font-black rounded-sm tracking-widest transition-all`}
               >
-                작전 기록 확정 (Confirm Heist Data) <span className="material-symbols-outlined text-2xl">{isFormValid ? 'verified_user' : 'lock'}</span>
+                <span className="material-symbols-outlined text-xl">{isFormValid ? 'verified_user' : 'lock'}</span> 작전 기록 확정
               </button>
             ) : (
               <button
                 onClick={handleNextRound}
                 className="relative flex items-center gap-4 px-12 py-5 bg-linear-to-br from-tertiary to-tertiary-container text-on-tertiary text-lg font-black rounded-sm shadow-xl hover:scale-[1.02] transition-all tracking-widest"
               >
-                {isFinalRound ? '최종 장부 정리 (Final Accounting)' : '다음 목표지로 (Next Site)'} <span className="material-symbols-outlined text-2xl">{isFinalRound ? 'analytics' : 'near_me'}</span>
+                <span className="material-symbols-outlined text-xl">{isFinalRound ? 'analytics' : 'near_me'}</span> {isFinalRound ? '최종 장부 정리' : '다음 작전'}
               </button>
             )}
           </div>
@@ -621,14 +598,14 @@ function RecordScreen() {
             disabled={!isFormValid}
             className={`w-full flex items-center justify-center gap-3 py-4 font-black text-base rounded-sm transition-all shadow-xl ${isFormValid ? 'bg-linear-to-br from-primary to-primary-container text-on-primary' : 'bg-surface-container-highest text-on-surface/20 opacity-50'}`}
           >
-            작전 기록 확정
+            <span className="material-symbols-outlined text-lg">{isFormValid ? 'verified_user' : 'lock'}</span> 작전 기록 확정
           </button>
         ) : (
           <button
             onClick={handleNextRound}
             className="w-full flex items-center justify-center gap-3 py-4 bg-linear-to-br from-tertiary to-tertiary-container text-on-tertiary font-black text-base rounded-sm shadow-xl"
           >
-            {isFinalRound ? '최종 장부 확인' : '다음 단계'}
+            <span className="material-symbols-outlined text-lg">{isFinalRound ? 'analytics' : 'near_me'}</span> {isFinalRound ? '최종 장부 정리' : '다음 작전'}
           </button>
         )}
       </div>
