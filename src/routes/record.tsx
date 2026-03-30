@@ -183,12 +183,12 @@ function RecordScreen() {
         } ${className || ''}`}
         style={style}
       >
-        <span className="serif-text text-[11px] md:text-sm font-black">{vault}</span>
+        <span className="serif-text text-[0.6875rem] md:text-sm font-black">{vault}</span>
         <div className="flex gap-0.5">
           {Array.from({ length: capacity }, (_, i) => (
             <span
               key={i}
-              className={`w-2.5 h-2.5 md:w-3 md:h-3 rounded-[2px] border flex items-center justify-center text-[7px] md:text-[8px] font-black ${
+              className={`w-2.5 h-2.5 md:w-3 md:h-3 rounded-[2px] border flex items-center justify-center text-[0.5625rem] md:text-[0.5625rem] font-black ${
                 isSelected
                   ? 'border-on-primary/40 text-on-primary/70'
                   : 'border-on-surface/15 text-on-surface/20'
@@ -264,11 +264,12 @@ function RecordScreen() {
           <div className="flex flex-col h-full bg-linear-to-b from-surface-container-high/40 to-transparent">
             <div className="flex justify-between items-center px-6 py-8 border-b border-outline-variant/5">
               <div>
-                <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase block opacity-60 mb-1">Mission Log</span>
+                <span className="text-primary text-[0.625rem] font-bold tracking-[0.4em] uppercase block opacity-60 mb-1">Mission Log</span>
                 <h2 className="serif-text text-2xl font-black text-primary tracking-tight">작전 이력 요약</h2>
               </div>
               <button
                 onClick={() => setIsHistoryOpen(false)}
+                aria-label="작전 이력 닫기"
                 className="p-2 hover:bg-white/5 rounded-full transition-colors group"
               >
                 <span className="material-symbols-outlined text-on-surface/40 group-hover:text-primary">close</span>
@@ -295,24 +296,24 @@ function RecordScreen() {
                       <div className="bg-surface-container-highest/50 rounded-sm p-4 space-y-4 border border-outline-variant/10 shadow-lg">
                         <div className="flex items-center gap-4">
                           <div className="space-y-1">
-                            <p className="text-[8px] font-bold text-on-surface/30 uppercase tracking-widest">터는 집</p>
+                            <p className="text-[0.5625rem] font-bold text-on-surface/30 uppercase tracking-widest">터는 집</p>
                             <p className="serif-text text-xl font-black text-primary">{round.targetHouse}</p>
                           </div>
                           <div className="flex-1">
-                            <p className="text-[8px] font-bold text-on-surface/30 uppercase tracking-widest mb-1">벽 · 침투</p>
+                            <p className="text-[0.5625rem] font-bold text-on-surface/30 uppercase tracking-widest mb-1">벽 · 침투</p>
                             <WallMiniMap horizontalWall={round.horizontalWall} verticalWall={round.verticalWall} startPoint={round.startPoint} />
                           </div>
                         </div>
 
                         <div className="pt-3 border-t border-outline-variant/5">
-                          <p className="text-[8px] font-bold text-on-surface/30 uppercase tracking-widest mb-2">Secured Loot (Units)</p>
+                          <p className="text-[0.5625rem] font-bold text-on-surface/30 uppercase tracking-widest mb-2">Secured Loot (Units)</p>
                           <div className="flex flex-wrap gap-2">
                             {Object.entries(round.vaultValues)
                               .filter(([_, vals]) => vals.some((v) => v !== ''))
                               .map(([vault, vals]) => (
                                 <div key={vault} className="bg-surface-container-low px-2 py-1 rounded-sm border border-outline-variant/5 flex items-center gap-2">
-                                  <span className="text-[10px] font-black text-on-surface-variant">{vault}</span>
-                                  <span className="text-[10px] font-black text-primary">{vals.filter((v) => v !== '').join('/')}</span>
+                                  <span className="text-[0.625rem] font-black text-on-surface-variant">{vault}</span>
+                                  <span className="text-[0.625rem] font-black text-primary">{vals.filter((v) => v !== '').join('/')}</span>
                                 </div>
                               ))}
                           </div>
@@ -335,7 +336,7 @@ function RecordScreen() {
         <section className="mb-6 md:mb-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8">
             <div className="max-w-4xl w-full">
-              <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase mb-2 md:mb-3 block opacity-60">
+              <span className="text-primary/60 text-[0.625rem] font-bold tracking-[0.4em] uppercase mb-2 md:mb-3 block">
                 {viewMode === 'input' ? '현장 상황 보고 (Field Recon)' : '획득물 결산 (Loot Accounting)'}
               </span>
               <h1 className="serif-text text-3xl md:text-5xl font-black text-primary tracking-tight leading-tight mb-4 md:mb-6">
@@ -357,11 +358,11 @@ function RecordScreen() {
                 <div className="grid grid-cols-2 gap-3 md:gap-5 py-6 px-5 md:px-10 bg-surface-container-low rounded-sm relative overflow-hidden shadow-xl border border-outline-variant/5">
                   <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-primary/40 via-primary to-primary/40"></div>
                   <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-surface-container-lowest rounded-sm border border-outline-variant/10 relative">
-                    <div className="absolute top-1 left-2 text-[7px] font-black text-primary/30 uppercase tracking-widest leading-none">터는 집</div>
+                    <div className="absolute top-1 left-2 text-[0.5625rem] font-black text-primary/30 uppercase tracking-widest leading-none">터는 집</div>
                     <span className="serif-text text-3xl md:text-4xl font-black text-primary leading-none mt-1">{targetHouse}</span>
                   </div>
                   <div className="flex flex-col bg-surface-container-lowest p-3 md:p-4 rounded-sm border border-outline-variant/10 items-center justify-center space-y-2 relative">
-                    <div className="absolute top-1 left-2 text-[7px] font-black text-primary/30 uppercase tracking-widest leading-none">벽 · 침투</div>
+                    <div className="absolute top-1 left-2 text-[0.5625rem] font-black text-primary/30 uppercase tracking-widest leading-none">벽 · 침투</div>
                     <WallMiniMap horizontalWall={horizontalWall} verticalWall={verticalWall} startPoint={startPoint} />
                   </div>
                 </div>
@@ -381,12 +382,12 @@ function RecordScreen() {
             <div className="bg-surface-container-low p-3 md:p-6 rounded-sm border border-outline-variant/10 overflow-x-auto">
               <div className="flex min-w-[340px] mx-auto" style={{ maxWidth: '740px' }}>
                 {/* Room 401 */}
-                <div className="self-center border-2 border-r-0 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3">
+                <div className="self-center border border-r-0 border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3">
                   <VaultCell vault="401" className="w-full min-w-[64px] md:min-w-[80px] min-h-[80px] md:min-h-[100px]" />
                 </div>
 
                 {/* Room 3xx - 4 corners */}
-                <div className="border-2 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
+                <div className="border border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
                   <div className="flex flex-col gap-2 h-full">
                     <div className="grid grid-cols-2 gap-2">
                       <VaultCell vault="301" className="w-full" />
@@ -409,7 +410,7 @@ function RecordScreen() {
                 {/* 2xx column */}
                 <div className="flex flex-col flex-1">
                   {/* Room 20x */}
-                  <div className="border-2 border-l-0 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
+                  <div className="border border-l-0 border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
                     <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full">
                       <VaultCell vault="201" className="w-full" />
                       <VaultCell vault="202" className="w-full" />
@@ -420,7 +421,7 @@ function RecordScreen() {
                   {/* Horizontal wall ㄴ overlay: between 20x and 21x */}
                   <HWallButton value="ㄴ" />
                   {/* Room 21x */}
-                  <div className="border-2 border-l-0 border-t-0 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
+                  <div className="border border-l-0 border-t-0 border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
                     <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full">
                       <VaultCell vault="211" className="w-full" />
                       <VaultCell vault="212" className="w-full" />
@@ -439,7 +440,7 @@ function RecordScreen() {
                 {/* 1xx column */}
                 <div className="flex flex-col flex-1">
                   {/* Room 10x */}
-                  <div className="border-2 border-l-0 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
+                  <div className="border border-l-0 border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
                     <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full">
                       <VaultCell vault="101" className="w-full" />
                       <VaultCell vault="102" className="w-full" />
@@ -450,7 +451,7 @@ function RecordScreen() {
                   {/* Horizontal wall ㄷ overlay: between 10x and 11x */}
                   <HWallButton value="ㄷ" />
                   {/* Room 11x */}
-                  <div className="border-2 border-l-0 border-t-0 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
+                  <div className="border border-l-0 border-t-0 border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
                     <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full">
                       <VaultCell vault="111" className="w-full" />
                       <VaultCell vault="112" className="w-full" />
@@ -464,6 +465,7 @@ function RecordScreen() {
                 <div className="flex flex-col self-stretch ml-0.5">
                   <button
                     onClick={() => setStartPoint('A')}
+                    aria-label="침투 지점 A 선택"
                     className="flex-1 flex items-center px-1 group transition-all"
                     title="침투 지점 A (10x 방)"
                   >
@@ -475,6 +477,7 @@ function RecordScreen() {
                   </button>
                   <button
                     onClick={() => setStartPoint('B')}
+                    aria-label="침투 지점 B 선택"
                     className="flex-1 flex items-center px-1 group transition-all"
                     title="침투 지점 B (11x 방)"
                   >
@@ -536,7 +539,7 @@ function RecordScreen() {
                                 onKeyDown={(e) => handleKeyDown(e, v, i, visibleVaults)}
                               />
                               {vaultValues[v][i] !== '' && !isValidValue(vaultValues[v][i]) && (
-                                <p className="absolute -bottom-4 left-0 w-full text-[8px] text-error font-black text-center animate-pulse">RANGE 20-100</p>
+                                <p className="absolute -bottom-4 left-0 w-full text-[0.5625rem] text-error font-black text-center animate-pulse">RANGE 20-100</p>
                               )}
                             </>
                           ) : (
@@ -561,7 +564,7 @@ function RecordScreen() {
               (viewMode === 'summary' && !VAULT_NUMBERS.some((v) => vaultValues[v].some((val) => val !== '')))) && (
               <div className="py-20 text-center opacity-10 space-y-3">
                 <span className="material-symbols-outlined text-4xl block">database</span>
-                <p className="text-[10px] font-bold tracking-[0.4em] uppercase">
+                <p className="text-[0.625rem] font-bold tracking-[0.4em] uppercase">
                   {viewMode === 'input' ? '조사된 데이터 없음' : '확보한 전리품 없음'}
                 </p>
               </div>
@@ -589,7 +592,7 @@ function RecordScreen() {
               </button>
             )}
           </div>
-          <p className="mt-6 text-on-surface-variant text-[10px] font-black tracking-[0.4em] opacity-30 uppercase">작전 PHASE 0{currentRound} / 07</p>
+          <p className="mt-6 text-on-surface-variant text-[0.625rem] font-black tracking-[0.4em] opacity-30 uppercase">작전 PHASE 0{currentRound} / 07</p>
         </section>
       </main>
 

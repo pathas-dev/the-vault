@@ -19,27 +19,27 @@ export const Sidebar = () => {
                 <p className="text-on-surface/40 text-xs mt-1">Stealth Mode Active</p>
             </div>
             <nav className="flex-1 space-y-2">
-                <Link className={getLinkClass("/")} to="/">
+                <Link className={getLinkClass("/")} to="/" aria-label="작전 개요">
                     <span className="material-symbols-outlined mr-3">description</span>
                     작전 개요
                 </Link>
-                <Link className={getLinkClass("/record")} to="/record">
+                <Link className={getLinkClass("/record")} to="/record" aria-label="전리품 기록">
                     <span className="material-symbols-outlined mr-3">inventory_2</span>
                     전리품 기록
                 </Link>
-                <Link className={getLinkClass("/summary")} to="/summary">
+                <Link className={getLinkClass("/summary")} to="/summary" aria-label="최종 결산">
                     <span className="material-symbols-outlined mr-3">payments</span>
                     최종 결산
                 </Link>
             </nav>
             <div className="px-6 mt-auto">
-                <div className="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg">
+                <div className="flex items-center gap-3 p-3 bg-surface-container-low rounded-sm">
                     <div className="w-8 h-8 rounded-sm overflow-hidden bg-primary-container/20 flex items-center justify-center border border-outline-variant/20">
                         <span className="material-symbols-outlined text-primary text-sm">person</span>
                     </div>
                     <div>
                         <p className="text-xs font-bold text-on-surface uppercase">Master Thief</p>
-                        <p className="text-[10px] text-on-surface-variant">Rank: S-Class</p>
+                        <p className="text-[0.625rem] text-on-surface-variant">Rank: S-Class</p>
                     </div>
                 </div>
             </div>
@@ -54,8 +54,9 @@ export const Topbar = ({ rightIcon = 'settings', onRightIconClick }: { rightIcon
                 대도의 비밀 장부
             </div>
             <div className="flex items-center gap-4">
-                <button 
+                <button
                   onClick={onRightIconClick}
+                  aria-label={rightIcon === 'history' ? '작전 이력 보기' : '설정'}
                   className="text-on-surface/60 hover:text-primary transition-colors duration-300 p-2 -mr-2"
                 >
                     <span className="material-symbols-outlined text-[24px]">{rightIcon}</span>

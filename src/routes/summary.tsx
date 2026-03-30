@@ -83,8 +83,8 @@ function SummaryScreen() {
             </p>
           </div>
           <div className="lg:col-span-4 flex flex-col items-start lg:items-end">
-            <div className="bg-surface-container-high/50 border border-outline-variant/20 p-5 md:p-8 rounded-sm w-full lg:max-w-[320px]">
-              <p className="text-[10px] font-bold text-primary/40 uppercase tracking-widest mb-2">
+            <div className="bg-surface-container-high/50 border border-outline-variant/15 p-5 md:p-8 rounded-sm w-full lg:max-w-[320px]">
+              <p className="text-[0.625rem] font-bold text-primary/40 uppercase tracking-widest mb-2">
                 Total Extraction Value
               </p>
               <p className="noto-serif text-4xl md:text-5xl font-black gold-text-gradient">
@@ -117,7 +117,7 @@ function SummaryScreen() {
                 </div>
                 <div className="flex gap-x-5 gap-y-1.5 flex-wrap mt-3">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[9px] uppercase font-bold text-on-surface-variant/40 tracking-widest">
+                    <span className="text-[0.5625rem] uppercase font-bold text-on-surface-variant/40 tracking-widest">
                       터는 집:
                     </span>
                     <span className="text-xs font-bold">
@@ -139,9 +139,9 @@ function SummaryScreen() {
                     return (
                       <div
                         key={v}
-                        className={`px-4 py-3 ${hasValue ? 'bg-surface-container' : 'bg-surface-container-low'}`}
+                        className={`px-4 py-3 transition-colors ${hasValue ? 'bg-surface-container' : 'bg-surface-container-low'}`}
                       >
-                        <p className="text-[9px] font-bold uppercase text-primary/50 tracking-widest mb-1">
+                        <p className="text-[0.5625rem] font-bold uppercase text-primary/50 tracking-widest mb-1">
                           {v} VAULT
                         </p>
                         <div className="flex gap-3 items-baseline">
@@ -165,7 +165,7 @@ function SummaryScreen() {
               <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="bg-surface-container-highest/20 text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
+                    <tr className="bg-surface-container-highest/20 text-[0.625rem] font-bold text-primary uppercase tracking-[0.2em]">
                       <th className="p-4 border-r border-outline-variant/5">
                         금고 (Vault)
                       </th>
@@ -182,7 +182,7 @@ function SummaryScreen() {
                   <tbody className="divide-y divide-outline-variant/5">
                     {Array.from({ length: MAX_CAPACITY }, (_, rowIdx) => (
                       <tr key={rowIdx}>
-                        <td className="p-4 text-[10px] font-bold uppercase text-on-surface-variant/40 border-r border-outline-variant/5 whitespace-nowrap">
+                        <td className="p-4 text-[0.625rem] font-bold uppercase text-on-surface-variant/40 border-r border-outline-variant/5 whitespace-nowrap">
                           은닉 가치 {['I', 'II', 'III'][rowIdx]}
                         </td>
                         {VAULT_NUMBERS.map((v) => {
@@ -209,12 +209,14 @@ function SummaryScreen() {
         <footer className="mt-20 hidden md:flex flex-col sm:flex-row gap-6 items-center justify-center">
           <button
             onClick={handleReset}
+            aria-label="새 작전 시작"
             className="w-full sm:w-auto px-16 py-5 bg-linear-to-br from-primary to-primary-container text-on-primary font-black text-lg rounded-sm hover:scale-[1.02] active:scale-95 transition-all shadow-2xl flex items-center justify-center gap-3"
           >
             <span className="material-symbols-outlined text-xl">refresh</span> 새 작전 시작
           </button>
           <button
             onClick={() => window.print()}
+            aria-label="장부 인쇄"
             className="w-full sm:w-auto px-10 py-5 border border-outline-variant/20 font-bold text-sm tracking-widest hover:bg-surface-container transition-colors rounded-sm flex items-center justify-center gap-3"
           >
             <span className="material-symbols-outlined text-xl">print</span> 장부 보관
@@ -234,6 +236,7 @@ function SummaryScreen() {
           </button>
           <button
             onClick={() => window.print()}
+            aria-label="장부 인쇄"
             className="px-4 py-4 border border-outline-variant/30 bg-surface-container-low/80 backdrop-blur-sm font-bold text-xs tracking-widest uppercase hover:bg-surface-container transition-colors rounded-sm"
           >
             <span className="material-symbols-outlined text-[18px] text-on-surface/60">print</span>

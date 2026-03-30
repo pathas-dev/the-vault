@@ -61,6 +61,28 @@
   --radius-md: 0.25rem;
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
+
+  /* Typography Scale */
+  --text-display-lg: 4.5rem;    /* 72px - hero headlines */
+  --text-display-sm: 2.25rem;   /* 36px - section titles */
+  --text-headline-lg: 1.875rem; /* 30px - page headlines */
+  --text-headline-md: 1.5rem;   /* 24px - card headlines */
+  --text-title-lg: 1.25rem;     /* 20px - prominent titles */
+  --text-title-md: 1rem;        /* 16px - standard titles */
+  --text-body-lg: 1rem;         /* 16px - body text */
+  --text-body-md: 0.875rem;     /* 14px - standard body */
+  --text-label-lg: 0.875rem;    /* 14px - large labels */
+  --text-label-md: 0.75rem;     /* 12px - standard labels */
+  --text-label-sm: 0.625rem;    /* 10px - small labels/metadata */
+  --text-label-xs: 0.5625rem;   /* 9px - micro labels (tracking/uppercase) */
+
+  /* Tracking */
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.05em;
+  --tracking-wider: 0.1em;
+  --tracking-widest: 0.2em;
+  --tracking-ultra: 0.3em;
 }
 
 @layer base {
@@ -90,6 +112,16 @@
   button, a {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+  }
+
+  /* Focus-visible for accessibility */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
   }
 }
 
@@ -127,5 +159,19 @@
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background: var(--color-outline-variant);
     border-radius: 2px;
+  }
+
+  .label-micro {
+    font-size: var(--text-label-xs);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+
+  .label-small {
+    font-size: var(--text-label-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
   }
 }

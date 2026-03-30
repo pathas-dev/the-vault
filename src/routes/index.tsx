@@ -83,7 +83,7 @@ function HomeScreen() {
               </button>
             )}
 
-            <button className="border border-outline-variant bg-surface-container-low/40 backdrop-blur-md text-on-surface/60 px-8 py-4 md:px-10 md:py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-base md:text-lg hover:bg-surface-container-high hover:text-on-surface transition-all">
+            <button aria-label="기밀 문서 열기" className="border border-outline-variant bg-surface-container-low/40 backdrop-blur-md text-on-surface/60 px-8 py-4 md:px-10 md:py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-base md:text-lg hover:bg-surface-container-high hover:text-on-surface transition-all active:scale-95">
               <span className="material-symbols-outlined">menu_book</span>
               기밀 문서
             </button>
@@ -91,37 +91,37 @@ function HomeScreen() {
         </div>
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-6 mt-auto">
-          <div className="bg-surface-container-low p-5 md:p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-colors">
+          <div className="bg-surface-container-low p-5 md:p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-all duration-300">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
               <span className="material-symbols-outlined text-5xl md:text-6xl">
                 visibility_off
               </span>
             </div>
-            <p className="text-primary text-xs font-bold tracking-[0.2em] mb-1 md:mb-2 uppercase">
+            <p className="text-primary text-[0.625rem] font-extrabold tracking-[0.2em] mb-1 md:mb-2 uppercase">
               Protocol
             </p>
             <h3 className="font-headline text-lg md:text-2xl text-on-surface">
               프로토콜: 완전 은폐
             </h3>
           </div>
-          <div className="bg-surface-container-low p-5 md:p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-colors">
+          <div className="bg-surface-container-low p-5 md:p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-all duration-300">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
               <span className="material-symbols-outlined text-5xl md:text-6xl">sensors</span>
             </div>
-            <p className="text-tertiary text-xs font-bold tracking-[0.2em] mb-1 md:mb-2 uppercase">
+            <p className="text-tertiary text-[0.625rem] font-extrabold tracking-[0.2em] mb-1 md:mb-2 uppercase">
               Status
             </p>
             <h3 className="font-headline text-lg md:text-2xl text-on-surface">
               상태: 미탐지
             </h3>
           </div>
-          <div className="bg-surface-container-low p-5 md:p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-colors">
+          <div className="bg-surface-container-low p-5 md:p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-all duration-300">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
               <span className="material-symbols-outlined text-5xl md:text-6xl">
                 account_balance_wallet
               </span>
             </div>
-            <p className="text-primary-fixed-dim text-xs font-bold tracking-[0.2em] mb-1 md:mb-2 uppercase">
+            <p className="text-primary-fixed-dim text-[0.625rem] font-extrabold tracking-[0.2em] mb-1 md:mb-2 uppercase">
               Assets
             </p>
             <h3 className="font-headline text-lg md:text-2xl text-on-surface">
@@ -130,7 +130,7 @@ function HomeScreen() {
           </div>
         </div>
       </main>
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]">
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.04]">
         <img
           alt="abstract geometry background"
           className="w-full h-full object-cover"
