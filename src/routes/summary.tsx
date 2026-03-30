@@ -73,7 +73,7 @@ function SummaryScreen() {
             <span className="text-primary text-sm font-bold tracking-[0.3em] uppercase mb-3 md:mb-4 block">
               Operation: Loot Extraction Complete
             </span>
-            <h2 className="noto-serif text-4xl md:text-7xl font-black gold-text-gradient leading-tight mb-4 md:mb-8">
+            <h2 className="noto-serif text-4xl md:text-6xl font-black gold-text-gradient leading-tight mb-4 md:mb-8">
               대도(大盜)의 비밀 장부
             </h2>
             <p className="text-on-surface-variant text-sm md:text-base max-w-lg leading-relaxed border-l border-outline-variant/30 pl-4 md:pl-6">

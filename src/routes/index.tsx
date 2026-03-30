@@ -100,7 +100,7 @@ function HomeScreen() {
             <p className="text-primary text-[0.625rem] font-extrabold tracking-[0.2em] mb-1 md:mb-2 uppercase">
               Protocol
             </p>
-            <h3 className="font-headline text-lg md:text-2xl text-on-surface">
+            <h3 className="font-headline text-xl md:text-2xl text-on-surface">
               프로토콜: 완전 은폐
             </h3>
           </div>
@@ -111,7 +111,7 @@ function HomeScreen() {
             <p className="text-tertiary text-[0.625rem] font-extrabold tracking-[0.2em] mb-1 md:mb-2 uppercase">
               Status
             </p>
-            <h3 className="font-headline text-lg md:text-2xl text-on-surface">
+            <h3 className="font-headline text-xl md:text-2xl text-on-surface">
               상태: 미탐지
             </h3>
           </div>
@@ -124,7 +124,7 @@ function HomeScreen() {
             <p className="text-primary-fixed-dim text-[0.625rem] font-extrabold tracking-[0.2em] mb-1 md:mb-2 uppercase">
               Assets
             </p>
-            <h3 className="font-headline text-lg md:text-2xl text-on-surface">
+            <h3 className="font-headline text-xl md:text-2xl text-on-surface">
               자산: 99.8% 회수율
             </h3>
           </div>

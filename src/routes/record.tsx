@@ -224,7 +224,7 @@ function RecordScreen() {
         } ${className || ''}`}
         style={style}
       >
-        <span className="serif-text text-[0.6875rem] md:text-sm font-black">
+        <span className="serif-text text-xs md:text-sm font-black">
           {vault}
         </span>
         <div className="flex gap-0.5">
@@ -437,7 +437,7 @@ function RecordScreen() {
                   ? '현장 상황 보고 (Field Recon)'
                   : '획득물 결산 (Loot Accounting)'}
               </span>
-              <h1 className="serif-text text-3xl md:text-5xl font-black text-primary tracking-tight leading-tight mb-4 md:mb-6">
+              <h1 className="serif-text text-4xl md:text-5xl font-black text-primary tracking-tight leading-tight mb-4 md:mb-6">
                 작전 PHASE {currentRound.toString().padStart(2, '0')} / 07
               </h1>
 
