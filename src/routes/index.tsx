@@ -254,21 +254,21 @@ function RecordScreen() {
         onClick={() => toggleVault(vault)}
         aria-pressed={isSelected}
         aria-label={`금고 ${vault} ${isSelected ? '선택 해제' : '선택'}`}
-        className={`flex flex-col items-center justify-center gap-0.5 p-2 md:p-3 border rounded-sm min-h-13 md:min-h-16 btn-press ${
+        className={`flex flex-col items-center justify-center gap-0.5 p-1 md:p-3 border rounded-sm min-h-11 md:min-h-16 btn-press ${
           isSelected
             ? 'bg-linear-to-br from-primary to-primary-container text-on-primary border-primary shadow-lg z-10 vault-selected'
             : 'bg-surface-container-lowest text-on-surface/50 border-outline-variant/20 hover:border-primary/30 hover:bg-surface-container-low hover:shadow-md hover:shadow-primary/5'
         } ${className || ''}`}
         style={style}
       >
-        <span className="serif-text text-xs md:text-sm font-black">
+        <span className="serif-text text-[10px] md:text-sm font-black">
           {vault}
         </span>
         <div className="flex gap-0.5">
           {Array.from({ length: capacity }, (_, i) => (
             <span
               key={i}
-              className={`size-2.5 md:size-3 rounded-sm border flex items-center justify-center text-label-xs md:text-label-xs font-black ${
+              className={`size-2 md:size-3 rounded-sm border flex items-center justify-center text-label-xs md:text-label-xs font-black ${
                 isSelected
                   ? 'border-on-primary/40 text-on-primary/70'
                   : 'border-on-surface/15 text-on-surface/20'
@@ -552,31 +552,31 @@ function RecordScreen() {
               </label>
             </div>
 
-            <div className="bg-surface-container-low p-3 md:p-6 rounded-sm border border-outline-variant/10 overflow-x-auto">
+            <div className="bg-surface-container-low p-1.5 md:p-6 rounded-sm border border-outline-variant/10 overflow-x-auto">
               <div
-                className="flex min-w-85 mx-auto"
+                className="flex min-w-fit mx-auto"
                 style={{ maxWidth: '740px' }}
               >
                 {/* Room 401 */}
-                <div className="self-center border border-r-0 border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3">
+                <div className="self-center border border-r-0 border-outline-variant/15 bg-surface-container-lowest/30 p-1 md:p-3">
                   <VaultCell
                     vault="401"
-                    className="w-full min-w-12 md:min-w-15 min-h-15 md:min-h-18"
+                    className="w-full min-w-10 md:min-w-15 min-h-11 md:min-h-18"
                   />
                 </div>
 
                 {/* Room 3xx - 4 corners */}
                 <div
-                  className="border border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3"
-                  style={{ flex: '0.8' }}
+                  className="border border-outline-variant/15 bg-surface-container-lowest/30 p-1 md:p-3"
+                  style={{ flex: '0.7' }}
                 >
-                  <div className="flex flex-col gap-2 h-full">
-                    <div className="grid grid-cols-2 gap-2">
+                  <div className="flex flex-col gap-1 h-full">
+                    <div className="grid grid-cols-2 gap-1">
                       <VaultCell vault="301" className="w-full" />
                       <VaultCell vault="302" className="w-full" />
                     </div>
                     <div className="flex-1" />
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 gap-1">
                       <VaultCell vault="303" className="w-full" />
                       <VaultCell vault="304" className="w-full" />
                     </div>
@@ -592,8 +592,8 @@ function RecordScreen() {
                 {/* 2xx column */}
                 <div className="flex flex-col flex-1">
                   {/* Room 20x */}
-                  <div className="border border-l-0 border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
-                    <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full">
+                  <div className="border border-l-0 border-outline-variant/15 bg-surface-container-lowest/30 p-1 md:p-3 flex-1">
+                    <div className="grid grid-cols-2 grid-rows-2 gap-1 h-full">
                       <VaultCell vault="201" className="w-full" />
                       <VaultCell vault="202" className="w-full" />
                       <div />
@@ -603,8 +603,8 @@ function RecordScreen() {
                   {/* Horizontal wall ㄴ overlay: between 20x and 21x */}
                   <HWallButton value="ㄴ" />
                   {/* Room 21x */}
-                  <div className="border border-l-0 border-t-0 border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
-                    <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full">
+                  <div className="border border-l-0 border-t-0 border-outline-variant/15 bg-surface-container-lowest/30 p-1 md:p-3 flex-1">
+                    <div className="grid grid-cols-2 grid-rows-2 gap-1 h-full">
                       <VaultCell vault="211" className="w-full" />
                       <VaultCell vault="212" className="w-full" />
                       <div />
@@ -622,11 +622,11 @@ function RecordScreen() {
                 {/* 1xx column */}
                 <div className="flex flex-col flex-1">
                   {/* Room 10x */}
-                  <div className="border border-l-0 border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3 flex-1 relative overflow-hidden">
+                  <div className="border border-l-0 border-outline-variant/15 bg-surface-container-lowest/30 p-1 md:p-3 flex-1 relative overflow-hidden">
                     <div
                       className={`absolute right-0 inset-y-0 w-0.5 transition-all duration-500 ${startPoint === 'A' ? 'bg-intrusion shadow-[0_0_12px_rgba(255,45,85,0.8)]' : 'bg-transparent'}`}
                     />
-                    <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full">
+                    <div className="grid grid-cols-2 grid-rows-2 gap-1 h-full">
                       <VaultCell vault="101" className="w-full" />
                       <VaultCell vault="102" className="w-full" />
                       <div />
@@ -636,11 +636,11 @@ function RecordScreen() {
                   {/* Horizontal wall ㄷ overlay: between 10x and 11x */}
                   <HWallButton value="ㄷ" />
                   {/* Room 11x */}
-                  <div className="border border-l-0 border-t-0 border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3 flex-1 relative overflow-hidden">
+                  <div className="border border-l-0 border-t-0 border-outline-variant/15 bg-surface-container-lowest/30 p-1 md:p-3 flex-1 relative overflow-hidden">
                     <div
                       className={`absolute right-0 inset-y-0 w-0.5 transition-all duration-500 ${startPoint === 'B' ? 'bg-intrusion shadow-[0_0_12px_rgba(255,45,85,0.8)]' : 'bg-transparent'}`}
                     />
-                    <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full">
+                    <div className="grid grid-cols-2 grid-rows-2 gap-1 h-full">
                       <VaultCell vault="111" className="w-full" />
                       <VaultCell vault="112" className="w-full" />
                       <div />
