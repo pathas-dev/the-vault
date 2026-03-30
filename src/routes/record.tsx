@@ -2,6 +2,8 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
 import { FloatingActions } from '../components/Layout'
 import { WallMiniMap } from '../components/WallMiniMap'
+import { type RoundData } from '../lib/schemas'
+import { getSavedRounds, saveRounds } from '../lib/storage'
 
 const VAULT_CONFIG: Record<string, number> = {
   '101': 1,
@@ -26,14 +28,6 @@ const VAULT_CONFIG: Record<string, number> = {
 const VAULT_NUMBERS = Object.keys(VAULT_CONFIG)
 const MAX_CAPACITY = 3
 
-type RoundData = {
-  targetHouse: string
-  startPoint: string
-  horizontalWall: string | null
-  verticalWall: string | null
-  vaultValues: Record<string, string[]>
-}
-
 function initVaultValues(): Record<string, string[]> {
   return VAULT_NUMBERS.reduce(
     (acc, v) => ({ ...acc, [v]: Array(VAULT_CONFIG[v]).fill('') }),
@@ -57,19 +51,15 @@ function RecordScreen() {
     useState<Record<string, string[]>>(initVaultValues())
 
   useEffect(() => {
-    const saved = sessionStorage.getItem('vault_rounds')
-    if (saved) {
-      const data = JSON.parse(saved)
-      if (Array.isArray(data)) {
-        setCurrentRound(data.length + 1)
-        setHistoryRounds(data)
-      }
+    const data = getSavedRounds()
+    if (data.length > 0) {
+      setCurrentRound(data.length + 1)
+      setHistoryRounds(data)
     }
   }, [])
 
   const toggleHistory = () => {
-    const saved = sessionStorage.getItem('vault_rounds')
-    if (saved) setHistoryRounds(JSON.parse(saved))
+    setHistoryRounds(getSavedRounds())
     setIsHistoryOpen(!isHistoryOpen)
   }
 
@@ -156,10 +146,8 @@ function RecordScreen() {
       verticalWall,
       vaultValues,
     }
-    const saved = sessionStorage.getItem('vault_rounds')
-    const allRounds = saved ? JSON.parse(saved) : []
-    allRounds.push(currentData)
-    sessionStorage.setItem('vault_rounds', JSON.stringify(allRounds))
+    const allRounds = [...getSavedRounds(), currentData]
+    saveRounds(allRounds)
 
     setHistoryRounds(allRounds)
 
