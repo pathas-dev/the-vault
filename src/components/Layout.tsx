@@ -76,9 +76,13 @@ export const FloatingActions = ({
           key={action.icon}
           onClick={action.onClick}
           aria-label={action.label}
-          className="text-on-surface/40 hover:text-primary transition-colors duration-300 p-2 hover:bg-surface-container-high/80 backdrop-blur-sm rounded-sm active:scale-90"
+          title={action.label}
+          className="text-on-surface/40 hover:text-primary transition-colors duration-300 p-2 hover:bg-surface-container-high/80 backdrop-blur-sm rounded-sm active:scale-90 group relative"
         >
-          <span className="material-symbols-outlined text-[22px]">
+          <span
+            className="material-symbols-outlined text-[22px]"
+            aria-hidden="true"
+          >
             {action.icon}
           </span>
         </button>
