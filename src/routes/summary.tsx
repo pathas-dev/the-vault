@@ -8,12 +8,22 @@ export const Route = createFileRoute('/summary' as any)({
 })
 
 const VAULT_CONFIG: Record<string, number> = {
-  '101': 1, '102': 1, '103': 2,
-  '111': 1, '112': 1, '113': 2,
-  '201': 1, '202': 2, '203': 2,
-  '211': 1, '212': 2, '213': 2,
-  '301': 1, '302': 2,
-  '303': 2, '304': 2,
+  '101': 1,
+  '102': 1,
+  '103': 2,
+  '111': 1,
+  '112': 1,
+  '113': 2,
+  '201': 1,
+  '202': 2,
+  '203': 2,
+  '211': 1,
+  '212': 2,
+  '213': 2,
+  '301': 1,
+  '302': 2,
+  '303': 2,
+  '304': 2,
   '401': 3,
 }
 
@@ -58,7 +68,8 @@ function SummaryScreen() {
 
   const calculateRoundTotal = (r: RoundData) => {
     return Object.values(r.vaultValues).reduce(
-      (sum: number, vals: string[]) => sum + vals.reduce((s, v) => s + (parseInt(v) || 0), 0),
+      (sum: number, vals: string[]) =>
+        sum + vals.reduce((s, v) => s + (parseInt(v) || 0), 0),
       0,
     )
   }
@@ -119,7 +130,11 @@ function SummaryScreen() {
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <WallMiniMap horizontalWall={round.horizontalWall} verticalWall={round.verticalWall} startPoint={round.startPoint} />
+                    <WallMiniMap
+                      horizontalWall={round.horizontalWall}
+                      verticalWall={round.verticalWall}
+                      startPoint={round.startPoint}
+                    />
                   </div>
                 </div>
               </div>
@@ -146,12 +161,26 @@ function SummaryScreen() {
                                 {v} VAULT
                               </p>
                               <div className="flex gap-3 items-baseline">
-                                {Array.from({ length: VAULT_CONFIG[v] }, (_, i) => (
-                                  <span key={i} className="noto-serif font-black text-primary text-sm">
-                                    {vals[i] || '—'}
-                                  </span>
-                                )).reduce((acc: React.ReactNode[], el, i) => {
-                                  if (i > 0) acc.push(<span key={`sep-${i}`} className="text-on-surface-variant/30 text-xs">/</span>)
+                                {Array.from(
+                                  { length: VAULT_CONFIG[v] },
+                                  (_, i) => (
+                                    <span
+                                      key={i}
+                                      className="noto-serif font-black text-primary text-sm"
+                                    >
+                                      {vals[i] || '—'}
+                                    </span>
+                                  ),
+                                ).reduce((acc: React.ReactNode[], el, i) => {
+                                  if (i > 0)
+                                    acc.push(
+                                      <span
+                                        key={`sep-${i}`}
+                                        className="text-on-surface-variant/30 text-xs"
+                                      >
+                                        /
+                                      </span>,
+                                    )
                                   acc.push(el)
                                   return acc
                                 }, [])}
@@ -162,43 +191,53 @@ function SummaryScreen() {
                       </div>
                     </div>
 
-                    {/* 데스크탑: 가로 테이블 */}
-                    <div className="hidden md:block overflow-x-auto">
+                    {/* 데스크탑: 테이블 (금고=행, 은닉가치=열) */}
+                    <div className="hidden md:block">
                       <table className="w-full text-left border-collapse">
                         <thead>
                           <tr className="bg-surface-container-highest/20 text-[0.625rem] font-bold text-primary uppercase tracking-[0.2em]">
                             <th className="p-4 border-r border-outline-variant/5">
-                              금고 (Vault)
+                              금고
                             </th>
-                            {activeVaults.map((v) => (
+                            {Array.from({ length: MAX_CAPACITY }, (_, i) => (
                               <th
-                                key={v}
-                                className="p-3 text-center border-r border-outline-variant/5 min-w-[60px]"
+                                key={i}
+                                className="p-3 text-center border-r border-outline-variant/5"
                               >
-                                {v}
+                                {['I', 'II', 'III'][i]}
                               </th>
                             ))}
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-outline-variant/5">
-                          {Array.from({ length: MAX_CAPACITY }, (_, rowIdx) => (
-                            <tr key={rowIdx}>
-                              <td className="p-4 text-[0.625rem] font-bold uppercase text-on-surface-variant/40 border-r border-outline-variant/5 whitespace-nowrap">
-                                은닉 가치 {['I', 'II', 'III'][rowIdx]}
-                              </td>
-                              {activeVaults.map((v) => {
-                                const vals = round.vaultValues[v] || []
-                                return (
-                                  <td
-                                    key={v}
-                                    className={`p-3 text-center text-sm font-black border-r border-outline-variant/5 ${rowIdx % 2 === 0 ? 'bg-on-surface/[0.02]' : ''}`}
-                                  >
-                                    {rowIdx < VAULT_CONFIG[v] ? (vals[rowIdx] || '-') : ''}
-                                  </td>
-                                )
-                              })}
-                            </tr>
-                          ))}
+                          {activeVaults.map((v, vIdx) => {
+                            const vals = round.vaultValues[v] || []
+                            return (
+                              <tr
+                                key={v}
+                                className={
+                                  vIdx % 2 === 0 ? 'bg-on-surface/[0.02]' : ''
+                                }
+                              >
+                                <td className="p-4 text-[0.625rem] font-bold uppercase text-primary/60 border-r border-outline-variant/5 tracking-widest whitespace-nowrap">
+                                  {v}
+                                </td>
+                                {Array.from(
+                                  { length: MAX_CAPACITY },
+                                  (_, i) => (
+                                    <td
+                                      key={i}
+                                      className="p-3 text-center text-sm font-black border-r border-outline-variant/5"
+                                    >
+                                      {i < VAULT_CONFIG[v]
+                                        ? vals[i] || '-'
+                                        : ''}
+                                    </td>
+                                  ),
+                                )}
+                              </tr>
+                            )
+                          })}
                         </tbody>
                       </table>
                     </div>
@@ -216,7 +255,8 @@ function SummaryScreen() {
             aria-label="새 작전 시작"
             className="px-12 py-4 bg-linear-to-br from-primary to-primary-container text-on-primary font-black text-base rounded-sm btn-press shadow-2xl hover:shadow-primary/20 flex items-center justify-center gap-3"
           >
-            <span className="material-symbols-outlined text-lg">refresh</span> 새 작전 시작
+            <span className="material-symbols-outlined text-lg">refresh</span>{' '}
+            새 작전 시작
           </button>
         </footer>
       </main>
