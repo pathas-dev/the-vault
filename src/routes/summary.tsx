@@ -118,22 +118,14 @@ function SummaryScreen() {
                 <div className="flex gap-x-5 gap-y-1.5 flex-wrap mt-3">
                   <div className="flex items-center gap-1.5">
                     <span className="text-[9px] uppercase font-bold text-on-surface-variant/40 tracking-widest">
-                      Target Site:
+                      터는 집:
                     </span>
                     <span className="text-xs font-bold">
                       {round.targetHouse}
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[9px] uppercase font-bold text-on-surface-variant/40 tracking-widest">
-                      Infiltration:
-                    </span>
-                    <span className="text-xs font-bold">
-                      {round.startPoint}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <WallMiniMap horizontalWall={round.horizontalWall} verticalWall={round.verticalWall} />
+                    <WallMiniMap horizontalWall={round.horizontalWall} verticalWall={round.verticalWall} startPoint={round.startPoint} />
                   </div>
                 </div>
               </div>

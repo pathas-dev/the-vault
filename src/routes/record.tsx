@@ -293,20 +293,15 @@ function RecordScreen() {
                       </div>
 
                       <div className="bg-surface-container-highest/50 rounded-sm p-4 space-y-4 border border-outline-variant/10 shadow-lg">
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="flex items-center gap-4">
                           <div className="space-y-1">
-                            <p className="text-[8px] font-bold text-on-surface/30 uppercase tracking-widest">Target Site</p>
+                            <p className="text-[8px] font-bold text-on-surface/30 uppercase tracking-widest">터는 집</p>
                             <p className="serif-text text-xl font-black text-primary">{round.targetHouse}</p>
                           </div>
-                          <div className="space-y-1">
-                            <p className="text-[8px] font-bold text-on-surface/30 uppercase tracking-widest">Infiltration</p>
-                            <p className="serif-text text-xl font-black text-primary">{round.startPoint}</p>
+                          <div className="flex-1">
+                            <p className="text-[8px] font-bold text-on-surface/30 uppercase tracking-widest mb-1">벽 · 침투</p>
+                            <WallMiniMap horizontalWall={round.horizontalWall} verticalWall={round.verticalWall} startPoint={round.startPoint} />
                           </div>
-                        </div>
-
-                        <div className="pt-3 border-t border-outline-variant/5">
-                          <p className="text-[8px] font-bold text-on-surface/30 uppercase tracking-widest mb-2">벽 위치</p>
-                          <WallMiniMap horizontalWall={round.horizontalWall} verticalWall={round.verticalWall} />
                         </div>
 
                         <div className="pt-3 border-t border-outline-variant/5">
@@ -348,45 +343,26 @@ function RecordScreen() {
               </h1>
 
               {viewMode === 'input' ? (
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
-                  {/* 터는 집 */}
-                  <div className="space-y-2 md:space-y-3">
-                    <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-primary/60 flex items-center gap-2">
-                      <span className="material-symbols-outlined text-xs">location_on</span> 터는 집 (Target)
-                    </label>
-                    <div className="flex gap-2">
-                      {['A', 'B', 'C', 'D'].map((h) => (
-                        <button key={h} onClick={() => setTargetHouse(h)} className={`flex-1 py-2 text-xs font-bold transition-all rounded-sm border ${targetHouse === h ? 'bg-primary text-on-primary border-primary' : 'bg-surface-container-low text-on-surface/40 border-outline-variant/20 hover:border-primary/40'}`}>{h}</button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* 침투 지점 */}
-                  <div className="space-y-2 md:space-y-3">
-                    <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-primary/60 flex items-center gap-2">
-                      <span className="material-symbols-outlined text-xs">login</span> 침투 지점 (Entry Point)
-                    </label>
-                    <div className="flex gap-2">
-                      {['A', 'B'].map((p) => (
-                        <button key={p} onClick={() => setStartPoint(p)} className={`flex-1 py-2 text-xs font-bold transition-all rounded-sm border ${startPoint === p ? 'bg-linear-to-br from-primary to-primary-container text-on-primary border-primary shadow-[0_4px_12px_rgba(255,198,55,0.1)]' : 'bg-surface-container-low text-on-surface/40 border-outline-variant/20 hover:border-primary/40'}`}>{p}</button>
-                      ))}
-                    </div>
+                <div className="space-y-2 md:space-y-3 max-w-xs">
+                  <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-primary/60 flex items-center gap-2">
+                    <span className="material-symbols-outlined text-xs">location_on</span> 터는 집
+                  </label>
+                  <div className="flex gap-2">
+                    {['A', 'B', 'C', 'D'].map((h) => (
+                      <button key={h} onClick={() => setTargetHouse(h)} className={`flex-1 py-2 text-xs font-bold transition-all rounded-sm border ${targetHouse === h ? 'bg-primary text-on-primary border-primary' : 'bg-surface-container-low text-on-surface/40 border-outline-variant/20 hover:border-primary/40'}`}>{h}</button>
+                    ))}
                   </div>
                 </div>
               ) : (
-                <div className="grid grid-cols-3 gap-3 md:gap-5 py-6 px-5 md:px-10 bg-surface-container-low rounded-sm relative overflow-hidden shadow-xl border border-outline-variant/5">
+                <div className="grid grid-cols-2 gap-3 md:gap-5 py-6 px-5 md:px-10 bg-surface-container-low rounded-sm relative overflow-hidden shadow-xl border border-outline-variant/5">
                   <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-primary/40 via-primary to-primary/40"></div>
                   <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-surface-container-lowest rounded-sm border border-outline-variant/10 relative">
                     <div className="absolute top-1 left-2 text-[7px] font-black text-primary/30 uppercase tracking-widest leading-none">터는 집</div>
                     <span className="serif-text text-3xl md:text-4xl font-black text-primary leading-none mt-1">{targetHouse}</span>
                   </div>
-                  <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-surface-container-lowest rounded-sm border border-outline-variant/10 relative">
-                    <div className="absolute top-1 left-2 text-[7px] font-black text-primary/30 uppercase tracking-widest leading-none">침투 지점</div>
-                    <span className="serif-text text-3xl md:text-4xl font-black text-primary leading-none mt-1">{startPoint}</span>
-                  </div>
                   <div className="flex flex-col bg-surface-container-lowest p-3 md:p-4 rounded-sm border border-outline-variant/10 items-center justify-center space-y-2 relative">
-                    <div className="absolute top-1 left-2 text-[7px] font-black text-primary/30 uppercase tracking-widest leading-none">벽 위치</div>
-                    <WallMiniMap horizontalWall={horizontalWall} verticalWall={verticalWall} />
+                    <div className="absolute top-1 left-2 text-[7px] font-black text-primary/30 uppercase tracking-widest leading-none">벽 · 침투</div>
+                    <WallMiniMap horizontalWall={horizontalWall} verticalWall={verticalWall} startPoint={startPoint} />
                   </div>
                 </div>
               )}
@@ -482,6 +458,32 @@ function RecordScreen() {
                       <VaultCell vault="113" className="w-full" />
                     </div>
                   </div>
+                </div>
+
+                {/* Entry points: right side of 1xx */}
+                <div className="flex flex-col self-stretch ml-0.5">
+                  <button
+                    onClick={() => setStartPoint('A')}
+                    className="flex-1 flex items-center px-1 group transition-all"
+                    title="침투 지점 A (10x 방)"
+                  >
+                    <span className={`material-symbols-outlined text-base md:text-lg transition-all duration-300 ${
+                      startPoint === 'A'
+                        ? 'text-error drop-shadow-[0_0_8px_rgba(255,100,100,0.8)]'
+                        : 'text-on-surface/15 group-hover:text-error/40'
+                    }`}>chevron_left</span>
+                  </button>
+                  <button
+                    onClick={() => setStartPoint('B')}
+                    className="flex-1 flex items-center px-1 group transition-all"
+                    title="침투 지점 B (11x 방)"
+                  >
+                    <span className={`material-symbols-outlined text-base md:text-lg transition-all duration-300 ${
+                      startPoint === 'B'
+                        ? 'text-error drop-shadow-[0_0_8px_rgba(255,100,100,0.8)]'
+                        : 'text-on-surface/15 group-hover:text-error/40'
+                    }`}>chevron_left</span>
+                  </button>
                 </div>
               </div>
             </div>
