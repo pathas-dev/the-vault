@@ -68,30 +68,23 @@ function SummaryScreen() {
       <FloatingActions actions={[{ icon: 'settings', label: '설정' }]} />
       <main className="flex-1 px-4 md:px-12 py-8 md:py-20 max-w-7xl mx-auto w-full pb-24 md:pb-12">
         {/* 헤더 섹션 */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-12 mb-10 md:mb-20 items-end">
-          <div className="lg:col-span-8">
-            <span className="text-primary text-sm font-bold tracking-[0.3em] uppercase mb-3 md:mb-4 block">
-              Operation: Loot Extraction Complete
+        <section className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8 mb-8 md:mb-16">
+          <div>
+            <span className="text-primary/60 text-[0.625rem] font-bold tracking-[0.4em] uppercase mb-2 block">
+              Operation Complete
             </span>
-            <h2 className="noto-serif text-4xl md:text-6xl font-black gold-text-gradient leading-tight mb-4 md:mb-8">
-              대도(大盜)의 비밀 장부
+            <h2 className="noto-serif text-3xl md:text-5xl font-black gold-text-gradient leading-tight tracking-tight">
+              최종 결산
             </h2>
-            <p className="text-on-surface-variant text-sm md:text-base max-w-lg leading-relaxed border-l border-outline-variant/30 pl-4 md:pl-6">
-              총 07단계의 보물 약탈 작전이 성료되었습니다. 아래 목록은 각 단계별
-              잠입 경로와 확보한 전리품 가치에 대한 최종 기록입니다. 본 문서는
-              자동 파기되지 않으므로 보안에 각별히 유의하십시오.
-            </p>
           </div>
-          <div className="lg:col-span-4 flex flex-col items-start lg:items-end">
-            <div className="bg-surface-container-high/50 border border-outline-variant/15 p-5 md:p-8 rounded-sm w-full lg:max-w-[320px]">
-              <p className="text-[0.625rem] font-bold text-primary/40 uppercase tracking-widest mb-2">
-                Total Extraction Value
-              </p>
-              <p className="noto-serif text-4xl md:text-5xl font-black gold-text-gradient">
-                {calculateTotal().toLocaleString()}{' '}
-                <span className="text-base tracking-widest">V</span>
-              </p>
-            </div>
+          <div className="bg-surface-container-high/50 border border-outline-variant/15 px-5 py-4 md:px-8 md:py-6 rounded-sm">
+            <p className="text-[0.625rem] font-bold text-primary/40 uppercase tracking-widest mb-1">
+              Total Value
+            </p>
+            <p className="noto-serif text-3xl md:text-4xl font-black gold-text-gradient tabular-nums">
+              {calculateTotal().toLocaleString()}{' '}
+              <span className="text-sm tracking-widest">V</span>
+            </p>
           </div>
         </section>
 
@@ -131,118 +124,112 @@ function SummaryScreen() {
                 </div>
               </div>
 
-              {/* 모바일: 카드 그리드 */}
-              <div className="block md:hidden">
-                <div className="grid grid-cols-2 gap-px bg-outline-variant/5">
-                  {VAULT_NUMBERS.map((v) => {
-                    const vals = round.vaultValues[v] || []
-                    const hasValue = vals.some((val) => val !== '')
-                    return (
-                      <div
-                        key={v}
-                        className={`px-4 py-3 transition-colors ${hasValue ? 'bg-surface-container' : 'bg-surface-container-low'}`}
-                      >
-                        <p className="text-[0.5625rem] font-bold uppercase text-primary/50 tracking-widest mb-1">
-                          {v} VAULT
-                        </p>
-                        <div className="flex gap-3 items-baseline">
-                          {Array.from({ length: VAULT_CONFIG[v] }, (_, i) => (
-                            <span key={i} className="noto-serif font-black text-primary text-sm">
-                              {vals[i] || '—'}
-                            </span>
-                          )).reduce((acc: React.ReactNode[], el, i) => {
-                            if (i > 0) acc.push(<span key={`sep-${i}`} className="text-on-surface-variant/30 text-xs">/</span>)
-                            acc.push(el)
-                            return acc
-                          }, [])}
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-
-              {/* 데스크탑: 가로 테이블 */}
-              <div className="hidden md:block overflow-x-auto">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="bg-surface-container-highest/20 text-[0.625rem] font-bold text-primary uppercase tracking-[0.2em]">
-                      <th className="p-4 border-r border-outline-variant/5">
-                        금고 (Vault)
-                      </th>
-                      {VAULT_NUMBERS.map((v) => (
-                        <th
-                          key={v}
-                          className="p-3 text-center border-r border-outline-variant/5 min-w-[60px]"
-                        >
-                          {v}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-outline-variant/5">
-                    {Array.from({ length: MAX_CAPACITY }, (_, rowIdx) => (
-                      <tr key={rowIdx}>
-                        <td className="p-4 text-[0.625rem] font-bold uppercase text-on-surface-variant/40 border-r border-outline-variant/5 whitespace-nowrap">
-                          은닉 가치 {['I', 'II', 'III'][rowIdx]}
-                        </td>
-                        {VAULT_NUMBERS.map((v) => {
+              {(() => {
+                const activeVaults = VAULT_NUMBERS.filter((v) => {
+                  const vals = round.vaultValues[v] || []
+                  return vals.some((val) => val !== '')
+                })
+                if (activeVaults.length === 0) return null
+                return (
+                  <>
+                    {/* 모바일: 카드 그리드 */}
+                    <div className="block md:hidden">
+                      <div className="grid grid-cols-2 gap-px bg-outline-variant/5">
+                        {activeVaults.map((v) => {
                           const vals = round.vaultValues[v] || []
                           return (
-                            <td
+                            <div
                               key={v}
-                              className={`p-3 text-center text-sm font-black border-r border-outline-variant/5 ${rowIdx % 2 === 0 ? 'bg-on-surface/[0.02]' : ''}`}
+                              className="px-4 py-3 bg-surface-container"
                             >
-                              {rowIdx < VAULT_CONFIG[v] ? (vals[rowIdx] || '-') : ''}
-                            </td>
+                              <p className="text-[0.5625rem] font-bold uppercase text-primary/50 tracking-widest mb-1">
+                                {v} VAULT
+                              </p>
+                              <div className="flex gap-3 items-baseline">
+                                {Array.from({ length: VAULT_CONFIG[v] }, (_, i) => (
+                                  <span key={i} className="noto-serif font-black text-primary text-sm">
+                                    {vals[i] || '—'}
+                                  </span>
+                                )).reduce((acc: React.ReactNode[], el, i) => {
+                                  if (i > 0) acc.push(<span key={`sep-${i}`} className="text-on-surface-variant/30 text-xs">/</span>)
+                                  acc.push(el)
+                                  return acc
+                                }, [])}
+                              </div>
+                            </div>
                           )
                         })}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                      </div>
+                    </div>
+
+                    {/* 데스크탑: 가로 테이블 */}
+                    <div className="hidden md:block overflow-x-auto">
+                      <table className="w-full text-left border-collapse">
+                        <thead>
+                          <tr className="bg-surface-container-highest/20 text-[0.625rem] font-bold text-primary uppercase tracking-[0.2em]">
+                            <th className="p-4 border-r border-outline-variant/5">
+                              금고 (Vault)
+                            </th>
+                            {activeVaults.map((v) => (
+                              <th
+                                key={v}
+                                className="p-3 text-center border-r border-outline-variant/5 min-w-[60px]"
+                              >
+                                {v}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-outline-variant/5">
+                          {Array.from({ length: MAX_CAPACITY }, (_, rowIdx) => (
+                            <tr key={rowIdx}>
+                              <td className="p-4 text-[0.625rem] font-bold uppercase text-on-surface-variant/40 border-r border-outline-variant/5 whitespace-nowrap">
+                                은닉 가치 {['I', 'II', 'III'][rowIdx]}
+                              </td>
+                              {activeVaults.map((v) => {
+                                const vals = round.vaultValues[v] || []
+                                return (
+                                  <td
+                                    key={v}
+                                    className={`p-3 text-center text-sm font-black border-r border-outline-variant/5 ${rowIdx % 2 === 0 ? 'bg-on-surface/[0.02]' : ''}`}
+                                  >
+                                    {rowIdx < VAULT_CONFIG[v] ? (vals[rowIdx] || '-') : ''}
+                                  </td>
+                                )
+                              })}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </>
+                )
+              })()}
             </section>
           ))}
         </div>
 
         {/* 데스크탑 액션 버튼 */}
-        <footer className="mt-20 hidden md:flex flex-col sm:flex-row gap-6 items-center justify-center">
+        <footer className="mt-16 hidden md:flex justify-center">
           <button
             onClick={handleReset}
             aria-label="새 작전 시작"
-            className="w-full sm:w-auto px-16 py-5 bg-linear-to-br from-primary to-primary-container text-on-primary font-black text-lg rounded-sm btn-press shadow-2xl hover:shadow-primary/20 flex items-center justify-center gap-3"
+            className="px-12 py-4 bg-linear-to-br from-primary to-primary-container text-on-primary font-black text-base rounded-sm btn-press shadow-2xl hover:shadow-primary/20 flex items-center justify-center gap-3"
           >
-            <span className="material-symbols-outlined text-xl">refresh</span> 새 작전 시작
-          </button>
-          <button
-            onClick={() => window.print()}
-            aria-label="장부 인쇄"
-            className="w-full sm:w-auto px-10 py-5 border border-outline-variant/20 font-bold text-sm tracking-widest hover:bg-surface-container rounded-sm flex items-center justify-center gap-3 btn-press gold-underline"
-          >
-            <span className="material-symbols-outlined text-xl">print</span> 장부 보관
+            <span className="material-symbols-outlined text-lg">refresh</span> 새 작전 시작
           </button>
         </footer>
       </main>
 
       {/* 모바일 전용 고정 액션 버튼 */}
       <div className="md:hidden fixed bottom-6 left-0 right-0 px-4 z-40">
-        <div className="flex gap-3">
-          <button
-            onClick={handleReset}
-            className="flex-1 py-4 bg-linear-to-br from-primary to-primary-container text-on-primary font-black text-sm rounded-sm btn-press shadow-2xl flex items-center justify-center gap-2"
-          >
-            <span className="material-symbols-outlined text-[18px]">refresh</span>
-            새 작전 시작
-          </button>
-          <button
-            onClick={() => window.print()}
-            aria-label="장부 인쇄"
-            className="px-4 py-4 border border-outline-variant/30 bg-surface-container-low/80 backdrop-blur-sm font-bold text-xs tracking-widest uppercase hover:bg-surface-container rounded-sm btn-press"
-          >
-            <span className="material-symbols-outlined text-[18px] text-on-surface/60">print</span>
-          </button>
-        </div>
+        <button
+          onClick={handleReset}
+          className="w-full py-4 bg-linear-to-br from-primary to-primary-container text-on-primary font-black text-sm rounded-sm btn-press shadow-2xl flex items-center justify-center gap-2"
+        >
+          <span className="material-symbols-outlined text-[18px]">refresh</span>
+          새 작전 시작
+        </button>
       </div>
     </div>
   )
