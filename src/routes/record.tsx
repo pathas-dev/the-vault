@@ -152,7 +152,7 @@ function RecordScreen() {
   }
 
   const isFinalRound = currentRound === 7
-  const isValidValue = (val: string) => val === '' || (Number(val) >= 20 && Number(val) <= 100)
+  const isValidValue = (val: string) => val === '' || (Number(val) >= 1 && Number(val) <= 100)
   const isFormValid = selectedVaults.length === 0 || selectedVaults.every((v) => {
     const values = vaultValues[v]
     return values.some((val) => val !== '') && values.every((val) => isValidValue(val))
@@ -539,7 +539,7 @@ function RecordScreen() {
                                 onKeyDown={(e) => handleKeyDown(e, v, i, visibleVaults)}
                               />
                               {vaultValues[v][i] !== '' && !isValidValue(vaultValues[v][i]) && (
-                                <p className="absolute -bottom-4 left-0 w-full text-[0.5625rem] text-error font-black text-center animate-pulse">RANGE 20-100</p>
+                                <p className="absolute -bottom-4 left-0 w-full text-[0.5625rem] text-error font-black text-center animate-pulse">RANGE 1-100</p>
                               )}
                             </>
                           ) : (
