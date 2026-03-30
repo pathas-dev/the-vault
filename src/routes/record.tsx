@@ -383,11 +383,11 @@ function RecordScreen() {
               <div className="flex min-w-[340px] mx-auto" style={{ maxWidth: '740px' }}>
                 {/* Room 401 */}
                 <div className="self-center border border-r-0 border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3">
-                  <VaultCell vault="401" className="w-full min-w-[64px] md:min-w-[80px] min-h-[80px] md:min-h-[100px]" />
+                  <VaultCell vault="401" className="w-full min-w-[48px] md:min-w-[60px] min-h-[60px] md:min-h-[72px]" />
                 </div>
 
                 {/* Room 3xx - 4 corners */}
-                <div className="border border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
+                <div className="border border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3" style={{ flex: '0.8' }}>
                   <div className="flex flex-col gap-2 h-full">
                     <div className="grid grid-cols-2 gap-2">
                       <VaultCell vault="301" className="w-full" />
