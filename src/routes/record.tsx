@@ -58,6 +58,20 @@ function RecordScreen() {
     }
   }, [])
 
+  // --- History Lock: Prevent Browser Back ---
+  useEffect(() => {
+    // Push dummy state to the history stack
+    window.history.pushState(null, '', window.location.href)
+
+    const handlePopState = () => {
+      // If user clicks back, push state again to stay on current page
+      window.history.pushState(null, '', window.location.href)
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [currentRound]) // Re-lock on every round change
+
   const toggleHistory = () => {
     setHistoryRounds(getSavedRounds())
     setIsHistoryOpen(!isHistoryOpen)
@@ -162,7 +176,7 @@ function RecordScreen() {
       setVaultValues(initVaultValues())
       window.scrollTo(0, 0)
     } else {
-      navigate({ to: '/summary' })
+      navigate({ to: '/summary', replace: true })
     }
   }
 

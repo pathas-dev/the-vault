@@ -38,11 +38,23 @@ function SummaryScreen() {
 
   useEffect(() => {
     setRounds(getSavedRounds())
+    
+    // --- History Lock: Prevent Browser Back ---
+    // Push dummy state to the history stack
+    window.history.pushState(null, '', window.location.href)
+
+    const handlePopState = () => {
+      // If user clicks back, push state again to stay on current page
+      window.history.pushState(null, '', window.location.href)
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
   }, [])
 
   const handleReset = () => {
     clearSavedRounds()
-    navigate({ to: '/', search: { round: 1 } })
+    navigate({ to: '/', search: { round: 1 }, replace: true })
   }
 
   const calculateTotal = () => {
