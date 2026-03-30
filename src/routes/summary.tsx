@@ -6,38 +6,26 @@ export const Route = createFileRoute('/summary' as any)({
   component: SummaryScreen,
 })
 
-type HouseValue = {
-  v1: string
-  v2: string
+const VAULT_CONFIG: Record<string, number> = {
+  '101': 1, '102': 1, '103': 2,
+  '111': 1, '112': 1, '113': 2,
+  '201': 1, '202': 2, '203': 2,
+  '211': 1, '212': 2, '213': 2,
+  '301': 1, '302': 2,
+  '303': 2, '304': 2,
+  '401': 3,
 }
+
+const VAULT_NUMBERS = Object.keys(VAULT_CONFIG)
+const MAX_CAPACITY = 3
 
 type RoundData = {
   targetHouse: string
   startPoint: string
   horizontalWall: string | null
   verticalWall: string | null
-  houseValues: Record<string, HouseValue>
+  vaultValues: Record<string, string[]>
 }
-
-const HOUSE_NUMBERS = [
-  '101',
-  '102',
-  '103',
-  '111',
-  '112',
-  '113',
-  '201',
-  '202',
-  '203',
-  '211',
-  '212',
-  '213',
-  '301',
-  '302',
-  '303',
-  '304',
-  '401',
-]
 
 function SummaryScreen() {
   const navigate = useNavigate()
@@ -57,9 +45,9 @@ function SummaryScreen() {
 
   const calculateTotal = () => {
     return rounds.reduce((sum: number, r: RoundData) => {
-      const roundSum = Object.values(r.houseValues).reduce(
-        (rSum: number, hv: HouseValue) => {
-          return rSum + (parseInt(hv.v1) || 0) + (parseInt(hv.v2) || 0)
+      const roundSum = Object.values(r.vaultValues).reduce(
+        (rSum: number, vals: string[]) => {
+          return rSum + vals.reduce((s, v) => s + (parseInt(v) || 0), 0)
         },
         0,
       )
@@ -68,8 +56,8 @@ function SummaryScreen() {
   }
 
   const calculateRoundTotal = (r: RoundData) => {
-    return Object.values(r.houseValues).reduce(
-      (sum: number, hv: HouseValue) => sum + (parseInt(hv.v1) || 0) + (parseInt(hv.v2) || 0),
+    return Object.values(r.vaultValues).reduce(
+      (sum: number, vals: string[]) => sum + vals.reduce((s, v) => s + (parseInt(v) || 0), 0),
       0,
     )
   }
@@ -154,29 +142,30 @@ function SummaryScreen() {
                 </div>
               </div>
 
-              {/* 모바일: 카드 그리드 / 데스크탑: 가로 테이블 */}
+              {/* 모바일: 카드 그리드 */}
               <div className="block md:hidden">
                 <div className="grid grid-cols-2 gap-px bg-outline-variant/5">
-                  {HOUSE_NUMBERS.map((h) => {
-                    const v1 = round.houseValues[h]?.v1
-                    const v2 = round.houseValues[h]?.v2
-                    const hasValue = v1 || v2
+                  {VAULT_NUMBERS.map((v) => {
+                    const vals = round.vaultValues[v] || []
+                    const hasValue = vals.some((val) => val !== '')
                     return (
                       <div
-                        key={h}
+                        key={v}
                         className={`px-4 py-3 ${hasValue ? 'bg-surface-container' : 'bg-surface-container-low'}`}
                       >
                         <p className="text-[9px] font-bold uppercase text-primary/50 tracking-widest mb-1">
-                          {h} SITE
+                          {v} VAULT
                         </p>
                         <div className="flex gap-3 items-baseline">
-                          <span className="noto-serif font-black text-primary text-sm">
-                            {v1 || '—'}
-                          </span>
-                          <span className="text-on-surface-variant/30 text-xs">/</span>
-                          <span className="noto-serif font-black text-primary text-sm">
-                            {v2 || '—'}
-                          </span>
+                          {Array.from({ length: VAULT_CONFIG[v] }, (_, i) => (
+                            <span key={i} className="noto-serif font-black text-primary text-sm">
+                              {vals[i] || '—'}
+                            </span>
+                          )).reduce((acc: React.ReactNode[], el, i) => {
+                            if (i > 0) acc.push(<span key={`sep-${i}`} className="text-on-surface-variant/30 text-xs">/</span>)
+                            acc.push(el)
+                            return acc
+                          }, [])}
                         </div>
                       </div>
                     )
@@ -190,45 +179,37 @@ function SummaryScreen() {
                   <thead>
                     <tr className="bg-surface-container-highest/20 text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
                       <th className="p-4 border-r border-outline-variant/5">
-                        단위 구역 (Unit)
+                        금고 (Vault)
                       </th>
-                      {HOUSE_NUMBERS.map((h) => (
+                      {VAULT_NUMBERS.map((v) => (
                         <th
-                          key={h}
+                          key={v}
                           className="p-3 text-center border-r border-outline-variant/5 min-w-[60px]"
                         >
-                          {h}
+                          {v}
                         </th>
                       ))}
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-outline-variant/5">
-                    <tr>
-                      <td className="p-4 text-[10px] font-bold uppercase text-on-surface-variant/40 border-r border-outline-variant/5 whitespace-nowrap">
-                        은닉 가치 I
-                      </td>
-                      {HOUSE_NUMBERS.map((h) => (
-                        <td
-                          key={h}
-                          className="p-3 text-center text-sm font-black border-r border-outline-variant/5 bg-on-surface/[0.02]"
-                        >
-                          {round.houseValues[h].v1 || '-'}
+                    {Array.from({ length: MAX_CAPACITY }, (_, rowIdx) => (
+                      <tr key={rowIdx}>
+                        <td className="p-4 text-[10px] font-bold uppercase text-on-surface-variant/40 border-r border-outline-variant/5 whitespace-nowrap">
+                          은닉 가치 {['I', 'II', 'III'][rowIdx]}
                         </td>
-                      ))}
-                    </tr>
-                    <tr>
-                      <td className="p-4 text-[10px] font-bold uppercase text-on-surface-variant/40 border-r border-outline-variant/5 whitespace-nowrap">
-                        은닉 가치 II
-                      </td>
-                      {HOUSE_NUMBERS.map((h) => (
-                        <td
-                          key={h}
-                          className="p-3 text-center text-sm font-black border-r border-outline-variant/5"
-                        >
-                          {round.houseValues[h].v2 || '-'}
-                        </td>
-                      ))}
-                    </tr>
+                        {VAULT_NUMBERS.map((v) => {
+                          const vals = round.vaultValues[v] || []
+                          return (
+                            <td
+                              key={v}
+                              className={`p-3 text-center text-sm font-black border-r border-outline-variant/5 ${rowIdx % 2 === 0 ? 'bg-on-surface/[0.02]' : ''}`}
+                            >
+                              {rowIdx < VAULT_CONFIG[v] ? (vals[rowIdx] || '-') : ''}
+                            </td>
+                          )
+                        })}
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
