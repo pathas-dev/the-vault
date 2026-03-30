@@ -3,7 +3,7 @@ import { RoundsSchema, type RoundData } from './schemas'
 const STORAGE_KEY = 'vault_rounds'
 
 export function getSavedRounds(): RoundData[] {
-  if (typeof window === 'undefined' || !window.sessionStorage) {
+  if (typeof sessionStorage === 'undefined') {
     return []
   }
 
@@ -29,13 +29,13 @@ export function getSavedRounds(): RoundData[] {
 }
 
 export function saveRounds(rounds: RoundData[]): void {
-  if (typeof window !== 'undefined' && window.sessionStorage) {
+  if (typeof sessionStorage !== 'undefined') {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(rounds))
   }
 }
 
 export function clearSavedRounds(): void {
-  if (typeof window !== 'undefined' && window.sessionStorage) {
+  if (typeof sessionStorage !== 'undefined') {
     sessionStorage.removeItem(STORAGE_KEY)
   }
 }

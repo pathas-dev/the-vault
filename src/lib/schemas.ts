@@ -5,7 +5,7 @@ export const RoundDataSchema = z.object({
   startPoint: z.string(),
   horizontalWall: z.string().nullable(),
   verticalWall: z.string().nullable(),
-  vaultValues: z.record(z.array(z.string())),
+  vaultValues: z.record(z.string(), z.array(z.string())),
 })
 
 export const RoundsSchema = z.array(RoundDataSchema)
