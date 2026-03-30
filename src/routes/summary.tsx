@@ -100,7 +100,8 @@ function SummaryScreen() {
           {rounds.map((round, idx) => (
             <section
               key={idx}
-              className="bg-surface-container-low rounded-sm overflow-hidden border border-outline-variant/10 shadow-xl"
+              className="bg-surface-container-low rounded-sm overflow-hidden border border-outline-variant/10 shadow-xl card-lift stagger-in"
+              style={{ animationDelay: `${idx * 100}ms` }}
             >
               {/* 라운드 헤더 */}
               <div className="px-4 md:px-8 py-4 md:py-6 border-b border-outline-variant/10 bg-surface-container-high/50">
@@ -210,14 +211,14 @@ function SummaryScreen() {
           <button
             onClick={handleReset}
             aria-label="새 작전 시작"
-            className="w-full sm:w-auto px-16 py-5 bg-linear-to-br from-primary to-primary-container text-on-primary font-black text-lg rounded-sm hover:scale-[1.02] active:scale-95 transition-all shadow-2xl flex items-center justify-center gap-3"
+            className="w-full sm:w-auto px-16 py-5 bg-linear-to-br from-primary to-primary-container text-on-primary font-black text-lg rounded-sm btn-press shadow-2xl hover:shadow-primary/20 flex items-center justify-center gap-3"
           >
             <span className="material-symbols-outlined text-xl">refresh</span> 새 작전 시작
           </button>
           <button
             onClick={() => window.print()}
             aria-label="장부 인쇄"
-            className="w-full sm:w-auto px-10 py-5 border border-outline-variant/20 font-bold text-sm tracking-widest hover:bg-surface-container transition-colors rounded-sm flex items-center justify-center gap-3"
+            className="w-full sm:w-auto px-10 py-5 border border-outline-variant/20 font-bold text-sm tracking-widest hover:bg-surface-container rounded-sm flex items-center justify-center gap-3 btn-press gold-underline"
           >
             <span className="material-symbols-outlined text-xl">print</span> 장부 보관
           </button>
@@ -229,7 +230,7 @@ function SummaryScreen() {
         <div className="flex gap-3">
           <button
             onClick={handleReset}
-            className="flex-1 py-4 bg-linear-to-br from-primary to-primary-container text-on-primary font-black text-sm rounded-sm active:scale-95 transition-all shadow-2xl flex items-center justify-center gap-2"
+            className="flex-1 py-4 bg-linear-to-br from-primary to-primary-container text-on-primary font-black text-sm rounded-sm btn-press shadow-2xl flex items-center justify-center gap-2"
           >
             <span className="material-symbols-outlined text-[18px]">refresh</span>
             새 작전 시작

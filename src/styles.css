@@ -174,4 +174,121 @@
     text-transform: uppercase;
     letter-spacing: 0.2em;
   }
+
+  /* === Delight: Micro-interactions === */
+
+  /* 골드 펄스 글로우 — 금고 선택 시 */
+  @keyframes gold-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 198, 55, 0); }
+    50% { box-shadow: 0 0 16px 4px rgba(255, 198, 55, 0.25); }
+  }
+  .vault-selected {
+    animation: gold-pulse 1.5s ease-in-out 1;
+  }
+
+  /* 카드 호버 리프트 */
+  .card-lift {
+    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.25s ease;
+  }
+  .card-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 198, 55, 0.06);
+  }
+  .card-lift:active {
+    transform: translateY(0);
+    transition-duration: 0.1s;
+  }
+
+  /* 버튼 프레스 피드백 */
+  .btn-press {
+    transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), filter 0.15s ease;
+  }
+  .btn-press:hover {
+    transform: translateY(-1px);
+  }
+  .btn-press:active {
+    transform: translateY(1px) scale(0.98);
+    filter: brightness(0.95);
+  }
+
+  /* 골드 보더 글로우 — input focus */
+  @keyframes border-glow {
+    0%, 100% { border-color: var(--color-primary); box-shadow: 0 0 6px rgba(255, 198, 55, 0.15); }
+    50% { border-color: var(--color-primary-container); box-shadow: 0 0 12px rgba(255, 198, 55, 0.25); }
+  }
+  .input-glow:focus {
+    animation: border-glow 2s ease-in-out infinite;
+  }
+
+  /* 스태거 진입 애니메이션 */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .stagger-in {
+    opacity: 0;
+    animation: fade-up 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+
+  /* 아이콘 호버 회전 */
+  .icon-hover-spin {
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .group:hover .icon-hover-spin {
+    transform: rotate(15deg) scale(1.1);
+  }
+
+  /* 아이콘 호버 바운스 */
+  .icon-hover-bounce {
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .group:hover .icon-hover-bounce {
+    transform: translateY(-2px) scale(1.15);
+  }
+
+  /* 골드 언더라인 슬라이드 */
+  .gold-underline {
+    position: relative;
+  }
+  .gold-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-primary), transparent);
+    transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .gold-underline:hover::after {
+    width: 100%;
+  }
+
+  /* 히어로 동심원 느린 회전 */
+  @keyframes slow-spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  .orbit-ring {
+    animation: slow-spin var(--orbit-duration, 60s) linear infinite;
+  }
+
+  /* reduced motion 대응 */
+  @media (prefers-reduced-motion: reduce) {
+    .vault-selected,
+    .input-glow:focus,
+    .stagger-in,
+    .orbit-ring {
+      animation: none;
+    }
+    .card-lift,
+    .btn-press,
+    .icon-hover-spin,
+    .icon-hover-bounce {
+      transition: none;
+    }
+    .stagger-in {
+      opacity: 1;
+    }
+  }
 }

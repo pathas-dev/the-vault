@@ -38,9 +38,9 @@ function HomeScreen() {
       <Topbar />
       <main className="flex-1 flex flex-col items-start justify-center px-5 md:px-24 py-10 md:py-20 relative z-10">
         <div className="absolute top-0 right-0 w-1/2 h-full pointer-events-none opacity-20 hidden lg:block">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-primary/20 rounded-full"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] border border-primary/10 rounded-full"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] border border-primary/30 rounded-full flex items-center justify-center">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-primary/20 rounded-full orbit-ring" style={{ '--orbit-duration': '90s' } as React.CSSProperties}></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] border border-primary/10 rounded-full orbit-ring" style={{ '--orbit-duration': '60s', animationDirection: 'reverse' } as React.CSSProperties}></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] border border-primary/30 rounded-full flex items-center justify-center orbit-ring" style={{ '--orbit-duration': '45s' } as React.CSSProperties}>
             <span
               className="material-symbols-outlined text-primary/40 text-8xl"
               style={{ fontVariationSettings: "'wght' 100" }}
@@ -62,7 +62,7 @@ function HomeScreen() {
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-10 md:mb-24">
             <button
               onClick={handleStartNew}
-              className="gold-gradient text-on-primary px-8 py-4 md:px-10 md:py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-base md:text-lg hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary/20"
+              className="gold-gradient text-on-primary px-8 py-4 md:px-10 md:py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-base md:text-lg btn-press shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30"
             >
               <span
                 className="material-symbols-outlined"
@@ -83,7 +83,7 @@ function HomeScreen() {
               </button>
             )}
 
-            <button aria-label="기밀 문서 열기" className="border border-outline-variant bg-surface-container-low/40 backdrop-blur-md text-on-surface/60 px-8 py-4 md:px-10 md:py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-base md:text-lg hover:bg-surface-container-high hover:text-on-surface transition-all active:scale-95">
+            <button aria-label="기밀 문서 열기" className="border border-outline-variant bg-surface-container-low/40 backdrop-blur-md text-on-surface/60 px-8 py-4 md:px-10 md:py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-base md:text-lg hover:bg-surface-container-high hover:text-on-surface btn-press gold-underline">
               <span className="material-symbols-outlined">menu_book</span>
               기밀 문서
             </button>
@@ -91,8 +91,8 @@ function HomeScreen() {
         </div>
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-6 mt-auto">
-          <div className="bg-surface-container-low p-5 md:p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-all duration-300">
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+          <div className="bg-surface-container-low p-5 md:p-8 rounded-sm relative overflow-hidden group card-lift">
+            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity icon-hover-bounce">
               <span className="material-symbols-outlined text-5xl md:text-6xl">
                 visibility_off
               </span>
@@ -104,8 +104,8 @@ function HomeScreen() {
               프로토콜: 완전 은폐
             </h3>
           </div>
-          <div className="bg-surface-container-low p-5 md:p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-all duration-300">
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+          <div className="bg-surface-container-low p-5 md:p-8 rounded-sm relative overflow-hidden group card-lift">
+            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity icon-hover-bounce">
               <span className="material-symbols-outlined text-5xl md:text-6xl">sensors</span>
             </div>
             <p className="text-tertiary text-[0.625rem] font-extrabold tracking-[0.2em] mb-1 md:mb-2 uppercase">
@@ -115,8 +115,8 @@ function HomeScreen() {
               상태: 미탐지
             </h3>
           </div>
-          <div className="bg-surface-container-low p-5 md:p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-all duration-300">
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+          <div className="bg-surface-container-low p-5 md:p-8 rounded-sm relative overflow-hidden group card-lift">
+            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity icon-hover-bounce">
               <span className="material-symbols-outlined text-5xl md:text-6xl">
                 account_balance_wallet
               </span>
