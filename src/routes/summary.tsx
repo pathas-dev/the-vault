@@ -200,10 +200,7 @@ function SummaryScreen() {
                               금고
                             </th>
                             {Array.from({ length: MAX_CAPACITY }, (_, i) => (
-                              <th
-                                key={i}
-                                className="p-3 text-center border-r border-outline-variant/5"
-                              >
+                              <th key={i} className="p-3 text-center border-r border-outline-variant/5">
                                 {['I', 'II', 'III'][i]}
                               </th>
                             ))}
@@ -222,19 +219,14 @@ function SummaryScreen() {
                                 <td className="p-4 text-[0.625rem] font-bold uppercase text-primary/60 border-r border-outline-variant/5 tracking-widest whitespace-nowrap">
                                   {v}
                                 </td>
-                                {Array.from(
-                                  { length: MAX_CAPACITY },
-                                  (_, i) => (
-                                    <td
-                                      key={i}
-                                      className="p-3 text-center text-sm font-black border-r border-outline-variant/5"
-                                    >
-                                      {i < VAULT_CONFIG[v]
-                                        ? vals[i] || '-'
-                                        : ''}
-                                    </td>
-                                  ),
-                                )}
+                                {Array.from({ length: MAX_CAPACITY }, (_, i) => (
+                                  <td
+                                    key={i}
+                                    className="p-3 text-center text-sm font-black border-r border-outline-variant/5"
+                                  >
+                                    {i < VAULT_CONFIG[v] ? (vals[i] || '-') : ''}
+                                  </td>
+                                ))}
                               </tr>
                             )
                           })}

@@ -400,14 +400,16 @@ function RecordScreen() {
                               .map(([vault, vals]) => (
                                 <div
                                   key={vault}
-                                  className="bg-surface-container-low px-2 py-1 rounded-sm border border-outline-variant/5 flex items-center gap-2"
+                                  className="bg-surface-container-low rounded-sm border border-outline-variant/5 flex items-center overflow-hidden"
                                 >
-                                  <span className="text-[0.625rem] font-black text-on-surface-variant">
+                                  <span className="text-[0.625rem] font-black text-on-surface-variant px-2 py-1">
                                     {vault}
                                   </span>
-                                  <span className="text-[0.625rem] font-black text-primary">
-                                    {vals.filter((v) => v !== '').join('/')}
-                                  </span>
+                                  {vals.filter((v) => v !== '').map((val, i) => (
+                                    <span key={i} className="text-[0.625rem] font-black text-primary px-1.5 py-1 border-l border-outline-variant/10">
+                                      {val}
+                                    </span>
+                                  ))}
                                 </div>
                               ))}
                           </div>
@@ -642,7 +644,7 @@ function RecordScreen() {
               <div className="serif-text">금고</div>
               {Array.from({ length: MAX_CAPACITY }, (_, i) => (
                 <div key={i} className="text-center serif-text">
-                  {['I', 'II', 'III'][i]}
+                  {i + 1}
                 </div>
               ))}
             </div>
@@ -667,43 +669,50 @@ function RecordScreen() {
                   </div>
                   {viewMode === 'input' ? (
                     <>
-                      {Array.from({ length: MAX_CAPACITY }, (_, i) => (
-                        <div key={i} className="px-1.5 relative">
-                          {i < VAULT_CONFIG[v] ? (
-                            <>
-                              <input
-                                name={`${v}-v${i}`}
-                                className={`w-full bg-surface-container-lowest border ${
-                                  vaultValues[v][i] !== '' &&
-                                  !isValidValue(vaultValues[v][i])
-                                    ? 'border-error ring-1 ring-error/20'
-                                    : 'border-outline-variant/10'
-                                } text-center text-primary font-black rounded-sm py-2.5 md:py-3 outline-none text-base md:text-lg input-glow focus:ring-1 focus:ring-primary/20`}
-                                placeholder="—"
-                                inputMode="numeric"
-                                type="number"
-                                value={vaultValues[v][i]}
-                                onChange={(e) =>
-                                  handleVaultValueChange(v, i, e.target.value)
-                                }
-                                onKeyDown={(e) =>
-                                  handleKeyDown(e, v, i, visibleVaults)
-                                }
-                              />
-                              {vaultValues[v][i] !== '' &&
-                                !isValidValue(vaultValues[v][i]) && (
-                                  <p className="absolute -bottom-4 left-0 w-full text-[0.5625rem] text-error font-black text-center animate-pulse">
-                                    RANGE 1-100
-                                  </p>
-                                )}
-                            </>
-                          ) : (
-                            <div className="w-full py-2.5 md:py-3 text-center text-on-surface/10 text-base">
-                              —
-                            </div>
-                          )}
-                        </div>
-                      ))}
+                      {Array.from({ length: MAX_CAPACITY }, (_, i) => {
+                        const isSlotAvailable = i < VAULT_CONFIG[v]
+                        const isUnlocked = i === 0 || (vaultValues[v][i - 1] !== '' && isValidValue(vaultValues[v][i - 1]))
+                        const isEnabled = isSlotAvailable && isUnlocked
+                        return (
+                          <div key={i} className="px-1.5 relative">
+                            {isSlotAvailable ? (
+                              <>
+                                <input
+                                  name={`${v}-v${i}`}
+                                  className={`w-full border text-center font-black rounded-sm py-2.5 md:py-3 outline-none text-base md:text-lg transition-all ${
+                                    !isEnabled
+                                      ? 'bg-surface-container-low border-outline-variant/5 text-on-surface/15 cursor-not-allowed'
+                                      : vaultValues[v][i] !== '' && !isValidValue(vaultValues[v][i])
+                                        ? 'bg-surface-container-lowest border-error ring-1 ring-error/20 text-primary'
+                                        : 'bg-surface-container-lowest border-outline-variant/10 text-primary input-glow focus:ring-1 focus:ring-primary/20'
+                                  }`}
+                                  placeholder={isEnabled ? '—' : ''}
+                                  inputMode="numeric"
+                                  type="number"
+                                  disabled={!isEnabled}
+                                  value={vaultValues[v][i]}
+                                  onChange={(e) =>
+                                    handleVaultValueChange(v, i, e.target.value)
+                                  }
+                                  onKeyDown={(e) =>
+                                    handleKeyDown(e, v, i, visibleVaults)
+                                  }
+                                />
+                                {vaultValues[v][i] !== '' &&
+                                  !isValidValue(vaultValues[v][i]) && (
+                                    <p className="absolute -bottom-4 left-0 w-full text-[0.5625rem] text-error font-black text-center animate-pulse">
+                                      1-100
+                                    </p>
+                                  )}
+                              </>
+                            ) : (
+                              <div className="w-full py-2.5 md:py-3 text-center text-on-surface/10 text-base">
+                                —
+                              </div>
+                            )}
+                          </div>
+                        )
+                      })}
                     </>
                   ) : (
                     <>
