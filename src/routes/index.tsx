@@ -489,7 +489,7 @@ function RecordScreen() {
                   ? '현장 상황 보고 (Field Recon)'
                   : '획득물 결산 (Loot Accounting)'}
               </span>
-              <h1 className="serif-text text-4xl md:text-5xl font-black text-primary tracking-tight leading-tight mb-4 md:mb-6">
+              <h1 className="serif-text text-2xl md:text-5xl font-black text-primary tracking-tight leading-tight mb-4 md:mb-6">
                 작전 PHASE {currentRound.toString().padStart(2, '0')} / 07
               </h1>
 
