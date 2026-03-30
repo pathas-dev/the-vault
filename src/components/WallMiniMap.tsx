@@ -35,13 +35,13 @@ export function WallMiniMap({
 
       {/* 2xx column */}
       <div className="flex flex-col flex-1">
-        <div className="border border-l-0 border-outline-variant/30 bg-surface-container-lowest/30 flex-1 rounded-sm" />
+        <div className="border border-l-0 border-outline-variant/15 bg-surface-container-lowest/30 flex-1 rounded-sm" />
         <div className="h-0 relative">
           <div
             className={`absolute inset-x-0 -top-px h-0.5 rounded-full ${horizontalWall === 'ㄴ' ? wallActive : wallInactive}`}
           />
         </div>
-        <div className="border border-l-0 border-t-0 border-outline-variant/30 bg-surface-container-lowest/30 flex-1 rounded-sm" />
+        <div className="border border-l-0 border-t-0 border-outline-variant/15 bg-surface-container-lowest/30 flex-1 rounded-sm" />
       </div>
 
       {/* Walls c/d: 2xx ↔ 1xx */}
@@ -56,9 +56,9 @@ export function WallMiniMap({
 
       {/* 1xx column */}
       <div className="flex flex-col flex-1">
-        <div className="border border-l-0 border-outline-variant/30 bg-surface-container-lowest/30 flex-1 relative rounded-sm">
+        <div className="border border-l-0 border-outline-variant/15 bg-surface-container-lowest/30 flex-1 relative rounded-sm">
           <div
-            className={`absolute right-0 inset-y-0 w-0.5 transition-all duration-300 ${startPoint === 'A' ? 'bg-intrusion shadow-[0_0_8px_rgba(255,45,85,0.6)]' : 'bg-on-surface/10'}`}
+            className={`absolute right-0 inset-y-0 w-0.5 transition-all duration-300 ${startPoint === 'A' ? 'bg-intrusion shadow-[0_0_8px_rgba(255,45,85,0.6)]' : 'bg-transparent'}`}
           />
         </div>
         <div className="h-0 relative">
@@ -66,9 +66,9 @@ export function WallMiniMap({
             className={`absolute inset-x-0 -top-px h-0.5 rounded-full ${horizontalWall === 'ㄷ' ? wallActive : wallInactive}`}
           />
         </div>
-        <div className="border border-l-0 border-t-0 border-outline-variant/30 bg-surface-container-lowest/30 flex-1 relative rounded-sm">
+        <div className="border border-l-0 border-t-0 border-outline-variant/15 bg-surface-container-lowest/30 flex-1 relative rounded-sm">
           <div
-            className={`absolute right-0 inset-y-0 w-0.5 transition-all duration-300 ${startPoint === 'B' ? 'bg-intrusion shadow-[0_0_8px_rgba(255,45,85,0.6)]' : 'bg-on-surface/10'}`}
+            className={`absolute right-0 inset-y-0 w-0.5 transition-all duration-300 ${startPoint === 'B' ? 'bg-intrusion shadow-[0_0_8px_rgba(255,45,85,0.6)]' : 'bg-transparent'}`}
           />
         </div>
       </div>

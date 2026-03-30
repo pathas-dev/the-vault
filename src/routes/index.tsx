@@ -622,7 +622,10 @@ function RecordScreen() {
                 {/* 1xx column */}
                 <div className="flex flex-col flex-1">
                   {/* Room 10x */}
-                  <div className="border border-l-0 border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
+                  <div className="border border-l-0 border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3 flex-1 relative overflow-hidden">
+                    <div
+                      className={`absolute right-0 inset-y-0 w-0.5 transition-all duration-500 ${startPoint === 'A' ? 'bg-intrusion shadow-[0_0_12px_rgba(255,45,85,0.8)]' : 'bg-transparent'}`}
+                    />
                     <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full">
                       <VaultCell vault="101" className="w-full" />
                       <VaultCell vault="102" className="w-full" />
@@ -633,7 +636,10 @@ function RecordScreen() {
                   {/* Horizontal wall ㄷ overlay: between 10x and 11x */}
                   <HWallButton value="ㄷ" />
                   {/* Room 11x */}
-                  <div className="border border-l-0 border-t-0 border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
+                  <div className="border border-l-0 border-t-0 border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3 flex-1 relative overflow-hidden">
+                    <div
+                      className={`absolute right-0 inset-y-0 w-0.5 transition-all duration-500 ${startPoint === 'B' ? 'bg-intrusion shadow-[0_0_12px_rgba(255,45,85,0.8)]' : 'bg-transparent'}`}
+                    />
                     <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full">
                       <VaultCell vault="111" className="w-full" />
                       <VaultCell vault="112" className="w-full" />
@@ -644,7 +650,7 @@ function RecordScreen() {
                 </div>
 
                 {/* Entry points: right side of 1xx */}
-                <div className="flex flex-col self-stretch ml-0.5">
+                <div className="flex flex-col self-stretch">
                   <button
                     onClick={() => setStartPoint('A')}
                     aria-label="침투 지점 A 선택"
