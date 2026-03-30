@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useState, useEffect } from 'react'
 import { Topbar } from '../components/Layout'
 
 export const Route = createFileRoute('/' as any)({
@@ -7,6 +8,30 @@ export const Route = createFileRoute('/' as any)({
 
 function HomeScreen() {
   const navigate = useNavigate()
+  const [hasSavedSession, setHasSavedSession] = useState(false)
+
+  useEffect(() => {
+    const saved = sessionStorage.getItem('vault_rounds')
+    if (saved) {
+      try {
+        const data = JSON.parse(saved)
+        if (Array.isArray(data) && data.length > 0) {
+          setHasSavedSession(true)
+        }
+      } catch (e) {
+        console.error('Failed to parse saved session', e)
+      }
+    }
+  }, [])
+
+  const handleStartNew = () => {
+    sessionStorage.removeItem('vault_rounds')
+    navigate({ to: '/record' })
+  }
+
+  const handleResume = () => {
+    navigate({ to: '/record' })
+  }
 
   return (
     <div className="flex-1 flex flex-col min-h-screen relative overflow-hidden blueprint-bg w-full pt-16 md:pt-20">
@@ -36,18 +61,29 @@ function HomeScreen() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-10 md:mb-24">
             <button
-              onClick={() => navigate({ to: '/record' })}
+              onClick={handleStartNew}
               className="gold-gradient text-on-primary px-8 py-4 md:px-10 md:py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-base md:text-lg hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary/20"
             >
               <span
                 className="material-symbols-outlined"
                 style={{ fontVariationSettings: "'FILL' 1" }}
               >
-                play_arrow
+                {hasSavedSession ? 'refresh' : 'play_arrow'}
               </span>
-              작전 시작
+              {hasSavedSession ? '새 작전 시작' : '작전 시작'}
             </button>
-            <button className="border border-outline-variant bg-surface-container-low/40 backdrop-blur-md text-primary px-8 py-4 md:px-10 md:py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-base md:text-lg hover:bg-surface-container-high transition-all">
+            
+            {hasSavedSession && (
+              <button
+                onClick={handleResume}
+                className="bg-surface-container-high text-primary px-8 py-4 md:px-10 md:py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-base md:text-lg hover:bg-surface-container-highest transition-all border border-primary/20 shadow-lg shadow-primary/10 animate-in fade-in slide-in-from-left-4 duration-500"
+              >
+                <span className="material-symbols-outlined">history</span>
+                이어서 하기
+              </button>
+            )}
+
+            <button className="border border-outline-variant bg-surface-container-low/40 backdrop-blur-md text-on-surface/60 px-8 py-4 md:px-10 md:py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-base md:text-lg hover:bg-surface-container-high hover:text-on-surface transition-all">
               <span className="material-symbols-outlined">menu_book</span>
               기밀 문서
             </button>
