@@ -57,7 +57,7 @@ export const Topbar = ({ rightIcon = 'settings', onRightIconClick }: { rightIcon
                 <button
                   onClick={onRightIconClick}
                   aria-label={rightIcon === 'history' ? '작전 이력 보기' : '설정'}
-                  className="text-on-surface/60 hover:text-primary transition-colors duration-300 p-2 -mr-2"
+                  className="text-on-surface/60 hover:text-primary transition-colors duration-300 p-2 -mr-2 hover:bg-surface-container-high rounded-sm active:scale-90"
                 >
                     <span className="material-symbols-outlined text-[24px]">{rightIcon}</span>
                 </button>

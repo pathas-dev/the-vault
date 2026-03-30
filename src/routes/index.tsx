@@ -18,8 +18,8 @@ function HomeScreen() {
         if (Array.isArray(data) && data.length > 0) {
           setHasSavedSession(true)
         }
-      } catch (e) {
-        console.error('Failed to parse saved session', e)
+      } catch {
+        // corrupted session data — ignore
       }
     }
   }, [])
@@ -76,7 +76,7 @@ function HomeScreen() {
             {hasSavedSession && (
               <button
                 onClick={handleResume}
-                className="bg-surface-container-high text-primary px-8 py-4 md:px-10 md:py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-base md:text-lg hover:bg-surface-container-highest transition-all border border-primary/20 shadow-lg shadow-primary/10 animate-in fade-in slide-in-from-left-4 duration-500"
+                className="bg-surface-container-high text-primary px-8 py-4 md:px-10 md:py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-base md:text-lg hover:bg-surface-container-highest border border-primary/20 shadow-lg shadow-primary/10 btn-press animate-in fade-in slide-in-from-left-4 duration-500"
               >
                 <span className="material-symbols-outlined">history</span>
                 이어서 하기

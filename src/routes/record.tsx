@@ -454,7 +454,7 @@ function RecordScreen() {
                       <button
                         key={h}
                         onClick={() => setTargetHouse(h)}
-                        className={`flex-1 py-2 text-xs font-bold transition-all rounded-sm border ${targetHouse === h ? 'bg-primary text-on-primary border-primary' : 'bg-surface-container-low text-on-surface/40 border-outline-variant/20 hover:border-primary/40'}`}
+                        className={`flex-1 py-2 text-xs font-bold rounded-sm border btn-press ${targetHouse === h ? 'bg-primary text-on-primary border-primary' : 'bg-surface-container-low text-on-surface/40 border-outline-variant/20 hover:border-primary/40'}`}
                       >
                         {h}
                       </button>
@@ -756,7 +756,7 @@ function RecordScreen() {
             ) : (
               <button
                 onClick={handleNextRound}
-                className="relative flex items-center gap-4 px-12 py-5 bg-linear-to-br from-tertiary to-tertiary-container text-on-tertiary text-lg font-black rounded-sm shadow-xl hover:scale-[1.02] transition-all tracking-widest"
+                className="relative flex items-center gap-4 px-12 py-5 bg-linear-to-br from-tertiary to-tertiary-container text-on-tertiary text-lg font-black rounded-sm shadow-xl hover:shadow-2xl btn-press tracking-widest"
               >
                 <span className="material-symbols-outlined text-xl">
                   {isFinalRound ? 'analytics' : 'near_me'}
@@ -786,7 +786,7 @@ function RecordScreen() {
         ) : (
           <button
             onClick={handleNextRound}
-            className="w-full flex items-center justify-center gap-3 py-4 bg-linear-to-br from-tertiary to-tertiary-container text-on-tertiary font-black text-base rounded-sm shadow-xl"
+            className="w-full flex items-center justify-center gap-3 py-4 bg-linear-to-br from-tertiary to-tertiary-container text-on-tertiary font-black text-base rounded-sm shadow-xl btn-press"
           >
             <span className="material-symbols-outlined text-lg">
               {isFinalRound ? 'analytics' : 'near_me'}

@@ -201,7 +201,7 @@
 
   /* 버튼 프레스 피드백 */
   .btn-press {
-    transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), filter 0.15s ease;
+    transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), filter 0.15s ease, box-shadow 0.2s ease;
   }
   .btn-press:hover {
     transform: translateY(-1px);
@@ -209,6 +209,7 @@
   .btn-press:active {
     transform: translateY(1px) scale(0.98);
     filter: brightness(0.95);
+    box-shadow: none;
   }
 
   /* 골드 보더 글로우 — input focus */

@@ -89,7 +89,7 @@ function SummaryScreen() {
               </p>
               <p className="noto-serif text-4xl md:text-5xl font-black gold-text-gradient">
                 {calculateTotal().toLocaleString()}{' '}
-                <span className="text-sm">V</span>
+                <span className="text-base tracking-widest">V</span>
               </p>
             </div>
           </div>
@@ -238,7 +238,7 @@ function SummaryScreen() {
           <button
             onClick={() => window.print()}
             aria-label="장부 인쇄"
-            className="px-4 py-4 border border-outline-variant/30 bg-surface-container-low/80 backdrop-blur-sm font-bold text-xs tracking-widest uppercase hover:bg-surface-container transition-colors rounded-sm"
+            className="px-4 py-4 border border-outline-variant/30 bg-surface-container-low/80 backdrop-blur-sm font-bold text-xs tracking-widest uppercase hover:bg-surface-container rounded-sm btn-press"
           >
             <span className="material-symbols-outlined text-[18px] text-on-surface/60">print</span>
           </button>
