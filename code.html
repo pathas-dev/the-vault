@@ -1,476 +1,761 @@
-<!DOCTYPE html>
+<!doctype html>
 <html class="dark" lang="ko">
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>대도의 비밀 장부 (The Vault)</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-    
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/history@5/umd/history.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js" crossorigin></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/history@5/umd/history.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"
+      crossorigin
+    ></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
     <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "surface-container-low": "#181c22",
-                        "secondary-container": "#454749",
-                        "secondary": "#c6c6c9",
-                        "primary-fixed-dim": "#fabd00",
-                        "primary": "#ffc637",
-                        "surface-bright": "#353940",
-                        "on-primary": "#3f2e00",
-                        "inverse-primary": "#785900",
-                        "on-error": "#690005",
-                        "on-tertiary-fixed": "#261900",
-                        "surface-container-highest": "#31353c",
-                        "inverse-on-surface": "#2d3137",
-                        "outline-variant": "#4d4635",
-                        "surface-dim": "#10141a",
-                        "inverse-surface": "#dfe2eb",
-                        "surface-container-high": "#262a31",
-                        "on-secondary-fixed-variant": "#454749",
-                        "surface-container": "#1c2026",
-                        "tertiary-fixed-dim": "#e9c176",
-                        "secondary-fixed": "#e2e2e5",
-                        "surface-tint": "#fabd00",
-                        "tertiary-fixed": "#ffdea5",
-                        "surface-container-lowest": "#0a0e14",
-                        "tertiary": "#f1c97d",
-                        "on-secondary-fixed": "#1a1c1e",
-                        "error": "#ffb4ab",
-                        "primary-container": "#e2aa00",
-                        "outline": "#99907c",
-                        "tertiary-container": "#d3ad65",
-                        "on-tertiary-container": "#5b4000",
-                        "on-secondary-container": "#b4b5b7",
-                        "on-primary-fixed-variant": "#5b4300",
-                        "background": "#10141a",
-                        "surface": "#10141a",
-                        "on-error-container": "#ffdad6",
-                        "secondary-fixed-dim": "#c6c6c9",
-                        "on-tertiary-fixed-variant": "#5d4201",
-                        "on-background": "#dfe2eb",
-                        "error-container": "#93000a",
-                        "on-tertiary": "#412d00",
-                        "on-secondary": "#2f3133",
-                        "on-surface": "#dfe2eb",
-                        "on-primary-fixed": "#261a00",
-                        "on-surface-variant": "#d0c5af",
-                        "surface-variant": "#31353c",
-                        "primary-fixed": "#ffdf9e",
-                        "on-primary-container": "#594100",
-                        "dfe2eb": "#dfe2eb"
-                    },
-                    fontFamily: {
-                        "headline": ["Noto Serif KR", "serif"],
-                        "body": ["Manrope", "sans-serif"],
-                        "label": ["Manrope", "sans-serif"]
-                    },
-                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
-                },
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              'surface-container-low': '#181c22',
+              'secondary-container': '#454749',
+              secondary: '#c6c6c9',
+              'primary-fixed-dim': '#fabd00',
+              primary: '#ffc637',
+              'surface-bright': '#353940',
+              'on-primary': '#3f2e00',
+              'inverse-primary': '#785900',
+              'on-error': '#690005',
+              'on-tertiary-fixed': '#261900',
+              'surface-container-highest': '#31353c',
+              'inverse-on-surface': '#2d3137',
+              'outline-variant': '#4d4635',
+              'surface-dim': '#10141a',
+              'inverse-surface': '#dfe2eb',
+              'surface-container-high': '#262a31',
+              'on-secondary-fixed-variant': '#454749',
+              'surface-container': '#1c2026',
+              'tertiary-fixed-dim': '#e9c176',
+              'secondary-fixed': '#e2e2e5',
+              'surface-tint': '#fabd00',
+              'tertiary-fixed': '#ffdea5',
+              'surface-container-lowest': '#0a0e14',
+              tertiary: '#f1c97d',
+              'on-secondary-fixed': '#1a1c1e',
+              error: '#ffb4ab',
+              'primary-container': '#e2aa00',
+              outline: '#99907c',
+              'tertiary-container': '#d3ad65',
+              'on-tertiary-container': '#5b4000',
+              'on-secondary-container': '#b4b5b7',
+              'on-primary-fixed-variant': '#5b4300',
+              background: '#10141a',
+              surface: '#10141a',
+              'on-error-container': '#ffdad6',
+              'secondary-fixed-dim': '#c6c6c9',
+              'on-tertiary-fixed-variant': '#5d4201',
+              'on-background': '#dfe2eb',
+              'error-container': '#93000a',
+              'on-tertiary': '#412d00',
+              'on-secondary': '#2f3133',
+              'on-surface': '#dfe2eb',
+              'on-primary-fixed': '#261a00',
+              'on-surface-variant': '#d0c5af',
+              'surface-variant': '#31353c',
+              'primary-fixed': '#ffdf9e',
+              'on-primary-container': '#594100',
+              dfe2eb: '#dfe2eb',
             },
-        }
+            fontFamily: {
+              headline: ['Noto Serif KR', 'serif'],
+              body: ['Manrope', 'sans-serif'],
+              label: ['Manrope', 'sans-serif'],
+            },
+            borderRadius: {
+              DEFAULT: '0.125rem',
+              lg: '0.25rem',
+              xl: '0.5rem',
+              full: '0.75rem',
+            },
+          },
+        },
+      }
     </script>
     <style>
-        body { font-family: 'Manrope', sans-serif; background-color: #10141a; color: #dfe2eb; }
-        .serif-text, .noto-serif { font-family: 'Noto Serif KR', serif; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
-        .blueprint-bg { background-image: radial-gradient(circle at 2px 2px, rgba(255, 198, 55, 0.05) 1px, transparent 0); background-size: 40px 40px; }
-        .gold-gradient { background: linear-gradient(135deg, #ffc637 0%, #e2aa00 100%); }
-        .gold-text-gradient { background: linear-gradient(135deg, #ffc637 0%, #e2aa00 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-        .custom-scrollbar::-webkit-scrollbar { height: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #181c22; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #4d4635; border-radius: 2px; }
+      body {
+        font-family: 'Manrope', sans-serif;
+        background-color: #10141a;
+        color: #dfe2eb;
+      }
+      .serif-text,
+      .noto-serif {
+        font-family: 'Noto Serif KR', serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24;
+        vertical-align: middle;
+      }
+      .blueprint-bg {
+        background-image: radial-gradient(
+          circle at 2px 2px,
+          rgba(255, 198, 55, 0.05) 1px,
+          transparent 0
+        );
+        background-size: 40px 40px;
+      }
+      .gold-gradient {
+        background: linear-gradient(135deg, #ffc637 0%, #e2aa00 100%);
+      }
+      .gold-text-gradient {
+        background: linear-gradient(135deg, #ffc637 0%, #e2aa00 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      input[type='number']::-webkit-inner-spin-button,
+      input[type='number']::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        height: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #181c22;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #4d4635;
+        border-radius: 2px;
+      }
     </style>
-</head>
-<body class="bg-background text-on-surface min-h-screen selection:bg-primary/30">
+  </head>
+  <body
+    class="bg-background text-on-surface min-h-screen selection:bg-primary/30"
+  >
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
-        const { createRoot } = ReactDOM;
-        const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
+      const { useState, useEffect } = React
+      const { createRoot } = ReactDOM
+      const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } =
+        ReactRouterDOM
 
-        // --- Components ---
+      // --- Components ---
 
-        const Sidebar = () => {
-            const location = useLocation();
-            
-            const getLinkClass = (path) => {
-                const isActive = location.pathname === path;
-                const baseClass = "flex items-center gap-3 px-6 py-3 font-medium text-sm transition-all duration-200";
-                if (isActive) {
-                    return `${baseClass} text-[#ffc637] border-l-2 border-[#ffc637] bg-gradient-to-r from-[#ffc637]/10 to-transparent translate-x-1`;
-                }
-                return `${baseClass} text-[#dfe2eb]/40 hover:text-[#dfe2eb]/80 hover:bg-[#181c22]`;
-            };
+      const Sidebar = () => {
+        const location = useLocation()
 
-            return (
-                <aside className="hidden md:flex flex-col h-screen w-64 py-8 bg-[#10141a] sticky top-0 shrink-0 z-40">
-                    <div className="px-6 mb-12">
-                        <h2 className="text-[#ffc637] font-['Noto_Serif_KR'] text-lg font-black uppercase tracking-widest">The Vault</h2>
-                        <p className="text-[#dfe2eb]/40 text-xs mt-1">Stealth Mode Active</p>
-                    </div>
-                    <nav className="flex-1 space-y-2">
-                        <Link className={getLinkClass("/")} to="/">
-                            <span className="material-symbols-outlined mr-3">description</span>
-                            작전 개요
-                        </Link>
-                        <Link className={getLinkClass("/record")} to="/record">
-                            <span className="material-symbols-outlined mr-3">inventory_2</span>
-                            전리품 기록
-                        </Link>
-                        <Link className={getLinkClass("/summary")} to="/summary">
-                            <span className="material-symbols-outlined mr-3">payments</span>
-                            최종 결산
-                        </Link>
-                    </nav>
-                    <div className="px-6 mt-auto">
-                        <div className="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg">
-                            <div className="w-8 h-8 rounded-sm overflow-hidden bg-primary-container/20 flex items-center justify-center border border-outline-variant/20">
-                                <span className="material-symbols-outlined text-primary text-sm">person</span>
-                            </div>
-                            <div>
-                                <p className="text-xs font-bold text-on-surface uppercase">Master Thief</p>
-                                <p className="text-[10px] text-on-surface-variant">Rank: S-Class</p>
-                            </div>
-                        </div>
-                    </div>
-                </aside>
-            );
-        };
+        const getLinkClass = (path) => {
+          const isActive = location.pathname === path
+          const baseClass =
+            'flex items-center gap-3 px-6 py-3 font-medium text-sm transition-all duration-200'
+          if (isActive) {
+            return `${baseClass} text-[#ffc637] border-l-2 border-[#ffc637] bg-gradient-to-r from-[#ffc637]/10 to-transparent translate-x-1`
+          }
+          return `${baseClass} text-[#dfe2eb]/40 hover:text-[#dfe2eb]/80 hover:bg-[#181c22]`
+        }
 
-        const Topbar = () => {
-            return (
-                <header className="flex justify-between items-center w-full px-6 py-4 max-w-none bg-[#10141a] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] z-50 sticky top-0">
-                    <div className="text-[#ffc637] font-['Noto_Serif_KR'] text-xl font-black uppercase tracking-widest">
-                        대도의 비밀 장부
-                    </div>
-                    <div className="flex items-center gap-6">
-                        <button className="text-[#dfe2eb]/60 hover:text-[#ffc637] transition-colors duration-300">
-                            <span className="material-symbols-outlined">settings</span>
-                        </button>
-                    </div>
-                </header>
-            );
-        };
-
-        const MobileNav = () => {
-            const location = useLocation();
-            
-            const getLinkClass = (path) => {
-                const isActive = location.pathname === path;
-                return `flex flex-col items-center gap-1 ${isActive ? 'text-[#ffc637]' : 'text-[#dfe2eb]/40'}`;
-            };
-
-            return (
-                <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#10141a] flex justify-around items-center py-4 px-2 z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
-                    <Link className={getLinkClass("/")} to="/">
-                        <span className="material-symbols-outlined">description</span>
-                        <span className="text-[10px] font-medium">개요</span>
-                    </Link>
-                    <Link className={getLinkClass("/record")} to="/record">
-                        <span className="material-symbols-outlined">inventory_2</span>
-                        <span className="text-[10px] font-medium">기록</span>
-                    </Link>
-                    <div className="relative -top-6">
-                        <button className="gold-gradient w-14 h-14 rounded-full flex items-center justify-center shadow-xl shadow-primary/40 border-4 border-[#10141a]">
-                            <span className="material-symbols-outlined text-on-primary text-3xl">add</span>
-                        </button>
-                    </div>
-                    <Link className={getLinkClass("/summary")} to="/summary">
-                        <span className="material-symbols-outlined">payments</span>
-                        <span className="text-[10px] font-medium">결산</span>
-                    </Link>
-                </nav>
-            );
-        };
-
-        // --- Screens ---
-
-        const HomeScreen = () => {
-            const navigate = useNavigate();
-            return (
-                <div className="flex-1 flex flex-col min-h-screen relative overflow-hidden blueprint-bg w-full">
-                    <Topbar />
-                    <main className="flex-1 flex flex-col items-start justify-center px-8 md:px-24 py-20 relative z-10">
-                        <div className="absolute top-0 right-0 w-1/2 h-full pointer-events-none opacity-20 hidden lg:block">
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-primary/20 rounded-full"></div>
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] border border-primary/10 rounded-full"></div>
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] border border-primary/30 rounded-full flex items-center justify-center">
-                                <span className="material-symbols-outlined text-primary/40 text-8xl" style={{fontVariationSettings: "'wght' 100"}}>lock_open</span>
-                            </div>
-                        </div>
-
-                        <div className="max-w-2xl">
-                            <h1 className="font-headline font-black text-6xl md:text-8xl text-primary leading-tight mb-6 tracking-tighter">
-                                대도의 <br/>비밀 장부
-                            </h1>
-                            <p className="text-on-surface-variant text-lg md:text-xl leading-relaxed mb-12 max-w-lg border-l-2 border-primary/40 pl-6 italic">
-                                조용히 침입하여 최고의 보물을 선점하십시오. 모든 기록은 비밀이며, 결과는 오직 명성으로 증명됩니다.
-                            </p>
-                            <div className="flex flex-col sm:flex-row gap-4 mb-24">
-                                <button onClick={() => navigate('/record')} className="gold-gradient text-on-primary px-10 py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-lg hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary/20">
-                                    <span className="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>play_arrow</span>
-                                    작전 시작 (Start Mission)
-                                </button>
-                                <button className="border border-outline-variant bg-surface-container-low/40 backdrop-blur-md text-primary px-10 py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-lg hover:bg-surface-container-high transition-all">
-                                    <span className="material-symbols-outlined">menu_book</span>
-                                    기밀 문서 (Field Manual)
-                                </button>
-                            </div>
-                        </div>
-
-                        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-auto">
-                            <div className="bg-surface-container-low p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-colors">
-                                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                                    <span className="material-symbols-outlined text-6xl">visibility_off</span>
-                                </div>
-                                <p className="text-primary text-xs font-bold tracking-[0.2em] mb-2 uppercase">Protocol</p>
-                                <h3 className="font-headline text-2xl text-on-surface">프로토콜: 완전 은폐</h3>
-                            </div>
-                            <div className="bg-surface-container-low p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-colors">
-                                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                                    <span className="material-symbols-outlined text-6xl">sensors</span>
-                                </div>
-                                <p className="text-tertiary text-xs font-bold tracking-[0.2em] mb-2 uppercase">Status</p>
-                                <h3 className="font-headline text-2xl text-on-surface">상태: 미탐지</h3>
-                            </div>
-                            <div className="bg-surface-container-low p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-colors">
-                                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                                    <span className="material-symbols-outlined text-6xl">account_balance_wallet</span>
-                                </div>
-                                <p className="text-primary-fixed-dim text-xs font-bold tracking-[0.2em] mb-2 uppercase">Assets</p>
-                                <h3 className="font-headline text-2xl text-on-surface">자산: 99.8% 회수율</h3>
-                            </div>
-                        </div>
-                    </main>
-                    <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]">
-                        <img alt="abstract geometry background" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHWEPZEfqgDNU0CqKRlARyDhMqA6qoLNFHlxyHkbtLwjQTPMhY5qNFg8LVtQMqorQ_BlOnMUTjUmpm0IBujdkGcQ6gBHeH646oJBPggC0-hMwGIROF7Ei4BVfnpOMdmEKOVbMMQa-3Jbb7ZFYOKAlBrNm3oOu6DcqIB1ScyFGFpfbITt5fal-D-IrrhgpF48Sh2jnFat3iHIg4ZHqL9e9c6-4WAwOjNooVSq5wF3kriG5C_9t3wMxk2DgjZ_5yrRichHM0O2RYf1n8"/>
-                    </div>
+        return (
+          <aside className="hidden md:flex flex-col h-screen w-64 py-8 bg-[#10141a] sticky top-0 shrink-0 z-40">
+            <div className="px-6 mb-12">
+              <h2 className="text-[#ffc637] font-['Noto_Serif_KR'] text-lg font-black uppercase tracking-widest">
+                The Vault
+              </h2>
+              <p className="text-[#dfe2eb]/40 text-xs mt-1">
+                Stealth Mode Active
+              </p>
+            </div>
+            <nav className="flex-1 space-y-2">
+              <Link className={getLinkClass('/')} to="/">
+                <span className="material-symbols-outlined mr-3">
+                  description
+                </span>
+                작전 개요
+              </Link>
+              <Link className={getLinkClass('/record')} to="/record">
+                <span className="material-symbols-outlined mr-3">
+                  inventory_2
+                </span>
+                전리품 기록
+              </Link>
+              <Link className={getLinkClass('/summary')} to="/summary">
+                <span className="material-symbols-outlined mr-3">payments</span>
+                최종 결산
+              </Link>
+            </nav>
+            <div className="px-6 mt-auto">
+              <div className="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg">
+                <div className="w-8 h-8 rounded-sm overflow-hidden bg-primary-container/20 flex items-center justify-center border border-outline-variant/20">
+                  <span className="material-symbols-outlined text-primary text-sm">
+                    person
+                  </span>
                 </div>
-            );
-        };
-
-        const RecordScreen = () => {
-            const navigate = useNavigate();
-            return (
-                <div className="flex-1 flex flex-col w-full min-w-0">
-                    <Topbar />
-                    <main className="flex-1 px-6 md:px-12 py-12 max-w-7xl mx-auto w-full pb-24 md:pb-12">
-                        <section className="mb-16">
-                            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-                                <div className="max-w-2xl">
-                                    <h1 className="serif-text text-5xl md:text-6xl font-black text-primary tracking-tight leading-tight mb-4">
-                                        제 01라운드 / 07
-                                    </h1>
-                                    <div className="flex flex-wrap gap-x-8 gap-y-4 text-on-surface-variant font-medium text-sm md:text-base">
-                                        <div className="flex items-center gap-2">
-                                            <span className="material-symbols-outlined text-primary/60 text-lg">location_on</span>
-                                            <span>목표 장소: <span className="text-on-surface">가옥 A</span></span>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <span className="material-symbols-outlined text-primary/60 text-lg">login</span>
-                                            <span>침투 지점: <span className="text-on-surface">입구 B</span></span>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <span className="material-symbols-outlined text-primary/60 text-lg">encrypted</span>
-                                            <span>보안 설정: <span className="text-on-surface">[ㄱ, ㄴ, ㄷ] / [a, b]</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                        <section className="bg-surface-container-low rounded-xl overflow-hidden border border-outline-variant/15">
-                            <div className="grid grid-cols-4 md:grid-cols-6 border-b border-outline-variant/15 bg-surface-container text-xs font-bold uppercase tracking-widest py-4 px-6 text-on-surface-variant">
-                                <div className="col-span-1 serif-text text-primary">가옥 호수</div>
-                                <div className="col-span-1 text-center serif-text text-primary">보물 01</div>
-                                <div className="col-span-1 text-center serif-text text-primary">보물 02</div>
-                                <div className="col-span-1 md:col-span-3 text-right serif-text text-primary">상태</div>
-                            </div>
-                            <div className="divide-y divide-outline-variant/5">
-                                <div className="grid grid-cols-4 md:grid-cols-6 items-center py-4 px-6 hover:bg-surface-container-high transition-colors">
-                                    <div className="col-span-1 serif-text text-lg font-bold text-on-surface">101</div>
-                                    <div className="col-span-1 px-2"><input className="w-full bg-surface-container-lowest border-0 text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2" placeholder="0" type="number" defaultValue="5"/></div>
-                                    <div className="col-span-1 px-2"><input className="w-full bg-surface-container-lowest border-0 text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2" placeholder="0" type="number" defaultValue="7"/></div>
-                                    <div className="col-span-1 md:col-span-3 flex justify-end gap-2">
-                                        <span className="hidden md:inline-block px-3 py-1 bg-surface-container text-[10px] font-bold text-tertiary rounded uppercase">Secured</span>
-                                        <span className="material-symbols-outlined text-tertiary cursor-pointer hover:scale-110 transition-transform">check_circle</span>
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-4 md:grid-cols-6 items-center py-4 px-6 hover:bg-surface-container-high transition-colors">
-                                    <div className="col-span-1 serif-text text-lg font-bold text-on-surface">102</div>
-                                    <div className="col-span-1 px-2"><input className="w-full bg-surface-container-lowest border-0 text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2" placeholder="0" type="number"/></div>
-                                    <div className="col-span-1 px-2"><input className="w-full bg-surface-container-lowest border-0 text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2" placeholder="0" type="number"/></div>
-                                    <div className="col-span-1 md:col-span-3 flex justify-end gap-2">
-                                        <span className="material-symbols-outlined text-outline-variant cursor-pointer hover:text-primary transition-colors">radio_button_unchecked</span>
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-4 md:grid-cols-6 items-center py-4 px-6 hover:bg-surface-container-high transition-colors">
-                                    <div className="col-span-1 serif-text text-lg font-bold text-on-surface text-error">103</div>
-                                    <div className="col-span-1 px-2"><input className="w-full bg-surface-container-lowest border-0 text-center text-error font-bold rounded-sm focus:ring-1 focus:ring-error/40 py-2" placeholder="0" type="number"/></div>
-                                    <div className="col-span-1 px-2"><input className="w-full bg-surface-container-lowest border-0 text-center text-error font-bold rounded-sm focus:ring-1 focus:ring-error/40 py-2" placeholder="0" type="number"/></div>
-                                    <div className="col-span-1 md:col-span-3 flex justify-end gap-2">
-                                        <span className="hidden md:inline-block px-3 py-1 bg-error-container/20 text-[10px] font-bold text-error rounded uppercase">Breached</span>
-                                        <span className="material-symbols-outlined text-error cursor-pointer">report_problem</span>
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-4 md:grid-cols-6 items-center py-4 px-6 hover:bg-surface-container-high transition-colors">
-                                    <div className="col-span-1 serif-text text-lg font-bold text-on-surface">111</div>
-                                    <div className="col-span-1 px-2"><input className="w-full bg-surface-container-lowest border-0 text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2" placeholder="0" type="number"/></div>
-                                    <div className="col-span-1 px-2"><input className="w-full bg-surface-container-lowest border-0 text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2" placeholder="0" type="number"/></div>
-                                    <div className="col-span-1 md:col-span-3 flex justify-end gap-2"><span className="material-symbols-outlined text-outline-variant cursor-pointer">radio_button_unchecked</span></div>
-                                </div>
-                            </div>
-                        </section>
-
-                        <section className="mt-20 flex flex-col items-center justify-center">
-                            <div className="relative group">
-                                <div className="absolute -inset-1 bg-gradient-to-r from-primary to-primary-container rounded blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-                                <button onClick={() => navigate('/summary')} className="relative flex items-center gap-4 px-12 py-6 bg-gradient-to-br from-primary to-primary-container text-on-primary text-xl font-black rounded-sm shadow-2xl hover:scale-[1.02] active:scale-95 transition-all">
-                                    <span className="serif-text">단계 결과 확보 (Secure Phase Results)</span>
-                                    <span className="material-symbols-outlined font-bold">lock_open</span>
-                                </button>
-                            </div>
-                            <p className="mt-6 text-on-surface-variant text-sm font-medium tracking-widest opacity-60">MISSION PHASE 01 OF 07</p>
-                        </section>
-                    </main>
-                    <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]" style={{backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBahMjspscmOlRydFeZiCVATXkfw6pEATu-kblpB4U_8PQEydTQeB7dqX-cofBN8Rj1D8nGIP-tDvL1Bzbv6cFxQYognCmXh74BugeJs97eBtH25zbnPZY3x6hf1VbkImgJ68Uw0RG9YP2o7mWGrFtXPMWBntot6cYMJaFv1jPE_A1BveuEzGHoSZqbR-0DCc9_BDp26do3lzs4mYICAdE7PIunrll4h4At9pxGYAoLyB8kWVnmcihNFo80yPv_Vf_3kPRHg0l3ZfBZ')"}}></div>
+                <div>
+                  <p className="text-xs font-bold text-on-surface uppercase">
+                    Master Thief
+                  </p>
+                  <p className="text-[10px] text-on-surface-variant">
+                    Rank: S-Class
+                  </p>
                 </div>
-            );
-        };
+              </div>
+            </div>
+          </aside>
+        )
+      }
 
-        const SummaryScreen = () => {
-            const navigate = useNavigate();
-            return (
-                <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden w-full">
-                    <Topbar />
-                    <main className="flex-1 px-6 md:px-12 py-10 md:py-20 max-w-7xl mx-auto w-full pb-24 md:pb-12">
-                        <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20 items-end">
-                            <div className="lg:col-span-8">
-                                <span className="text-primary text-sm font-bold tracking-[0.3em] uppercase mb-4 block">Operation: Extraction Complete</span>
-                                <h2 className="noto-serif text-5xl md:text-7xl font-black gold-text-gradient leading-tight mb-8">
-                                    전리품 결산
-                                </h2>
-                                <p className="text-on-surface-variant max-w-lg leading-relaxed border-l border-outline-variant/30 pl-6">
-                                    작전이 성공적으로 종료되었습니다. 수집된 모든 자산과 전리품이 안전 가옥으로 이송되었으며, 최종 기여도에 따른 결산 결과가 생성되었습니다.
-                                </p>
-                            </div>
-                            <div className="lg:col-span-4 flex flex-col items-start lg:items-end">
-                                <div className="relative w-full aspect-square max-w-[280px] group">
-                                    <div className="absolute inset-0 gold-gradient rounded-sm opacity-20 blur-2xl group-hover:opacity-30 transition-opacity"></div>
-                                    <img alt="The Vault Key" className="w-full h-full object-cover rounded-sm grayscale group-hover:grayscale-0 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgP5CZI58R2xp7GTH5c3Ys1BEYM0OAsdureVTBodlFTcGgzY9r__bTEFe_1bWTqAK7Pe6VQrHRkeBNjovDU-vptUtkzoJM_KvojbGZz5CXkTyuRveI0e9CraR9nqyQ95lDpjqZer9Si4rDcc1VoTRCeFfciaANPhYGFxuAwKF7s8dzQAvlYV11kBxsUyg6mnnOZEw9WyXaJKFppUiSi5PBrFcXLwhHn1P07eo-ibstQIVyoU5qGarhFnP8IYe2g1wiNDEsJcDrnBbr"/>
-                                </div>
-                            </div>
-                        </section>
+      const Topbar = () => {
+        return (
+          <header className="flex justify-between items-center w-full px-6 py-4 max-w-none bg-[#10141a] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] z-50 sticky top-0">
+            <div className="text-[#ffc637] font-['Noto_Serif_KR'] text-xl font-black uppercase tracking-widest">
+              대도의 비밀 장부
+            </div>
+            <div className="flex items-center gap-6">
+              <button className="text-[#dfe2eb]/60 hover:text-[#ffc637] transition-colors duration-300">
+                <span className="material-symbols-outlined">settings</span>
+              </button>
+            </div>
+          </header>
+        )
+      }
 
-                        <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-                            <div className="bg-surface-container-low p-8 relative overflow-hidden group">
-                                <div className="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                                    <span className="material-symbols-outlined text-9xl">military_tech</span>
-                                </div>
-                                <p className="text-xs text-primary font-bold tracking-widest uppercase mb-4">최고 득점</p>
-                                <div className="flex items-baseline gap-2">
-                                    <span className="noto-serif text-4xl font-bold">142</span>
-                                    <span className="text-on-surface-variant text-sm uppercase">pts</span>
-                                </div>
-                            </div>
-                            <div className="bg-surface-container-low p-8 relative overflow-hidden group">
-                                <div className="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                                    <span className="material-symbols-outlined text-9xl">analytics</span>
-                                </div>
-                                <p className="text-xs text-primary font-bold tracking-widest uppercase mb-4">평균 획득</p>
-                                <div className="flex items-baseline gap-2">
-                                    <span className="noto-serif text-4xl font-bold">20.3</span>
-                                    <span className="text-on-surface-variant text-sm uppercase">pts</span>
-                                </div>
-                            </div>
-                            <div className="bg-surface-container-low p-8 relative overflow-hidden group">
-                                <div className="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                                    <span className="material-symbols-outlined text-9xl">task_alt</span>
-                                </div>
-                                <p className="text-xs text-primary font-bold tracking-widest uppercase mb-4">완료 단계</p>
-                                <div className="flex items-baseline gap-2">
-                                    <span className="noto-serif text-4xl font-bold">07</span>
-                                    <span className="text-on-surface-variant text-sm uppercase">/ 07</span>
-                                </div>
-                            </div>
-                        </section>
+      const MobileNav = () => {
+        const location = useLocation()
 
-                        <section className="bg-surface-container rounded-sm overflow-hidden mb-16">
-                            <div className="px-8 py-6 border-b border-outline-variant/10 flex justify-between items-center bg-surface-container-high/50">
-                                <h3 className="noto-serif text-lg font-bold tracking-tight flex items-center gap-3">
-                                    <span className="material-symbols-outlined text-primary">grid_view</span>
-                                    상세 스코어 리포트
-                                </h3>
-                            </div>
-                            <div className="overflow-x-auto custom-scrollbar">
-                                <table className="w-full text-left border-collapse min-w-[600px]">
-                                    <thead>
-                                        <tr className="bg-surface-container-highest/30">
-                                            <th className="p-4 text-[10px] font-bold text-primary tracking-[0.2em] uppercase border-r border-outline-variant/10">Metric</th>
-                                            <th className="p-4 text-[10px] font-bold text-on-surface-variant tracking-[0.2em] uppercase text-center">R1</th>
-                                            <th className="p-4 text-[10px] font-bold text-on-surface-variant tracking-[0.2em] uppercase text-center">R2</th>
-                                            <th className="p-4 text-[10px] font-bold text-on-surface-variant tracking-[0.2em] uppercase text-center">R3</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-outline-variant/5">
-                                        <tr className="hover:bg-surface-container-high transition-colors">
-                                            <td className="p-4 font-medium text-sm border-r border-outline-variant/10">House 01</td>
-                                            <td className="p-4 text-center noto-serif font-bold text-on-surface">12</td>
-                                            <td className="p-4 text-center noto-serif font-bold text-on-surface">15</td>
-                                            <td className="p-4 text-center noto-serif font-bold text-on-surface">08</td>
-                                        </tr>
-                                        <tr className="bg-primary/5">
-                                            <td className="p-4 font-black text-sm border-r border-outline-variant/10 text-primary uppercase tracking-widest">Grand Total</td>
-                                            <td className="p-4 text-right noto-serif text-3xl font-black gold-text-gradient pr-8" colSpan="3">
-                                                142 PTS
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </section>
+        const getLinkClass = (path) => {
+          const isActive = location.pathname === path
+          return `flex flex-col items-center gap-1 ${isActive ? 'text-[#ffc637]' : 'text-[#dfe2eb]/40'}`
+        }
 
-                        <footer className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-                            <button onClick={() => navigate('/')} className="w-full sm:w-auto px-12 py-4 gold-gradient text-on-primary font-bold text-sm rounded-sm hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-primary/10">
-                                새로운 작전 (New Heist)
-                            </button>
-                        </footer>
-                    </main>
+        return (
+          <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#10141a] flex justify-around items-center py-4 px-2 z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+            <Link className={getLinkClass('/')} to="/">
+              <span className="material-symbols-outlined">description</span>
+              <span className="text-[10px] font-medium">개요</span>
+            </Link>
+            <Link className={getLinkClass('/record')} to="/record">
+              <span className="material-symbols-outlined">inventory_2</span>
+              <span className="text-[10px] font-medium">기록</span>
+            </Link>
+            <div className="relative -top-6">
+              <button className="gold-gradient w-14 h-14 rounded-full flex items-center justify-center shadow-xl shadow-primary/40 border-4 border-[#10141a]">
+                <span className="material-symbols-outlined text-on-primary text-3xl">
+                  add
+                </span>
+              </button>
+            </div>
+            <Link className={getLinkClass('/summary')} to="/summary">
+              <span className="material-symbols-outlined">payments</span>
+              <span className="text-[10px] font-medium">결산</span>
+            </Link>
+          </nav>
+        )
+      }
+
+      // --- Screens ---
+
+      const HomeScreen = () => {
+        const navigate = useNavigate()
+        return (
+          <div className="flex-1 flex flex-col min-h-screen relative overflow-hidden blueprint-bg w-full">
+            <Topbar />
+            <main className="flex-1 flex flex-col items-start justify-center px-8 md:px-24 py-20 relative z-10">
+              <div className="absolute top-0 right-0 w-1/2 h-full pointer-events-none opacity-20 hidden lg:block">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-primary/20 rounded-full"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] border border-primary/10 rounded-full"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] border border-primary/30 rounded-full flex items-center justify-center">
+                  <span
+                    className="material-symbols-outlined text-primary/40 text-8xl"
+                    style={{ fontVariationSettings: "'wght' 100" }}
+                  >
+                    lock_open
+                  </span>
                 </div>
-            );
-        };
+              </div>
 
-        const App = () => {
-            return (
-                <MemoryRouter>
-                    <div className="flex w-full min-h-screen">
-                        <Sidebar />
-                        <Routes>
-                            <Route path="/" element={<HomeScreen />} />
-                            <Route path="/record" element={<RecordScreen />} />
-                            <Route path="/summary" element={<SummaryScreen />} />
-                        </Routes>
-                        <MobileNav />
+              <div className="max-w-2xl">
+                <h1 className="font-headline font-black text-6xl md:text-8xl text-primary leading-tight mb-6 tracking-tighter">
+                  대도의 <br />
+                  비밀 장부
+                </h1>
+                <p className="text-on-surface-variant text-lg md:text-xl leading-relaxed mb-12 max-w-lg border-l-2 border-primary/40 pl-6 italic">
+                  조용히 침입하여 최고의 보물을 선점하십시오. 모든 기록은
+                  비밀이며, 결과는 오직 명성으로 증명됩니다.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 mb-24">
+                  <button
+                    onClick={() => navigate('/record')}
+                    className="gold-gradient text-on-primary px-10 py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-lg hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary/20"
+                  >
+                    <span
+                      className="material-symbols-outlined"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
+                      play_arrow
+                    </span>
+                    작전 시작 (Start Mission)
+                  </button>
+                  <button className="border border-outline-variant bg-surface-container-low/40 backdrop-blur-md text-primary px-10 py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-lg hover:bg-surface-container-high transition-all">
+                    <span className="material-symbols-outlined">menu_book</span>
+                    기밀 문서 (Field Manual)
+                  </button>
+                </div>
+              </div>
+
+              <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-auto">
+                <div className="bg-surface-container-low p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-colors">
+                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <span className="material-symbols-outlined text-6xl">
+                      visibility_off
+                    </span>
+                  </div>
+                  <p className="text-primary text-xs font-bold tracking-[0.2em] mb-2 uppercase">
+                    Protocol
+                  </p>
+                  <h3 className="font-headline text-2xl text-on-surface">
+                    프로토콜: 완전 은폐
+                  </h3>
+                </div>
+                <div className="bg-surface-container-low p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-colors">
+                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <span className="material-symbols-outlined text-6xl">
+                      sensors
+                    </span>
+                  </div>
+                  <p className="text-tertiary text-xs font-bold tracking-[0.2em] mb-2 uppercase">
+                    Status
+                  </p>
+                  <h3 className="font-headline text-2xl text-on-surface">
+                    상태: 미탐지
+                  </h3>
+                </div>
+                <div className="bg-surface-container-low p-8 rounded-sm relative overflow-hidden group hover:bg-surface-container-high transition-colors">
+                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <span className="material-symbols-outlined text-6xl">
+                      account_balance_wallet
+                    </span>
+                  </div>
+                  <p className="text-primary-fixed-dim text-xs font-bold tracking-[0.2em] mb-2 uppercase">
+                    Assets
+                  </p>
+                  <h3 className="font-headline text-2xl text-on-surface">
+                    자산: 99.8% 회수율
+                  </h3>
+                </div>
+              </div>
+            </main>
+            <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]">
+              <img
+                alt="abstract geometry background"
+                className="w-full h-full object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHWEPZEfqgDNU0CqKRlARyDhMqA6qoLNFHlxyHkbtLwjQTPMhY5qNFg8LVtQMqorQ_BlOnMUTjUmpm0IBujdkGcQ6gBHeH646oJBPggC0-hMwGIROF7Ei4BVfnpOMdmEKOVbMMQa-3Jbb7ZFYOKAlBrNm3oOu6DcqIB1ScyFGFpfbITt5fal-D-IrrhgpF48Sh2jnFat3iHIg4ZHqL9e9c6-4WAwOjNooVSq5wF3kriG5C_9t3wMxk2DgjZ_5yrRichHM0O2RYf1n8"
+              />
+            </div>
+          </div>
+        )
+      }
+
+      const RecordScreen = () => {
+        const navigate = useNavigate()
+        return (
+          <div className="flex-1 flex flex-col w-full min-w-0">
+            <Topbar />
+            <main className="flex-1 px-6 md:px-12 py-12 max-w-7xl mx-auto w-full pb-24 md:pb-12">
+              <section className="mb-16">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+                  <div className="max-w-2xl">
+                    <h1 className="serif-text text-5xl md:text-6xl font-black text-primary tracking-tight leading-tight mb-4">
+                      제 01라운드 / 07
+                    </h1>
+                    <div className="flex flex-wrap gap-x-8 gap-y-4 text-on-surface-variant font-medium text-sm md:text-base">
+                      <div className="flex items-center gap-2">
+                        <span className="material-symbols-outlined text-primary/60 text-lg">
+                          location_on
+                        </span>
+                        <span>
+                          목표 장소:{' '}
+                          <span className="text-on-surface">가옥 A</span>
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="material-symbols-outlined text-primary/60 text-lg">
+                          login
+                        </span>
+                        <span>
+                          침투 지점:{' '}
+                          <span className="text-on-surface">입구 B</span>
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="material-symbols-outlined text-primary/60 text-lg">
+                          encrypted
+                        </span>
+                        <span>
+                          보안 설정:{' '}
+                          <span className="text-on-surface">
+                            [ㄱ, ㄴ, ㄷ] / [a, b]
+                          </span>
+                        </span>
+                      </div>
                     </div>
-                </MemoryRouter>
-            );
-        };
+                  </div>
+                </div>
+              </section>
 
-        const root = createRoot(document.getElementById('root'));
-        root.render(<App />);
+              <section className="bg-surface-container-low rounded-xl overflow-hidden border border-outline-variant/15">
+                <div className="grid grid-cols-4 md:grid-cols-6 border-b border-outline-variant/15 bg-surface-container text-xs font-bold uppercase tracking-widest py-4 px-6 text-on-surface-variant">
+                  <div className="col-span-1 serif-text text-primary">
+                    가옥 호수
+                  </div>
+                  <div className="col-span-1 text-center serif-text text-primary">
+                    보물 01
+                  </div>
+                  <div className="col-span-1 text-center serif-text text-primary">
+                    보물 02
+                  </div>
+                  <div className="col-span-1 md:col-span-3 text-right serif-text text-primary">
+                    상태
+                  </div>
+                </div>
+                <div className="divide-y divide-outline-variant/5">
+                  <div className="grid grid-cols-4 md:grid-cols-6 items-center py-4 px-6 hover:bg-surface-container-high transition-colors">
+                    <div className="col-span-1 serif-text text-lg font-bold text-on-surface">
+                      101
+                    </div>
+                    <div className="col-span-1 px-2">
+                      <input
+                        className="w-full bg-surface-container-lowest border-0 text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2"
+                        placeholder="0"
+                        type="number"
+                        defaultValue="5"
+                      />
+                    </div>
+                    <div className="col-span-1 px-2">
+                      <input
+                        className="w-full bg-surface-container-lowest border-0 text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2"
+                        placeholder="0"
+                        type="number"
+                        defaultValue="7"
+                      />
+                    </div>
+                    <div className="col-span-1 md:col-span-3 flex justify-end gap-2">
+                      <span className="hidden md:inline-block px-3 py-1 bg-surface-container text-[10px] font-bold text-tertiary rounded uppercase">
+                        Secured
+                      </span>
+                      <span className="material-symbols-outlined text-tertiary cursor-pointer hover:scale-110 transition-transform">
+                        check_circle
+                      </span>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-4 md:grid-cols-6 items-center py-4 px-6 hover:bg-surface-container-high transition-colors">
+                    <div className="col-span-1 serif-text text-lg font-bold text-on-surface">
+                      102
+                    </div>
+                    <div className="col-span-1 px-2">
+                      <input
+                        className="w-full bg-surface-container-lowest border-0 text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2"
+                        placeholder="0"
+                        type="number"
+                      />
+                    </div>
+                    <div className="col-span-1 px-2">
+                      <input
+                        className="w-full bg-surface-container-lowest border-0 text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2"
+                        placeholder="0"
+                        type="number"
+                      />
+                    </div>
+                    <div className="col-span-1 md:col-span-3 flex justify-end gap-2">
+                      <span className="material-symbols-outlined text-outline-variant cursor-pointer hover:text-primary transition-colors">
+                        radio_button_unchecked
+                      </span>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-4 md:grid-cols-6 items-center py-4 px-6 hover:bg-surface-container-high transition-colors">
+                    <div className="col-span-1 serif-text text-lg font-bold text-on-surface text-error">
+                      103
+                    </div>
+                    <div className="col-span-1 px-2">
+                      <input
+                        className="w-full bg-surface-container-lowest border-0 text-center text-error font-bold rounded-sm focus:ring-1 focus:ring-error/40 py-2"
+                        placeholder="0"
+                        type="number"
+                      />
+                    </div>
+                    <div className="col-span-1 px-2">
+                      <input
+                        className="w-full bg-surface-container-lowest border-0 text-center text-error font-bold rounded-sm focus:ring-1 focus:ring-error/40 py-2"
+                        placeholder="0"
+                        type="number"
+                      />
+                    </div>
+                    <div className="col-span-1 md:col-span-3 flex justify-end gap-2">
+                      <span className="hidden md:inline-block px-3 py-1 bg-error-container/20 text-[10px] font-bold text-error rounded uppercase">
+                        Breached
+                      </span>
+                      <span className="material-symbols-outlined text-error cursor-pointer">
+                        report_problem
+                      </span>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-4 md:grid-cols-6 items-center py-4 px-6 hover:bg-surface-container-high transition-colors">
+                    <div className="col-span-1 serif-text text-lg font-bold text-on-surface">
+                      111
+                    </div>
+                    <div className="col-span-1 px-2">
+                      <input
+                        className="w-full bg-surface-container-lowest border-0 text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2"
+                        placeholder="0"
+                        type="number"
+                      />
+                    </div>
+                    <div className="col-span-1 px-2">
+                      <input
+                        className="w-full bg-surface-container-lowest border-0 text-center text-primary font-bold rounded-sm focus:ring-1 focus:ring-primary/40 py-2"
+                        placeholder="0"
+                        type="number"
+                      />
+                    </div>
+                    <div className="col-span-1 md:col-span-3 flex justify-end gap-2">
+                      <span className="material-symbols-outlined text-outline-variant cursor-pointer">
+                        radio_button_unchecked
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="mt-20 flex flex-col items-center justify-center">
+                <div className="relative group">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-primary to-primary-container rounded blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                  <button
+                    onClick={() => navigate('/summary')}
+                    className="relative flex items-center gap-4 px-12 py-6 bg-gradient-to-br from-primary to-primary-container text-on-primary text-xl font-black rounded-sm shadow-2xl hover:scale-[1.02] active:scale-95 transition-all"
+                  >
+                    <span className="serif-text">
+                      단계 결과 확보 (Secure Phase Results)
+                    </span>
+                    <span className="material-symbols-outlined font-bold">
+                      lock_open
+                    </span>
+                  </button>
+                </div>
+                <p className="mt-6 text-on-surface-variant text-sm font-medium tracking-widest opacity-60">
+                  MISSION PHASE 01 OF 07
+                </p>
+              </section>
+            </main>
+            <div
+              className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]"
+              style={{
+                backgroundImage:
+                  "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBahMjspscmOlRydFeZiCVATXkfw6pEATu-kblpB4U_8PQEydTQeB7dqX-cofBN8Rj1D8nGIP-tDvL1Bzbv6cFxQYognCmXh74BugeJs97eBtH25zbnPZY3x6hf1VbkImgJ68Uw0RG9YP2o7mWGrFtXPMWBntot6cYMJaFv1jPE_A1BveuEzGHoSZqbR-0DCc9_BDp26do3lzs4mYICAdE7PIunrll4h4At9pxGYAoLyB8kWVnmcihNFo80yPv_Vf_3kPRHg0l3ZfBZ')",
+              }}
+            ></div>
+          </div>
+        )
+      }
+
+      const SummaryScreen = () => {
+        const navigate = useNavigate()
+        return (
+          <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden w-full">
+            <Topbar />
+            <main className="flex-1 px-6 md:px-12 py-10 md:py-20 max-w-7xl mx-auto w-full pb-24 md:pb-12">
+              <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20 items-end">
+                <div className="lg:col-span-8">
+                  <span className="text-primary text-sm font-bold tracking-[0.3em] uppercase mb-4 block">
+                    Operation: Extraction Complete
+                  </span>
+                  <h2 className="noto-serif text-5xl md:text-7xl font-black gold-text-gradient leading-tight mb-8">
+                    전리품 결산
+                  </h2>
+                  <p className="text-on-surface-variant max-w-lg leading-relaxed border-l border-outline-variant/30 pl-6">
+                    작전이 성공적으로 종료되었습니다. 수집된 모든 자산과
+                    전리품이 안전 가옥으로 이송되었으며, 최종 기여도에 따른 결산
+                    결과가 생성되었습니다.
+                  </p>
+                </div>
+                <div className="lg:col-span-4 flex flex-col items-start lg:items-end">
+                  <div className="relative w-full aspect-square max-w-[280px] group">
+                    <div className="absolute inset-0 gold-gradient rounded-sm opacity-20 blur-2xl group-hover:opacity-30 transition-opacity"></div>
+                    <img
+                      alt="The Vault Key"
+                      className="w-full h-full object-cover rounded-sm grayscale group-hover:grayscale-0 transition-all duration-700"
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgP5CZI58R2xp7GTH5c3Ys1BEYM0OAsdureVTBodlFTcGgzY9r__bTEFe_1bWTqAK7Pe6VQrHRkeBNjovDU-vptUtkzoJM_KvojbGZz5CXkTyuRveI0e9CraR9nqyQ95lDpjqZer9Si4rDcc1VoTRCeFfciaANPhYGFxuAwKF7s8dzQAvlYV11kBxsUyg6mnnOZEw9WyXaJKFppUiSi5PBrFcXLwhHn1P07eo-ibstQIVyoU5qGarhFnP8IYe2g1wiNDEsJcDrnBbr"
+                    />
+                  </div>
+                </div>
+              </section>
+
+              <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+                <div className="bg-surface-container-low p-8 relative overflow-hidden group">
+                  <div className="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                    <span className="material-symbols-outlined text-9xl">
+                      military_tech
+                    </span>
+                  </div>
+                  <p className="text-xs text-primary font-bold tracking-widest uppercase mb-4">
+                    최고 득점
+                  </p>
+                  <div className="flex items-baseline gap-2">
+                    <span className="noto-serif text-4xl font-bold">142</span>
+                    <span className="text-on-surface-variant text-sm uppercase">
+                      pts
+                    </span>
+                  </div>
+                </div>
+                <div className="bg-surface-container-low p-8 relative overflow-hidden group">
+                  <div className="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                    <span className="material-symbols-outlined text-9xl">
+                      analytics
+                    </span>
+                  </div>
+                  <p className="text-xs text-primary font-bold tracking-widest uppercase mb-4">
+                    평균 획득
+                  </p>
+                  <div className="flex items-baseline gap-2">
+                    <span className="noto-serif text-4xl font-bold">20.3</span>
+                    <span className="text-on-surface-variant text-sm uppercase">
+                      pts
+                    </span>
+                  </div>
+                </div>
+                <div className="bg-surface-container-low p-8 relative overflow-hidden group">
+                  <div className="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                    <span className="material-symbols-outlined text-9xl">
+                      task_alt
+                    </span>
+                  </div>
+                  <p className="text-xs text-primary font-bold tracking-widest uppercase mb-4">
+                    완료 단계
+                  </p>
+                  <div className="flex items-baseline gap-2">
+                    <span className="noto-serif text-4xl font-bold">07</span>
+                    <span className="text-on-surface-variant text-sm uppercase">
+                      / 07
+                    </span>
+                  </div>
+                </div>
+              </section>
+
+              <section className="bg-surface-container rounded-sm overflow-hidden mb-16">
+                <div className="px-8 py-6 border-b border-outline-variant/10 flex justify-between items-center bg-surface-container-high/50">
+                  <h3 className="noto-serif text-lg font-bold tracking-tight flex items-center gap-3">
+                    <span className="material-symbols-outlined text-primary">
+                      grid_view
+                    </span>
+                    상세 스코어 리포트
+                  </h3>
+                </div>
+                <div className="overflow-x-auto custom-scrollbar">
+                  <table className="w-full text-left border-collapse min-w-[600px]">
+                    <thead>
+                      <tr className="bg-surface-container-highest/30">
+                        <th className="p-4 text-[10px] font-bold text-primary tracking-[0.2em] uppercase border-r border-outline-variant/10">
+                          Metric
+                        </th>
+                        <th className="p-4 text-[10px] font-bold text-on-surface-variant tracking-[0.2em] uppercase text-center">
+                          R1
+                        </th>
+                        <th className="p-4 text-[10px] font-bold text-on-surface-variant tracking-[0.2em] uppercase text-center">
+                          R2
+                        </th>
+                        <th className="p-4 text-[10px] font-bold text-on-surface-variant tracking-[0.2em] uppercase text-center">
+                          R3
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-outline-variant/5">
+                      <tr className="hover:bg-surface-container-high transition-colors">
+                        <td className="p-4 font-medium text-sm border-r border-outline-variant/10">
+                          House 01
+                        </td>
+                        <td className="p-4 text-center noto-serif font-bold text-on-surface">
+                          12
+                        </td>
+                        <td className="p-4 text-center noto-serif font-bold text-on-surface">
+                          15
+                        </td>
+                        <td className="p-4 text-center noto-serif font-bold text-on-surface">
+                          08
+                        </td>
+                      </tr>
+                      <tr className="bg-primary/5">
+                        <td className="p-4 font-black text-sm border-r border-outline-variant/10 text-primary uppercase tracking-widest">
+                          Grand Total
+                        </td>
+                        <td
+                          className="p-4 text-right noto-serif text-3xl font-black gold-text-gradient pr-8"
+                          colSpan="3"
+                        >
+                          142 PTS
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+
+              <footer className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+                <button
+                  onClick={() => navigate('/')}
+                  className="w-full sm:w-auto px-12 py-4 gold-gradient text-on-primary font-bold text-sm rounded-sm hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-primary/10"
+                >
+                  새로운 작전 (New Heist)
+                </button>
+              </footer>
+            </main>
+          </div>
+        )
+      }
+
+      const App = () => {
+        return (
+          <MemoryRouter>
+            <div className="flex w-full min-h-screen">
+              <Sidebar />
+              <Routes>
+                <Route path="/" element={<HomeScreen />} />
+                <Route path="/record" element={<RecordScreen />} />
+                <Route path="/summary" element={<SummaryScreen />} />
+              </Routes>
+              <MobileNav />
+            </div>
+          </MemoryRouter>
+        )
+      }
+
+      const root = createRoot(document.getElementById('root'))
+      root.render(<App />)
     </script>
-</body>
+  </body>
 </html>

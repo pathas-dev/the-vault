@@ -38,9 +38,23 @@ function HomeScreen() {
       <FloatingActions actions={[{ icon: 'settings', label: '설정' }]} />
       <main className="flex-1 flex flex-col items-start justify-center px-5 md:px-24 py-10 md:py-20 relative z-10">
         <div className="absolute top-0 right-0 w-1/2 h-full pointer-events-none opacity-20 hidden lg:block">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-primary/20 rounded-full orbit-ring" style={{ '--orbit-duration': '90s' } as React.CSSProperties}></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] border border-primary/10 rounded-full orbit-ring" style={{ '--orbit-duration': '60s', animationDirection: 'reverse' } as React.CSSProperties}></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] border border-primary/30 rounded-full flex items-center justify-center orbit-ring" style={{ '--orbit-duration': '45s' } as React.CSSProperties}>
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-primary/20 rounded-full orbit-ring"
+            style={{ '--orbit-duration': '90s' } as React.CSSProperties}
+          ></div>
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] border border-primary/10 rounded-full orbit-ring"
+            style={
+              {
+                '--orbit-duration': '60s',
+                animationDirection: 'reverse',
+              } as React.CSSProperties
+            }
+          ></div>
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] border border-primary/30 rounded-full flex items-center justify-center orbit-ring"
+            style={{ '--orbit-duration': '45s' } as React.CSSProperties}
+          >
             <span
               className="material-symbols-outlined text-primary/40 text-8xl"
               style={{ fontVariationSettings: "'wght' 100" }}
@@ -72,7 +86,7 @@ function HomeScreen() {
               </span>
               {hasSavedSession ? '새 작전 시작' : '작전 시작'}
             </button>
-            
+
             {hasSavedSession && (
               <button
                 onClick={handleResume}
@@ -83,7 +97,10 @@ function HomeScreen() {
               </button>
             )}
 
-            <button aria-label="기밀 문서 열기" className="border border-outline-variant bg-surface-container-low/40 backdrop-blur-md text-on-surface/60 px-8 py-4 md:px-10 md:py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-base md:text-lg hover:bg-surface-container-high hover:text-on-surface btn-press gold-underline">
+            <button
+              aria-label="기밀 문서 열기"
+              className="border border-outline-variant bg-surface-container-low/40 backdrop-blur-md text-on-surface/60 px-8 py-4 md:px-10 md:py-5 rounded-sm font-bold flex items-center justify-center gap-3 text-base md:text-lg hover:bg-surface-container-high hover:text-on-surface btn-press gold-underline"
+            >
               <span className="material-symbols-outlined">menu_book</span>
               기밀 문서
             </button>
@@ -106,7 +123,9 @@ function HomeScreen() {
           </div>
           <div className="bg-surface-container-low p-5 md:p-8 rounded-sm relative overflow-hidden group card-lift">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity icon-hover-bounce">
-              <span className="material-symbols-outlined text-5xl md:text-6xl">sensors</span>
+              <span className="material-symbols-outlined text-5xl md:text-6xl">
+                sensors
+              </span>
             </div>
             <p className="text-tertiary text-[0.625rem] font-extrabold tracking-[0.2em] mb-1 md:mb-2 uppercase">
               Status

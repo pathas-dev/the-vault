@@ -307,7 +307,11 @@ function RecordScreen() {
 
   return (
     <div className="flex-1 flex flex-col w-full min-w-0">
-      <FloatingActions actions={[{ icon: 'history', label: '작전 이력 보기', onClick: toggleHistory }]} />
+      <FloatingActions
+        actions={[
+          { icon: 'history', label: '작전 이력 보기', onClick: toggleHistory },
+        ]}
+      />
 
       {/* 작전 이력 패널 (History Panel) */}
       <div
@@ -405,11 +409,16 @@ function RecordScreen() {
                                   <span className="text-[0.625rem] font-black text-on-surface-variant px-2 py-1">
                                     {vault}
                                   </span>
-                                  {vals.filter((v) => v !== '').map((val, i) => (
-                                    <span key={i} className="text-[0.625rem] font-black text-primary px-1.5 py-1 border-l border-outline-variant/10">
-                                      {val}
-                                    </span>
-                                  ))}
+                                  {vals
+                                    .filter((v) => v !== '')
+                                    .map((val, i) => (
+                                      <span
+                                        key={i}
+                                        className="text-[0.625rem] font-black text-primary px-1.5 py-1 border-l border-outline-variant/10"
+                                      >
+                                        {val}
+                                      </span>
+                                    ))}
                                 </div>
                               ))}
                           </div>
@@ -671,7 +680,10 @@ function RecordScreen() {
                     <>
                       {Array.from({ length: MAX_CAPACITY }, (_, i) => {
                         const isSlotAvailable = i < VAULT_CONFIG[v]
-                        const isUnlocked = i === 0 || (vaultValues[v][i - 1] !== '' && isValidValue(vaultValues[v][i - 1]))
+                        const isUnlocked =
+                          i === 0 ||
+                          (vaultValues[v][i - 1] !== '' &&
+                            isValidValue(vaultValues[v][i - 1]))
                         const isEnabled = isSlotAvailable && isUnlocked
                         return (
                           <div key={i} className="px-1.5 relative">
@@ -682,7 +694,8 @@ function RecordScreen() {
                                   className={`w-full border text-center font-black rounded-sm py-2.5 md:py-3 outline-none text-base md:text-lg transition-all ${
                                     !isEnabled
                                       ? 'bg-surface-container-low border-outline-variant/5 text-on-surface/15 cursor-not-allowed'
-                                      : vaultValues[v][i] !== '' && !isValidValue(vaultValues[v][i])
+                                      : vaultValues[v][i] !== '' &&
+                                          !isValidValue(vaultValues[v][i])
                                         ? 'bg-surface-container-lowest border-error ring-1 ring-error/20 text-primary'
                                         : 'bg-surface-container-lowest border-outline-variant/10 text-primary input-glow focus:ring-1 focus:ring-primary/20'
                                   }`}
