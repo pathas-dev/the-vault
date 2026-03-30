@@ -10,7 +10,7 @@ Agent operating guide. Read this before touching any file in this project.
 - **Theme:** High-stakes heist / stealth editorial aesthetic — "The Shadow Architect"
 - **Stack:** React 19, TanStack Start/Router/Form/Table, TypeScript 5.7, Vite 7.3, Tailwind CSS v4, Vitest
 - **Package manager:** pnpm
-- **Path alias:** `#/*` → `./src/*`
+- **Path alias:** `@/*` → `./src/*`
 
 ---
 
