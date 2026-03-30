@@ -207,7 +207,7 @@ function RecordScreen() {
         onClick={() => toggleVault(vault)}
         aria-pressed={isSelected}
         aria-label={`금고 ${vault} ${isSelected ? '선택 해제' : '선택'}`}
-        className={`flex flex-col items-center justify-center gap-0.5 p-2 md:p-3 border rounded-sm min-h-[52px] md:min-h-[64px] btn-press ${
+        className={`flex flex-col items-center justify-center gap-0.5 p-2 md:p-3 border rounded-sm min-h-13 md:min-h-16 btn-press ${
           isSelected
             ? 'bg-linear-to-br from-primary to-primary-container text-on-primary border-primary shadow-lg z-10 vault-selected'
             : 'bg-surface-container-lowest text-on-surface/50 border-outline-variant/20 hover:border-primary/30 hover:bg-surface-container-low hover:shadow-md hover:shadow-primary/5'
@@ -221,7 +221,7 @@ function RecordScreen() {
           {Array.from({ length: capacity }, (_, i) => (
             <span
               key={i}
-              className={`w-2.5 h-2.5 md:w-3 md:h-3 rounded-[2px] border flex items-center justify-center text-[0.5625rem] md:text-[0.5625rem] font-black ${
+              className={`size-2.5 md:size-3 rounded-sm border flex items-center justify-center text-label-xs md:text-label-xs font-black ${
                 isSelected
                   ? 'border-on-primary/40 text-on-primary/70'
                   : 'border-on-surface/15 text-on-surface/20'
@@ -249,18 +249,18 @@ function RecordScreen() {
           onClick={() => setHorizontalWall(isSelected ? null : value)}
           aria-pressed={isSelected}
           aria-label={`가로벽 ${value} ${isSelected ? '해제' : '설치'}`}
-          className="absolute left-0 right-0 -top-[8px] h-[16px] flex items-center cursor-pointer group"
+          className="absolute inset-x-0 -top-2 h-4 flex items-center cursor-pointer group"
           title={`가로벽 ${value}`}
         >
-          <div className="h-[2px] flex-1 bg-outline-variant/25" />
+          <div className="h-0.5 flex-1 bg-outline-variant/25" />
           <div
-            className={`h-[4px] w-8 mx-0.5 rounded-full transition-all duration-300 ${
+            className={`h-1 w-8 mx-0.5 rounded-full transition-all duration-300 ${
               isSelected
                 ? 'bg-tertiary shadow-[0_0_12px_rgba(241,201,125,0.9)]'
                 : 'bg-tertiary/15 shadow-[0_0_6px_rgba(241,201,125,0.1)] group-hover:bg-tertiary/30 group-hover:shadow-[0_0_8px_rgba(241,201,125,0.2)]'
             }`}
           />
-          <div className="h-[2px] flex-1 bg-outline-variant/25" />
+          <div className="h-0.5 flex-1 bg-outline-variant/25" />
         </button>
       </div>
     )
@@ -280,18 +280,18 @@ function RecordScreen() {
           onClick={() => setVerticalWall(isSelected ? null : value)}
           aria-pressed={isSelected}
           aria-label={`세로벽 ${value} ${isSelected ? '해제' : '설치'}`}
-          className="absolute top-0 bottom-0 -left-[8px] w-[16px] flex flex-col items-center cursor-pointer group"
+          className="absolute inset-y-0 -left-2 w-4 flex flex-col items-center cursor-pointer group"
           title={`세로벽 ${value}`}
         >
-          <div className="w-[2px] flex-1 bg-outline-variant/25" />
+          <div className="w-0.5 flex-1 bg-outline-variant/25" />
           <div
-            className={`w-[4px] h-8 my-0.5 rounded-full transition-all duration-300 ${
+            className={`w-1 h-8 my-0.5 rounded-full transition-all duration-300 ${
               isSelected
                 ? 'bg-tertiary shadow-[0_0_12px_rgba(241,201,125,0.9)]'
                 : 'bg-tertiary/15 shadow-[0_0_6px_rgba(241,201,125,0.1)] group-hover:bg-tertiary/30 group-hover:shadow-[0_0_8px_rgba(241,201,125,0.2)]'
             }`}
           />
-          <div className="w-[2px] flex-1 bg-outline-variant/25" />
+          <div className="w-0.5 flex-1 bg-outline-variant/25" />
         </button>
       </div>
     )
@@ -309,19 +309,19 @@ function RecordScreen() {
 
       {/* 작전 이력 패널 (History Panel) */}
       <div
-        className={`fixed inset-0 z-[100] transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${isHistoryOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 z-100 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${isHistoryOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
       >
         <div
           className="absolute inset-0 bg-background/60 backdrop-blur-sm"
           onClick={() => setIsHistoryOpen(false)}
         />
         <div
-          className={`absolute top-0 right-0 h-full w-full max-w-md bg-surface-container-high/90 backdrop-blur-[20px] shadow-2xl border-l border-outline-variant/10 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${isHistoryOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          className={`absolute inset-y-0 right-0 size-full max-w-md bg-surface-container-high/90 backdrop-blur-[20px] shadow-2xl border-l border-outline-variant/10 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${isHistoryOpen ? 'translate-x-0' : 'translate-x-full'}`}
         >
           <div className="flex flex-col h-full bg-linear-to-b from-surface-container-high/40 to-transparent">
             <div className="flex justify-between items-center px-6 py-8 border-b border-outline-variant/5">
               <div>
-                <span className="text-primary text-[0.625rem] font-bold tracking-[0.4em] uppercase block opacity-60 mb-1">
+                <span className="text-primary text-label-sm font-bold tracking-[0.4em] uppercase block opacity-60 mb-1">
                   Mission Log
                 </span>
                 <h2 className="serif-text text-2xl font-black text-primary tracking-tight">
@@ -369,7 +369,7 @@ function RecordScreen() {
                       <div className="bg-surface-container-highest/50 rounded-sm p-4 space-y-4 border border-outline-variant/10 shadow-lg">
                         <div className="flex items-center gap-4">
                           <div className="space-y-1">
-                            <p className="text-[0.5625rem] font-bold text-on-surface/30 uppercase tracking-widest">
+                            <p className="text-label-xs font-bold text-on-surface/30 uppercase tracking-widest">
                               터는 집
                             </p>
                             <p className="serif-text text-xl font-black text-primary">
@@ -377,7 +377,7 @@ function RecordScreen() {
                             </p>
                           </div>
                           <div className="flex-1">
-                            <p className="text-[0.5625rem] font-bold text-on-surface/30 uppercase tracking-widest mb-1">
+                            <p className="text-label-xs font-bold text-on-surface/30 uppercase tracking-widest mb-1">
                               벽 · 침투
                             </p>
                             <WallMiniMap
@@ -389,7 +389,7 @@ function RecordScreen() {
                         </div>
 
                         <div className="pt-3 border-t border-outline-variant/5">
-                          <p className="text-[0.5625rem] font-bold text-on-surface/30 uppercase tracking-widest mb-2">
+                          <p className="text-label-xs font-bold text-on-surface/30 uppercase tracking-widest mb-2">
                             Secured Loot (Units)
                           </p>
                           <div className="flex flex-wrap gap-2">
@@ -400,7 +400,7 @@ function RecordScreen() {
                                   key={vault}
                                   className="bg-surface-container-low rounded-sm border border-outline-variant/5 flex items-center overflow-hidden"
                                 >
-                                  <span className="text-[0.625rem] font-black text-on-surface-variant px-2 py-1">
+                                  <span className="text-label-sm font-black text-on-surface-variant px-2 py-1">
                                     {vault}
                                   </span>
                                   {vals
@@ -408,7 +408,7 @@ function RecordScreen() {
                                     .map((val, i) => (
                                       <span
                                         key={i}
-                                        className="text-[0.625rem] font-black text-primary px-1.5 py-1 border-l border-outline-variant/10"
+                                        className="text-label-sm font-black text-primary px-1.5 py-1 border-l border-outline-variant/10"
                                       >
                                         {val}
                                       </span>
@@ -425,7 +425,7 @@ function RecordScreen() {
             </div>
 
             <div className="p-8 border-t border-outline-variant/5 opacity-30">
-              <p className="text-[9px] font-black tracking-[0.4em] uppercase text-center">
+              <p className="text-label-xs font-black tracking-[0.4em] uppercase text-center">
                 Protocol V-7 Active
               </p>
             </div>
@@ -437,7 +437,7 @@ function RecordScreen() {
         <section className="mb-6 md:mb-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8">
             <div className="max-w-4xl w-full">
-              <span className="text-primary/60 text-[0.625rem] font-bold tracking-[0.4em] uppercase mb-2 md:mb-3 block">
+              <span className="text-primary/60 text-label-sm font-bold tracking-[0.4em] uppercase mb-2 md:mb-3 block">
                 {viewMode === 'input'
                   ? '현장 상황 보고 (Field Recon)'
                   : '획득물 결산 (Loot Accounting)'}
@@ -448,7 +448,7 @@ function RecordScreen() {
 
               {viewMode === 'input' ? (
                 <div className="space-y-2 md:space-y-3 max-w-xs">
-                  <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-primary/60 flex items-center gap-2">
+                  <label className="text-label-xs font-bold tracking-widest uppercase text-primary/60 flex items-center gap-2">
                     <span className="material-symbols-outlined text-xs">
                       location_on
                     </span>{' '}
@@ -470,9 +470,9 @@ function RecordScreen() {
                 </div>
               ) : (
                 <div className="grid grid-cols-2 gap-3 md:gap-5 py-6 px-5 md:px-10 bg-surface-container-low rounded-sm relative overflow-hidden shadow-xl border border-outline-variant/5">
-                  <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-primary/40 via-primary to-primary/40"></div>
+                  <div className="absolute inset-x-0 top-0 h-0.5 bg-linear-to-r from-primary/40 via-primary to-primary/40"></div>
                   <div className="flex flex-col items-center justify-center p-3 md:p-4 bg-surface-container-lowest rounded-sm border border-outline-variant/10 relative">
-                    <div className="absolute top-1 left-2 text-[0.5625rem] font-black text-primary/30 uppercase tracking-widest leading-none">
+                    <div className="absolute top-1 left-2 text-label-xs font-black text-primary/30 uppercase tracking-widest leading-none">
                       터는 집
                     </div>
                     <span className="serif-text text-3xl md:text-4xl font-black text-primary leading-none mt-1">
@@ -480,7 +480,7 @@ function RecordScreen() {
                     </span>
                   </div>
                   <div className="flex flex-col bg-surface-container-lowest p-3 md:p-4 rounded-sm border border-outline-variant/10 items-center justify-center space-y-2 relative">
-                    <div className="absolute top-1 left-2 text-[0.5625rem] font-black text-primary/30 uppercase tracking-widest leading-none">
+                    <div className="absolute top-1 left-2 text-label-xs font-black text-primary/30 uppercase tracking-widest leading-none">
                       벽 · 침투
                     </div>
                     <WallMiniMap
@@ -500,21 +500,21 @@ function RecordScreen() {
           <section className="mb-8 md:mb-12">
             <div className="flex items-center gap-2.5 mb-4 md:mb-6">
               <div className="h-px w-6 bg-primary/40"></div>
-              <label className="text-[9px] font-bold tracking-[0.4em] uppercase text-primary/60 tracking-widest">
+              <label className="text-label-xs font-bold tracking-[0.4em] uppercase text-primary/60">
                 은닉 금고
               </label>
             </div>
 
             <div className="bg-surface-container-low p-3 md:p-6 rounded-sm border border-outline-variant/10 overflow-x-auto">
               <div
-                className="flex min-w-[340px] mx-auto"
+                className="flex min-w-85 mx-auto"
                 style={{ maxWidth: '740px' }}
               >
                 {/* Room 401 */}
                 <div className="self-center border border-r-0 border-outline-variant/15 bg-surface-container-lowest/30 p-2 md:p-3">
                   <VaultCell
                     vault="401"
-                    className="w-full min-w-[48px] md:min-w-[60px] min-h-[60px] md:min-h-[72px]"
+                    className="w-full min-w-12 md:min-w-15 min-h-15 md:min-h-18"
                   />
                 </div>
 
@@ -602,36 +602,36 @@ function RecordScreen() {
                     onClick={() => setStartPoint('A')}
                     aria-label="침투 지점 A 선택"
                     aria-pressed={startPoint === 'A'}
-                    className="flex-1 flex items-center px-1 group transition-all"
+                    className="flex-1 flex items-center px-2 group transition-all"
                     title="침투 지점 A (10x 방)"
                   >
                     <span
-                      className={`material-symbols-outlined text-base md:text-lg transition-all duration-300 ${
+                      className={`serif-text text-sm md:text-base font-black transition-all duration-300 ${
                         startPoint === 'A'
-                          ? 'text-error drop-shadow-[0_0_8px_rgba(255,100,100,0.8)]'
-                          : 'text-on-surface/15 group-hover:text-error/40'
+                          ? 'text-intrusion drop-shadow-[0_0_8px_rgba(255,45,85,0.6)] scale-125'
+                          : 'text-on-surface/15 group-hover:text-intrusion/40'
                       }`}
                       aria-hidden="true"
                     >
-                      chevron_left
+                      A
                     </span>
                   </button>
                   <button
                     onClick={() => setStartPoint('B')}
                     aria-label="침투 지점 B 선택"
                     aria-pressed={startPoint === 'B'}
-                    className="flex-1 flex items-center px-1 group transition-all"
+                    className="flex-1 flex items-center px-2 group transition-all"
                     title="침투 지점 B (11x 방)"
                   >
                     <span
-                      className={`material-symbols-outlined text-base md:text-lg transition-all duration-300 ${
+                      className={`serif-text text-sm md:text-base font-black transition-all duration-300 ${
                         startPoint === 'B'
-                          ? 'text-error drop-shadow-[0_0_8px_rgba(255,100,100,0.8)]'
-                          : 'text-on-surface/15 group-hover:text-error/40'
+                          ? 'text-intrusion drop-shadow-[0_0_8px_rgba(255,45,85,0.6)] scale-125'
+                          : 'text-on-surface/15 group-hover:text-intrusion/40'
                       }`}
                       aria-hidden="true"
                     >
-                      chevron_left
+                      B
                     </span>
                   </button>
                 </div>
@@ -644,7 +644,7 @@ function RecordScreen() {
         {(viewMode === 'summary' || selectedVaults.length > 0) && (
           <section className="bg-surface-container-low rounded-sm overflow-hidden shadow-xl">
             <div
-              className="bg-surface-container-high text-[9px] font-black uppercase tracking-[0.2em] py-3 md:py-4 px-5 md:px-10 text-primary/60"
+              className="bg-surface-container-high text-label-xs font-black uppercase tracking-widest py-3 md:py-4 px-5 md:px-10 text-primary/60"
               style={{
                 display: 'grid',
                 gridTemplateColumns: `100px repeat(${MAX_CAPACITY}, 1fr)`,
@@ -714,7 +714,7 @@ function RecordScreen() {
                                 />
                                 {vaultValues[v][i] !== '' &&
                                   !isValidValue(vaultValues[v][i]) && (
-                                    <p className="absolute -bottom-4 left-0 w-full text-[0.5625rem] text-error font-black text-center animate-pulse">
+                                    <p className="absolute -bottom-4 inset-x-0 text-label-xs text-error font-black text-center animate-pulse">
                                       1-100
                                     </p>
                                   )}
@@ -752,7 +752,7 @@ function RecordScreen() {
                 <span className="material-symbols-outlined text-4xl block">
                   database
                 </span>
-                <p className="text-[0.625rem] font-bold tracking-[0.4em] uppercase">
+                <p className="text-label-sm font-bold tracking-[0.4em] uppercase">
                   {viewMode === 'input'
                     ? '조사된 데이터 없음'
                     : '확보한 전리품 없음'}
@@ -788,13 +788,13 @@ function RecordScreen() {
               </button>
             )}
           </div>
-          <p className="mt-6 text-on-surface-variant text-[0.625rem] font-black tracking-[0.4em] opacity-30 uppercase">
+          <p className="mt-6 text-on-surface-variant text-label-sm font-black tracking-[0.4em] opacity-30 uppercase">
             작전 PHASE 0{currentRound} / 07
           </p>
         </section>
       </main>
 
-      <div className="md:hidden fixed bottom-6 left-0 right-0 px-4 z-40">
+      <div className="md:hidden fixed inset-x-0 bottom-6 px-4 z-40">
         {viewMode === 'input' ? (
           <button
             onClick={handlePhaseSubmit}

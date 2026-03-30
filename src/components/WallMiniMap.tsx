@@ -11,80 +11,80 @@ export function WallMiniMap({
 }: WallMiniMapProps) {
   const wallActive = 'bg-tertiary shadow-[0_0_4px_rgba(241,201,125,0.9)]'
   const wallInactive = 'bg-transparent'
-  const entryActive = 'bg-error shadow-[0_0_4px_rgba(255,100,100,0.8)]'
+  const entryActive = 'bg-intrusion shadow-[0_0_8px_rgba(255,45,85,0.6)]'
 
   return (
     <div
       className="flex items-stretch"
-      style={{ width: '120px', height: '56px' }}
+      style={{ width: '130px', height: '56px' }}
     >
       {/* 401 */}
-      <div className="border border-outline-variant/30 bg-surface-container-lowest/30 self-center w-3 h-7 rounded-[1px]" />
+      <div className="border border-outline-variant/30 bg-surface-container-lowest/30 self-center w-3 h-7 rounded-sm" />
 
       {/* 3xx */}
-      <div className="border border-outline-variant/30 bg-surface-container-lowest/30 flex-1 rounded-[1px]" />
+      <div className="border border-outline-variant/30 bg-surface-container-lowest/30 flex-1 rounded-sm" />
 
       {/* Walls a/b: 3xx ↔ 20x/21x */}
       <div className="flex flex-col w-0 z-10">
         <div
-          className={`flex-1 w-[3px] -ml-[1px] rounded-full ${verticalWall === 'a' ? wallActive : wallInactive}`}
+          className={`flex-1 w-0.75 -ml-px rounded-full ${verticalWall === 'a' ? wallActive : wallInactive}`}
         />
         <div
-          className={`flex-1 w-[3px] -ml-[1px] rounded-full ${verticalWall === 'b' ? wallActive : wallInactive}`}
+          className={`flex-1 w-0.75 -ml-px rounded-full ${verticalWall === 'b' ? wallActive : wallInactive}`}
         />
       </div>
 
       {/* 2xx column */}
       <div className="flex flex-col flex-1">
-        <div className="border border-l-0 border-outline-variant/30 bg-surface-container-lowest/30 flex-1 rounded-[1px]" />
+        <div className="border border-l-0 border-outline-variant/30 bg-surface-container-lowest/30 flex-1 rounded-sm" />
         <div className="h-0 relative">
           <div
-            className={`absolute left-0 right-0 -top-[1px] h-[3px] rounded-full ${horizontalWall === 'ㄴ' ? wallActive : wallInactive}`}
+            className={`absolute inset-x-0 -top-px h-0.75 rounded-full ${horizontalWall === 'ㄴ' ? wallActive : wallInactive}`}
           />
         </div>
-        <div className="border border-l-0 border-t-0 border-outline-variant/30 bg-surface-container-lowest/30 flex-1 rounded-[1px]" />
+        <div className="border border-l-0 border-t-0 border-outline-variant/30 bg-surface-container-lowest/30 flex-1 rounded-sm" />
       </div>
 
       {/* Walls c/d: 2xx ↔ 1xx */}
       <div className="flex flex-col w-0 z-10">
         <div
-          className={`flex-1 w-[3px] -ml-[1px] rounded-full ${verticalWall === 'c' ? wallActive : wallInactive}`}
+          className={`flex-1 w-0.75 -ml-px rounded-full ${verticalWall === 'c' ? wallActive : wallInactive}`}
         />
         <div
-          className={`flex-1 w-[3px] -ml-[1px] rounded-full ${verticalWall === 'd' ? wallActive : wallInactive}`}
+          className={`flex-1 w-0.75 -ml-px rounded-full ${verticalWall === 'd' ? wallActive : wallInactive}`}
         />
       </div>
 
       {/* 1xx column */}
       <div className="flex flex-col flex-1">
         <div
-          className={`border border-l-0 border-outline-variant/30 bg-surface-container-lowest/30 flex-1 rounded-[1px] ${startPoint === 'A' ? 'border-r-error/60' : ''}`}
+          className={`border border-l-0 border-outline-variant/30 bg-surface-container-lowest/30 flex-1 rounded-sm ${startPoint === 'A' ? 'border-r-intrusion/60' : ''}`}
         />
         <div className="h-0 relative">
           <div
-            className={`absolute left-0 right-0 -top-[1px] h-[3px] rounded-full ${horizontalWall === 'ㄷ' ? wallActive : wallInactive}`}
+            className={`absolute inset-x-0 -top-px h-0.75 rounded-full ${horizontalWall === 'ㄷ' ? wallActive : wallInactive}`}
           />
         </div>
         <div
-          className={`border border-l-0 border-t-0 border-outline-variant/30 bg-surface-container-lowest/30 flex-1 rounded-[1px] ${startPoint === 'B' ? 'border-r-error/60' : ''}`}
+          className={`border border-l-0 border-t-0 border-outline-variant/30 bg-surface-container-lowest/30 flex-1 rounded-sm ${startPoint === 'B' ? 'border-r-intrusion/60' : ''}`}
         />
       </div>
 
       {/* Entry point indicators */}
-      {startPoint && (
-        <div className="flex flex-col self-stretch w-2 ml-px">
-          <div
-            className={`flex-1 flex items-center ${startPoint === 'A' ? '' : 'opacity-0'}`}
-          >
-            <div className={`w-[4px] h-3 rounded-full ${entryActive}`} />
-          </div>
-          <div
-            className={`flex-1 flex items-center ${startPoint === 'B' ? '' : 'opacity-0'}`}
-          >
-            <div className={`w-[4px] h-3 rounded-full ${entryActive}`} />
-          </div>
+      <div className="flex flex-col self-stretch w-4 ml-1">
+        <div
+          className={`flex-1 flex items-center gap-1.5 transition-opacity duration-300 ${startPoint === 'A' ? 'opacity-100' : 'opacity-10'}`}
+        >
+          <div className={`w-0.75 h-3 rounded-full ${startPoint === 'A' ? entryActive : 'bg-on-surface/30'}`} />
+          <span className={`serif-text text-label-sm font-black ${startPoint === 'A' ? 'text-intrusion' : 'text-on-surface/30'}`}>A</span>
         </div>
-      )}
+        <div
+          className={`flex-1 flex items-center gap-1.5 transition-opacity duration-300 ${startPoint === 'B' ? 'opacity-100' : 'opacity-10'}`}
+        >
+          <div className={`w-0.75 h-3 rounded-full ${startPoint === 'B' ? entryActive : 'bg-on-surface/30'}`} />
+          <span className={`serif-text text-label-sm font-black ${startPoint === 'B' ? 'text-intrusion' : 'text-on-surface/30'}`}>B</span>
+        </div>
+      </div>
     </div>
   )
 }

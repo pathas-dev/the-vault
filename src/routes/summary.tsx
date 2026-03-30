@@ -72,7 +72,7 @@ function SummaryScreen() {
         {/* 헤더 섹션 */}
         <section className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8 mb-8 md:mb-16">
           <div>
-            <span className="text-primary/60 text-[0.625rem] font-bold tracking-[0.4em] uppercase mb-2 block">
+            <span className="text-primary/60 text-label-sm font-bold tracking-[0.4em] uppercase mb-2 block">
               Operation Complete
             </span>
             <h2 className="noto-serif text-3xl md:text-5xl font-black gold-text-gradient leading-tight tracking-tight">
@@ -80,7 +80,7 @@ function SummaryScreen() {
             </h2>
           </div>
           <div className="bg-surface-container-high/50 border border-outline-variant/15 px-5 py-4 md:px-8 md:py-6 rounded-sm">
-            <p className="text-[0.625rem] font-bold text-primary/40 uppercase tracking-widest mb-1">
+            <p className="text-label-sm font-bold text-primary/40 uppercase tracking-widest mb-1">
               Total Value
             </p>
             <p className="noto-serif text-3xl md:text-4xl font-black gold-text-gradient tabular-nums">
@@ -113,7 +113,7 @@ function SummaryScreen() {
                 </div>
                 <div className="flex gap-x-5 gap-y-1.5 flex-wrap mt-3">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[0.5625rem] uppercase font-bold text-on-surface-variant/40 tracking-widest">
+                    <span className="text-label-xs uppercase font-bold text-on-surface-variant/40 tracking-widest">
                       터는 집:
                     </span>
                     <span className="text-xs font-bold">
@@ -148,7 +148,7 @@ function SummaryScreen() {
                               key={v}
                               className="px-4 py-3 bg-surface-container"
                             >
-                              <p className="text-[0.5625rem] font-bold uppercase text-primary/50 tracking-widest mb-1">
+                              <p className="text-label-xs font-bold uppercase text-primary/50 tracking-widest mb-1">
                                 {v} VAULT
                               </p>
                               <div className="flex gap-3 items-baseline">
@@ -178,7 +178,7 @@ function SummaryScreen() {
                     <div className="hidden md:block">
                       <table className="w-full text-left border-collapse">
                         <thead>
-                          <tr className="bg-surface-container-highest/20 text-[0.625rem] font-bold text-primary uppercase tracking-[0.2em]">
+                          <tr className="bg-surface-container-highest/20 text-label-sm font-bold text-primary uppercase tracking-widest">
                             <th className="p-4 border-r border-outline-variant/5">
                               금고
                             </th>
@@ -199,10 +199,10 @@ function SummaryScreen() {
                               <tr
                                 key={v}
                                 className={
-                                  vIdx % 2 === 0 ? 'bg-on-surface/[0.02]' : ''
+                                  vIdx % 2 === 0 ? 'bg-on-surface/2' : ''
                                 }
                               >
-                                <td className="p-4 text-[0.625rem] font-bold uppercase text-primary/60 border-r border-outline-variant/5 tracking-widest whitespace-nowrap">
+                                <td className="p-4 text-label-xs font-bold uppercase text-primary/60 border-r border-outline-variant/5 tracking-widest whitespace-nowrap">
                                   {v}
                                 </td>
                                 {Array.from(
@@ -245,13 +245,13 @@ function SummaryScreen() {
       </main>
 
       {/* 모바일 전용 고정 액션 버튼 */}
-      <div className="md:hidden fixed bottom-6 left-0 right-0 px-4 z-40">
+      <div className="md:hidden fixed inset-x-0 bottom-6 px-4 z-40">
         <button
           onClick={handleReset}
           className="w-full py-4 bg-linear-to-br from-primary to-primary-container text-on-primary font-black text-sm rounded-sm btn-press shadow-2xl flex items-center justify-center gap-2"
         >
-          <span className="material-symbols-outlined text-[18px]">refresh</span>
-          새 작전 시작
+          <span className="material-symbols-outlined text-lg">refresh</span>새
+          작전 시작
         </button>
       </div>
     </div>

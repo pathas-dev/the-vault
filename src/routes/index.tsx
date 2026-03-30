@@ -31,13 +31,13 @@ function HomeScreen() {
     <div className="flex-1 flex flex-col min-h-screen relative overflow-hidden blueprint-bg w-full">
       <FloatingActions actions={[{ icon: 'settings', label: '설정' }]} />
       <main className="flex-1 flex flex-col items-start justify-center px-5 md:px-24 py-10 md:py-20 relative z-10">
-        <div className="absolute top-0 right-0 w-1/2 h-full pointer-events-none opacity-20 hidden lg:block">
+        <div className="absolute inset-y-0 right-0 w-1/2 h-full pointer-events-none opacity-20 hidden lg:block">
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-primary/20 rounded-full orbit-ring"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-150 border border-primary/20 rounded-full orbit-ring"
             style={{ '--orbit-duration': '90s' } as React.CSSProperties}
           ></div>
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] border border-primary/10 rounded-full orbit-ring"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-112.5 border border-primary/10 rounded-full orbit-ring"
             style={
               {
                 '--orbit-duration': '60s',
@@ -46,7 +46,7 @@ function HomeScreen() {
             }
           ></div>
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] border border-primary/30 rounded-full flex items-center justify-center orbit-ring"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-75 border border-primary/30 rounded-full flex items-center justify-center orbit-ring"
             style={{ '--orbit-duration': '45s' } as React.CSSProperties}
           >
             <span
@@ -108,7 +108,7 @@ function HomeScreen() {
                 visibility_off
               </span>
             </div>
-            <p className="text-primary text-[0.625rem] font-extrabold tracking-[0.2em] mb-1 md:mb-2 uppercase">
+            <p className="text-primary text-label-sm font-extrabold tracking-widest mb-1 md:mb-2 uppercase">
               Protocol
             </p>
             <h3 className="font-headline text-xl md:text-2xl text-on-surface">
@@ -121,7 +121,7 @@ function HomeScreen() {
                 sensors
               </span>
             </div>
-            <p className="text-tertiary text-[0.625rem] font-extrabold tracking-[0.2em] mb-1 md:mb-2 uppercase">
+            <p className="text-tertiary text-label-sm font-extrabold tracking-widest mb-1 md:mb-2 uppercase">
               Status
             </p>
             <h3 className="font-headline text-xl md:text-2xl text-on-surface">
@@ -134,7 +134,7 @@ function HomeScreen() {
                 account_balance_wallet
               </span>
             </div>
-            <p className="text-primary-fixed-dim text-[0.625rem] font-extrabold tracking-[0.2em] mb-1 md:mb-2 uppercase">
+            <p className="text-primary-fixed-dim text-label-sm font-extrabold tracking-widest mb-1 md:mb-2 uppercase">
               Assets
             </p>
             <h3 className="font-headline text-xl md:text-2xl text-on-surface">
@@ -146,7 +146,7 @@ function HomeScreen() {
       <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.04]">
         <img
           alt="abstract geometry background"
-          className="w-full h-full object-cover"
+          className="size-full object-cover"
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHWEPZEfqgDNU0CqKRlARyDhMqA6qoLNFHlxyHkbtLwjQTPMhY5qNFg8LVtQMqorQ_BlOnMUTjUmpm0IBujdkGcQ6gBHeH646oJBPggC0-hMwGIROF7Ei4BVfnpOMdmEKOVbMMQa-3Jbb7ZFYOKAlBrNm3oOu6DcqIB1ScyFGFpfbITt5fal-D-IrrhgpF48Sh2jnFat3iHIg4ZHqL9e9c6-4WAwOjNooVSq5wF3kriG5C_9t3wMxk2DgjZ_5yrRichHM0O2RYf1n8"
         />
       </div>

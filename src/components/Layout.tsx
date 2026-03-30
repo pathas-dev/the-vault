@@ -45,16 +45,14 @@ export const Sidebar = () => {
       </nav>
       <div className="px-6 mt-auto">
         <div className="flex items-center gap-3 p-3 bg-surface-container-low rounded-sm">
-          <div className="w-8 h-8 rounded-sm overflow-hidden bg-primary-container/20 flex items-center justify-center border border-outline-variant/20">
+          <div className="w-8 h-8 rounded-sm overflow-hidden flex justify-center border border-outline-variant/20">
             <span className="material-symbols-outlined text-primary text-sm">
               person
             </span>
           </div>
           <div>
-            <p className="text-xs font-bold text-on-surface uppercase">
-              Master Thief
-            </p>
-            <p className="text-[0.625rem] text-on-surface-variant">
+            <p className="text-xs font-bold uppercase">Master Thief</p>
+            <p className="text-label-sm text-on-surface-variant">
               Rank: S-Class
             </p>
           </div>

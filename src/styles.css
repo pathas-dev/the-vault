@@ -53,6 +53,10 @@
   --color-primary-fixed: #ffdf9e;
   --color-on-primary-container: #594100;
 
+  --color-intrusion: #ff2d55;
+  --color-intrusion-container: #4d0014;
+  --color-on-intrusion: #ffffff;
+
   --font-headline: 'Noto Serif KR', serif;
   --font-body: 'Manrope', sans-serif;
   --font-label: 'Manrope', sans-serif;
