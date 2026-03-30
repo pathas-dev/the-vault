@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
 import { FloatingActions } from '../components/Layout'
+import { clearSavedRounds, getSavedRounds } from '../lib/storage'
 
 export const Route = createFileRoute('/' as any)({
   component: HomeScreen,
@@ -11,21 +12,14 @@ function HomeScreen() {
   const [hasSavedSession, setHasSavedSession] = useState(false)
 
   useEffect(() => {
-    const saved = sessionStorage.getItem('vault_rounds')
-    if (saved) {
-      try {
-        const data = JSON.parse(saved)
-        if (Array.isArray(data) && data.length > 0) {
-          setHasSavedSession(true)
-        }
-      } catch {
-        // corrupted session data — ignore
-      }
+    const data = getSavedRounds()
+    if (data.length > 0) {
+      setHasSavedSession(true)
     }
   }, [])
 
   const handleStartNew = () => {
-    sessionStorage.removeItem('vault_rounds')
+    clearSavedRounds()
     navigate({ to: '/record' })
   }
 

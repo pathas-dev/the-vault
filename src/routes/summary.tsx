@@ -2,6 +2,8 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
 import { FloatingActions } from '../components/Layout'
 import { WallMiniMap } from '../components/WallMiniMap'
+import { type RoundData } from '../lib/schemas'
+import { clearSavedRounds, getSavedRounds } from '../lib/storage'
 
 export const Route = createFileRoute('/summary' as any)({
   component: SummaryScreen,
@@ -30,27 +32,16 @@ const VAULT_CONFIG: Record<string, number> = {
 const VAULT_NUMBERS = Object.keys(VAULT_CONFIG)
 const MAX_CAPACITY = 3
 
-type RoundData = {
-  targetHouse: string
-  startPoint: string
-  horizontalWall: string | null
-  verticalWall: string | null
-  vaultValues: Record<string, string[]>
-}
-
 function SummaryScreen() {
   const navigate = useNavigate()
   const [rounds, setRounds] = useState<RoundData[]>([])
 
   useEffect(() => {
-    const saved = sessionStorage.getItem('vault_rounds')
-    if (saved) {
-      setRounds(JSON.parse(saved))
-    }
+    setRounds(getSavedRounds())
   }, [])
 
   const handleReset = () => {
-    sessionStorage.removeItem('vault_rounds')
+    clearSavedRounds()
     navigate({ to: '/' })
   }
 
