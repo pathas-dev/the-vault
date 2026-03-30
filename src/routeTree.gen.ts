@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SummaryRouteImport } from './routes/summary'
 import { Route as RecordRouteImport } from './routes/record'
+import { Route as LandingArchiveRouteImport } from './routes/landing-archive'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -22,6 +23,11 @@ const SummaryRoute = SummaryRouteImport.update({
 const RecordRoute = RecordRouteImport.update({
   id: '/record',
   path: '/record',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LandingArchiveRoute = LandingArchiveRouteImport.update({
+  id: '/landing-archive',
+  path: '/landing-archive',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -38,12 +44,14 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/landing-archive': typeof LandingArchiveRoute
   '/record': typeof RecordRoute
   '/summary': typeof SummaryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/landing-archive': typeof LandingArchiveRoute
   '/record': typeof RecordRoute
   '/summary': typeof SummaryRoute
 }
@@ -51,20 +59,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/landing-archive': typeof LandingArchiveRoute
   '/record': typeof RecordRoute
   '/summary': typeof SummaryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/record' | '/summary'
+  fullPaths: '/' | '/about' | '/landing-archive' | '/record' | '/summary'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/record' | '/summary'
-  id: '__root__' | '/' | '/about' | '/record' | '/summary'
+  to: '/' | '/about' | '/landing-archive' | '/record' | '/summary'
+  id: '__root__' | '/' | '/about' | '/landing-archive' | '/record' | '/summary'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  LandingArchiveRoute: typeof LandingArchiveRoute
   RecordRoute: typeof RecordRoute
   SummaryRoute: typeof SummaryRoute
 }
@@ -83,6 +93,13 @@ declare module '@tanstack/react-router' {
       path: '/record'
       fullPath: '/record'
       preLoaderRoute: typeof RecordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/landing-archive': {
+      id: '/landing-archive'
+      path: '/landing-archive'
+      fullPath: '/landing-archive'
+      preLoaderRoute: typeof LandingArchiveRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -105,6 +122,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  LandingArchiveRoute: LandingArchiveRoute,
   RecordRoute: RecordRoute,
   SummaryRoute: SummaryRoute,
 }

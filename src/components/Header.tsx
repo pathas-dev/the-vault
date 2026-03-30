@@ -8,6 +8,8 @@ export default function Header() {
         <h2 className="m-0 shrink-0 text-base font-semibold tracking-tight">
           <Link
             to="/"
+            search={{ round: 1 }}
+            replace={true}
             className="inline-flex items-center gap-2 rounded-full border border-(--chip-line) bg-(--chip-bg) px-3 py-1.5 text-sm text-(--sea-ink) no-underline shadow-[0_8px_24px_rgba(30,90,72,0.08)] sm:px-4 sm:py-2"
           >
             <span className="h-2 w-2 rounded-full bg-[linear-gradient(90deg,#56c6be,#7ed3bf)]" />
@@ -51,6 +53,8 @@ export default function Header() {
         <div className="order-3 flex w-full flex-wrap items-center gap-x-4 gap-y-1 pb-1 text-sm font-semibold sm:order-2 sm:w-auto sm:flex-nowrap sm:pb-0">
           <Link
             to="/"
+            search={{ round: 1 }}
+            replace={true}
             className="nav-link"
             activeProps={{ className: 'nav-link is-active' }}
           >

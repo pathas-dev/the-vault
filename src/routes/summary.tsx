@@ -42,7 +42,7 @@ function SummaryScreen() {
 
   const handleReset = () => {
     clearSavedRounds()
-    navigate({ to: '/' })
+    navigate({ to: '/', search: { round: 1 } })
   }
 
   const calculateTotal = () => {

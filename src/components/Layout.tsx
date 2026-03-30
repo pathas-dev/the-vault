@@ -22,13 +22,11 @@ export const Sidebar = () => {
         <p className="text-on-surface/40 text-xs mt-1">Stealth Mode Active</p>
       </div>
       <nav className="flex-1 space-y-2">
-        <Link className={getLinkClass('/')} to="/" aria-label="작전 개요">
-          <span className="material-symbols-outlined mr-3">description</span>
-          작전 개요
-        </Link>
         <Link
-          className={getLinkClass('/record')}
-          to="/record"
+          className={getLinkClass('/')}
+          to="/"
+          search={{ round: 1 }}
+          replace={true}
           aria-label="전리품 기록"
         >
           <span className="material-symbols-outlined mr-3">inventory_2</span>
@@ -37,6 +35,7 @@ export const Sidebar = () => {
         <Link
           className={getLinkClass('/summary')}
           to="/summary"
+          replace={true}
           aria-label="최종 결산"
         >
           <span className="material-symbols-outlined mr-3">payments</span>
