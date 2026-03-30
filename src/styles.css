@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Manrope:wght@400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Manrope:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
 @theme {
@@ -53,9 +53,9 @@
   --color-primary-fixed: #ffdf9e;
   --color-on-primary-container: #594100;
 
-  --font-headline: "Noto Serif KR", serif;
-  --font-body: "Manrope", sans-serif;
-  --font-label: "Manrope", sans-serif;
+  --font-headline: 'Noto Serif KR', serif;
+  --font-body: 'Manrope', sans-serif;
+  --font-label: 'Manrope', sans-serif;
 
   --radius-sm: 0.125rem;
   --radius-md: 0.25rem;
@@ -63,18 +63,18 @@
   --radius-xl: 0.75rem;
 
   /* Typography Scale */
-  --text-display-lg: 4.5rem;    /* 72px - hero headlines */
-  --text-display-sm: 2.25rem;   /* 36px - section titles */
+  --text-display-lg: 4.5rem; /* 72px - hero headlines */
+  --text-display-sm: 2.25rem; /* 36px - section titles */
   --text-headline-lg: 1.875rem; /* 30px - page headlines */
-  --text-headline-md: 1.5rem;   /* 24px - card headlines */
-  --text-title-lg: 1.25rem;     /* 20px - prominent titles */
-  --text-title-md: 1rem;        /* 16px - standard titles */
-  --text-body-lg: 1rem;         /* 16px - body text */
-  --text-body-md: 0.875rem;     /* 14px - standard body */
-  --text-label-lg: 0.875rem;    /* 14px - large labels */
-  --text-label-md: 0.75rem;     /* 12px - standard labels */
-  --text-label-sm: 0.625rem;    /* 10px - small labels/metadata */
-  --text-label-xs: 0.5625rem;   /* 9px - micro labels (tracking/uppercase) */
+  --text-headline-md: 1.5rem; /* 24px - card headlines */
+  --text-title-lg: 1.25rem; /* 20px - prominent titles */
+  --text-title-md: 1rem; /* 16px - standard titles */
+  --text-body-lg: 1rem; /* 16px - body text */
+  --text-body-md: 0.875rem; /* 14px - standard body */
+  --text-label-lg: 0.875rem; /* 14px - large labels */
+  --text-label-md: 0.75rem; /* 12px - standard labels */
+  --text-label-sm: 0.625rem; /* 10px - small labels/metadata */
+  --text-label-xs: 0.5625rem; /* 9px - micro labels (tracking/uppercase) */
 
   /* Tracking */
   --tracking-tight: -0.025em;
@@ -93,23 +93,31 @@
     /* iOS 스크롤 관성 */
     -webkit-overflow-scrolling: touch;
   }
-  
-  .serif-text, .noto-serif {
+
+  .serif-text,
+  .noto-serif {
     font-family: var(--font-headline);
   }
-  
+
   .material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
     vertical-align: middle;
   }
 
   /* 모바일 input 자동 확대 방지 (iOS Safari) */
-  input, select, textarea {
+  input,
+  select,
+  textarea {
     font-size: max(16px, 1em);
   }
 
   /* 터치 피드백 최적화 */
-  button, a {
+  button,
+  a {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
@@ -127,35 +135,47 @@
 
 @layer utilities {
   .blueprint-bg {
-    background-image: radial-gradient(circle at 2px 2px, rgba(255, 198, 55, 0.05) 1px, transparent 0);
+    background-image: radial-gradient(
+      circle at 2px 2px,
+      rgba(255, 198, 55, 0.05) 1px,
+      transparent 0
+    );
     background-size: 40px 40px;
   }
-  
+
   .gold-gradient {
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-container) 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-primary) 0%,
+      var(--color-primary-container) 100%
+    );
   }
-  
+
   .gold-text-gradient {
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-container) 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-primary) 0%,
+      var(--color-primary-container) 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
+
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
-  
+
   .custom-scrollbar::-webkit-scrollbar {
     height: 4px;
     width: 4px;
   }
-  
+
   .custom-scrollbar::-webkit-scrollbar-track {
     background: var(--color-surface-container-low);
   }
-  
+
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background: var(--color-outline-variant);
     border-radius: 2px;
@@ -179,8 +199,13 @@
 
   /* 골드 펄스 글로우 — 금고 선택 시 */
   @keyframes gold-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 198, 55, 0); }
-    50% { box-shadow: 0 0 16px 4px rgba(255, 198, 55, 0.25); }
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 198, 55, 0);
+    }
+    50% {
+      box-shadow: 0 0 16px 4px rgba(255, 198, 55, 0.25);
+    }
   }
   .vault-selected {
     animation: gold-pulse 1.5s ease-in-out 1;
@@ -188,11 +213,15 @@
 
   /* 카드 호버 리프트 */
   .card-lift {
-    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.25s ease;
+    transition:
+      transform 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+      box-shadow 0.25s ease;
   }
   .card-lift:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 198, 55, 0.06);
+    box-shadow:
+      0 8px 24px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(255, 198, 55, 0.06);
   }
   .card-lift:active {
     transform: translateY(0);
@@ -201,7 +230,10 @@
 
   /* 버튼 프레스 피드백 */
   .btn-press {
-    transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), filter 0.15s ease, box-shadow 0.2s ease;
+    transition:
+      transform 0.15s cubic-bezier(0.25, 1, 0.5, 1),
+      filter 0.15s ease,
+      box-shadow 0.2s ease;
   }
   .btn-press:hover {
     transform: translateY(-1px);
@@ -214,8 +246,15 @@
 
   /* 골드 보더 글로우 — input focus */
   @keyframes border-glow {
-    0%, 100% { border-color: var(--color-primary); box-shadow: 0 0 6px rgba(255, 198, 55, 0.15); }
-    50% { border-color: var(--color-primary-container); box-shadow: 0 0 12px rgba(255, 198, 55, 0.25); }
+    0%,
+    100% {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 6px rgba(255, 198, 55, 0.15);
+    }
+    50% {
+      border-color: var(--color-primary-container);
+      box-shadow: 0 0 12px rgba(255, 198, 55, 0.25);
+    }
   }
   .input-glow:focus {
     animation: border-glow 2s ease-in-out infinite;
@@ -223,8 +262,14 @@
 
   /* 스태거 진입 애니메이션 */
   @keyframes fade-up {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   .stagger-in {
     opacity: 0;
@@ -267,8 +312,12 @@
 
   /* 히어로 동심원 느린 회전 */
   @keyframes slow-spin {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to { transform: translate(-50%, -50%) rotate(360deg); }
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
   }
   .orbit-ring {
     animation: slow-spin var(--orbit-duration, 60s) linear infinite;

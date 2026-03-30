@@ -4,13 +4,13 @@ Route-specific conventions and architectural patterns for `/src/routes/`.
 
 ## Routes Overview
 
-| Route | Purpose | Key Components |
-|-------|---------|-----------------|
-| `__root.tsx` | Root layout wrapper. Applies dark theme pre-render, TanStack devtools. | `RootDocument`, theme init script |
-| `index.tsx` | Home/landing page. Hero section with CTA buttons, operation overview cards. | `HomeScreen`, session detection |
-| `record.tsx` | Main feature (~620 lines). Multi-round vault recording form with target house, floor plan grid, wall/entry selection, vault value input. | `RecordScreen`, `WallMiniMap`, keyboard nav |
-| `summary.tsx` | Results page. Total extraction value, per-round breakdown (desktop table + mobile cards), `WallMiniMap` visualization. | `SummaryScreen`, calculation helpers |
-| `about.tsx` | About page. Static content. | `About` |
+| Route         | Purpose                                                                                                                                  | Key Components                              |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `__root.tsx`  | Root layout wrapper. Applies dark theme pre-render, TanStack devtools.                                                                   | `RootDocument`, theme init script           |
+| `index.tsx`   | Home/landing page. Hero section with CTA buttons, operation overview cards.                                                              | `HomeScreen`, session detection             |
+| `record.tsx`  | Main feature (~620 lines). Multi-round vault recording form with target house, floor plan grid, wall/entry selection, vault value input. | `RecordScreen`, `WallMiniMap`, keyboard nav |
+| `summary.tsx` | Results page. Total extraction value, per-round breakdown (desktop table + mobile cards), `WallMiniMap` visualization.                   | `SummaryScreen`, calculation helpers        |
+| `about.tsx`   | About page. Static content.                                                                                                              | `About`                                     |
 
 ## Route Definition Pattern
 
@@ -29,13 +29,14 @@ Screen components are regular function components (not separately exported). Typ
 Session data stored in `sessionStorage` under key `vault_rounds` as JSON array.
 
 **RoundData type:**
+
 ```typescript
 {
-  targetHouse: string        // 'A' | 'B' | 'C' | 'D'
-  startPoint: string         // 'A' | 'B'
-  horizontalWall: string | null  // 'ㄴ' | 'ㄷ' | null
-  verticalWall: string | null    // 'a' | 'b' | 'c' | 'd' | null
-  vaultValues: Record<string, string[]>  // vault number -> [values]
+  targetHouse: string // 'A' | 'B' | 'C' | 'D'
+  startPoint: string // 'A' | 'B'
+  horizontalWall: string | null // 'ㄴ' | 'ㄷ' | null
+  verticalWall: string | null // 'a' | 'b' | 'c' | 'd' | null
+  vaultValues: Record<string, string[]> // vault number -> [values]
 }
 ```
 
@@ -47,9 +48,23 @@ Session data stored in `sessionStorage` under key `vault_rounds` as JSON array.
 
 ```typescript
 const VAULT_CONFIG: Record<string, number> = {
-  '101': 1, '102': 1, '103': 2, '111': 1, '112': 1, '113': 2,
-  '201': 1, '202': 2, '203': 2, '211': 1, '212': 2, '213': 2,
-  '301': 1, '302': 2, '303': 2, '304': 2, '401': 3,
+  '101': 1,
+  '102': 1,
+  '103': 2,
+  '111': 1,
+  '112': 1,
+  '113': 2,
+  '201': 1,
+  '202': 2,
+  '203': 2,
+  '211': 1,
+  '212': 2,
+  '213': 2,
+  '301': 1,
+  '302': 2,
+  '303': 2,
+  '304': 2,
+  '401': 3,
 }
 const VAULT_NUMBERS = Object.keys(VAULT_CONFIG)
 const MAX_CAPACITY = 3
