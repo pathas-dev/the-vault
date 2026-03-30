@@ -152,7 +152,7 @@ function RecordScreen() {
 
   const isFinalRound = currentRound === 7
   const isValidValue = (val: string) => val === '' || (Number(val) >= 20 && Number(val) <= 100)
-  const isFormValid = selectedVaults.length > 0 && selectedVaults.every((v) => {
+  const isFormValid = selectedVaults.length === 0 || selectedVaults.every((v) => {
     const values = vaultValues[v]
     return values.some((val) => val !== '') && values.every((val) => isValidValue(val))
   })
@@ -198,6 +198,48 @@ function RecordScreen() {
           ))}
         </div>
       </button>
+    )
+  }
+
+  const HWallButton = ({ value, className }: { value: string; className?: string }) => {
+    const isSelected = horizontalWall === value
+    return (
+      <div className={`relative h-0 z-10 ${className || ''}`}>
+        <button
+          onClick={() => setHorizontalWall(isSelected ? null : value)}
+          className="absolute left-0 right-0 -top-[8px] h-[16px] flex items-center cursor-pointer group"
+          title={`가로벽 ${value}`}
+        >
+          <div className="h-[2px] flex-1 bg-outline-variant/25" />
+          <div className={`h-[4px] w-8 mx-0.5 rounded-full transition-all duration-300 ${
+            isSelected
+              ? 'bg-tertiary shadow-[0_0_12px_rgba(241,201,125,0.9)]'
+              : 'bg-tertiary/15 shadow-[0_0_6px_rgba(241,201,125,0.1)] group-hover:bg-tertiary/30 group-hover:shadow-[0_0_8px_rgba(241,201,125,0.2)]'
+          }`} />
+          <div className="h-[2px] flex-1 bg-outline-variant/25" />
+        </button>
+      </div>
+    )
+  }
+
+  const VWallButton = ({ value, className }: { value: string; className?: string }) => {
+    const isSelected = verticalWall === value
+    return (
+      <div className={`relative w-0 z-10 ${className || ''}`}>
+        <button
+          onClick={() => setVerticalWall(isSelected ? null : value)}
+          className="absolute top-0 bottom-0 -left-[8px] w-[16px] flex flex-col items-center cursor-pointer group"
+          title={`세로벽 ${value}`}
+        >
+          <div className="w-[2px] flex-1 bg-outline-variant/25" />
+          <div className={`w-[4px] h-8 my-0.5 rounded-full transition-all duration-300 ${
+            isSelected
+              ? 'bg-tertiary shadow-[0_0_12px_rgba(241,201,125,0.9)]'
+              : 'bg-tertiary/15 shadow-[0_0_6px_rgba(241,201,125,0.1)] group-hover:bg-tertiary/30 group-hover:shadow-[0_0_8px_rgba(241,201,125,0.2)]'
+          }`} />
+          <div className="w-[2px] flex-1 bg-outline-variant/25" />
+        </button>
+      </div>
     )
   }
 
@@ -311,7 +353,7 @@ function RecordScreen() {
               </h1>
 
               {viewMode === 'input' ? (
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
                   {/* 터는 집 */}
                   <div className="space-y-2 md:space-y-3">
                     <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-primary/60 flex items-center gap-2">
@@ -333,35 +375,6 @@ function RecordScreen() {
                       {['A', 'B'].map((p) => (
                         <button key={p} onClick={() => setStartPoint(p)} className={`flex-1 py-2 text-xs font-bold transition-all rounded-sm border ${startPoint === p ? 'bg-linear-to-br from-primary to-primary-container text-on-primary border-primary shadow-[0_4px_12px_rgba(255,198,55,0.1)]' : 'bg-surface-container-low text-on-surface/40 border-outline-variant/20 hover:border-primary/40'}`}>{p}</button>
                       ))}
-                    </div>
-                  </div>
-
-                  {/* 벽 위치 */}
-                  <div className="space-y-2 md:space-y-3">
-                    <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-primary/60 flex items-center gap-2">
-                      <span className="material-symbols-outlined text-xs">shield_with_heart</span> 벽 위치 (Security Nodes)
-                    </label>
-                    <div className="grid grid-cols-2 gap-3 content-stretch">
-                      <div className="flex flex-col gap-1.5">
-                        <div className="px-1"><span className="text-[7px] font-black text-on-surface/20 uppercase tracking-widest leading-none">H-Barrier</span></div>
-                        {['ㄱ', 'ㄴ', 'ㄷ'].map((w) => (
-                          <button key={w} onClick={() => setHorizontalWall(horizontalWall === w ? null : w)} className={`group flex items-center gap-4 px-3 py-2.5 transition-all rounded-sm border ${horizontalWall === w ? 'bg-tertiary/10 text-tertiary border-tertiary shadow-[0_0_15px_rgba(241,201,125,0.15)]' : 'bg-surface-container-low text-on-surface/30 border-outline-variant/10 hover:border-primary/20'}`}>
-                            <div className={`h-1 flex-1 rounded-full transition-all duration-300 ${horizontalWall === w ? 'bg-tertiary shadow-[0_0_10px_rgba(241,201,125,0.9)] scale-x-105' : 'bg-on-surface/10 group-hover:bg-on-surface/30'}`}></div>
-                            <span className="serif-text text-[11px] font-black">{w}</span>
-                          </button>
-                        ))}
-                      </div>
-                      <div className="flex flex-col gap-1.5">
-                        <div className="px-1"><span className="text-[7px] font-black text-on-surface/20 uppercase tracking-widest leading-none">V-Pillar</span></div>
-                        <div className="flex gap-1.5 items-stretch h-full min-h-[100px]">
-                          {['a', 'b', 'c'].map((w) => (
-                            <button key={w} onClick={() => setVerticalWall(verticalWall === w ? null : w)} className={`group flex-1 flex flex-col items-center justify-between py-3 px-1 transition-all rounded-sm border border-dashed ${verticalWall === w ? 'bg-tertiary/10 text-tertiary border-tertiary shadow-[0_0_15px_rgba(241,201,125,0.15)] border-solid' : 'bg-surface-container-low text-on-surface/30 border-outline-variant/10 hover:border-primary/20'}`}>
-                              <span className={`serif-text text-[11px] font-black ${verticalWall === w ? 'text-tertiary' : 'group-hover:text-primary/60'}`}>{w}</span>
-                              <div className={`w-1 flex-1 my-1 rounded-full transition-all duration-300 ${verticalWall === w ? 'bg-tertiary shadow-[0_0_10px_rgba(241,201,125,0.9)] scale-y-105' : 'bg-on-surface/10 group-hover:bg-on-surface/30'}`}></div>
-                            </button>
-                          ))}
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -416,29 +429,34 @@ function RecordScreen() {
               <div className="flex min-w-[520px] mx-auto" style={{ maxWidth: '740px' }}>
                 {/* Room 401 */}
                 <div className="self-center border-2 border-r-0 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3">
-                  <div className="relative">
-                    <span className="absolute -top-1.5 left-1 text-[7px] font-black text-on-surface/15 uppercase tracking-widest leading-none bg-surface-container-lowest/30 px-1">4xx</span>
-                    <VaultCell vault="401" className="w-full min-w-[64px] md:min-w-[80px] min-h-[80px] md:min-h-[100px]" />
-                  </div>
+                  <VaultCell vault="401" className="w-full min-w-[64px] md:min-w-[80px] min-h-[80px] md:min-h-[100px]" />
                 </div>
 
                 {/* Room 3xx - 4 corners */}
-                <div className="border-2 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3 flex-1 relative">
-                  <span className="absolute top-0.5 left-1.5 text-[7px] font-black text-on-surface/15 uppercase tracking-widest leading-none">3xx</span>
-                  <div className="grid grid-cols-2 gap-2 h-full" style={{ gridTemplateRows: 'auto 1fr auto' }}>
-                    <VaultCell vault="301" className="w-full" />
-                    <VaultCell vault="302" className="w-full" />
-                    <div className="col-span-2" />
-                    <VaultCell vault="303" className="w-full" />
-                    <VaultCell vault="304" className="w-full" />
+                <div className="border-2 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
+                  <div className="flex flex-col gap-2 h-full">
+                    <div className="grid grid-cols-2 gap-2">
+                      <VaultCell vault="301" className="w-full" />
+                      <VaultCell vault="302" className="w-full" />
+                    </div>
+                    <div className="flex-1" />
+                    <div className="grid grid-cols-2 gap-2">
+                      <VaultCell vault="303" className="w-full" />
+                      <VaultCell vault="304" className="w-full" />
+                    </div>
                   </div>
                 </div>
 
-                {/* 2xx column - two rooms stacked */}
+                {/* Vertical walls a/b overlay: between 3xx and 20x/21x */}
+                <div className="flex flex-col self-stretch w-0 z-10">
+                  <VWallButton value="a" className="flex-1" />
+                  <VWallButton value="b" className="flex-1" />
+                </div>
+
+                {/* 2xx column */}
                 <div className="flex flex-col flex-1">
                   {/* Room 20x */}
-                  <div className="border-2 border-l-0 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3 flex-1 relative">
-                    <span className="absolute top-0.5 left-1.5 text-[7px] font-black text-on-surface/15 uppercase tracking-widest leading-none">20x</span>
+                  <div className="border-2 border-l-0 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
                     <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full">
                       <VaultCell vault="201" className="w-full" />
                       <VaultCell vault="202" className="w-full" />
@@ -446,9 +464,10 @@ function RecordScreen() {
                       <VaultCell vault="203" className="w-full" />
                     </div>
                   </div>
+                  {/* Horizontal wall ㄴ overlay: between 20x and 21x */}
+                  <HWallButton value="ㄴ" />
                   {/* Room 21x */}
-                  <div className="border-2 border-l-0 border-t-0 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3 flex-1 relative">
-                    <span className="absolute top-0.5 left-1.5 text-[7px] font-black text-on-surface/15 uppercase tracking-widest leading-none">21x</span>
+                  <div className="border-2 border-l-0 border-t-0 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
                     <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full">
                       <VaultCell vault="211" className="w-full" />
                       <VaultCell vault="212" className="w-full" />
@@ -458,11 +477,16 @@ function RecordScreen() {
                   </div>
                 </div>
 
-                {/* 1xx column - two rooms stacked */}
+                {/* Vertical walls c/d overlay: between 20x↔10x and 21x↔11x */}
+                <div className="flex flex-col self-stretch w-0 z-10">
+                  <VWallButton value="c" className="flex-1" />
+                  <VWallButton value="d" className="flex-1" />
+                </div>
+
+                {/* 1xx column */}
                 <div className="flex flex-col flex-1">
                   {/* Room 10x */}
-                  <div className="border-2 border-l-0 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3 flex-1 relative">
-                    <span className="absolute top-0.5 left-1.5 text-[7px] font-black text-on-surface/15 uppercase tracking-widest leading-none">10x</span>
+                  <div className="border-2 border-l-0 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
                     <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full">
                       <VaultCell vault="101" className="w-full" />
                       <VaultCell vault="102" className="w-full" />
@@ -470,9 +494,10 @@ function RecordScreen() {
                       <VaultCell vault="103" className="w-full" />
                     </div>
                   </div>
+                  {/* Horizontal wall ㄷ overlay: between 10x and 11x */}
+                  <HWallButton value="ㄷ" />
                   {/* Room 11x */}
-                  <div className="border-2 border-l-0 border-t-0 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3 flex-1 relative">
-                    <span className="absolute top-0.5 left-1.5 text-[7px] font-black text-on-surface/15 uppercase tracking-widest leading-none">11x</span>
+                  <div className="border-2 border-l-0 border-t-0 border-outline-variant/30 bg-surface-container-lowest/30 p-2 md:p-3 flex-1">
                     <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full">
                       <VaultCell vault="111" className="w-full" />
                       <VaultCell vault="112" className="w-full" />
