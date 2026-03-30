@@ -98,14 +98,14 @@ function RecordScreen() {
       if (valueIndex < capacity - 1) {
         const nextInput = document.querySelector(
           `input[name="${vault}-v${valueIndex + 1}"]`,
-        ) as HTMLInputElement
+        )
         nextInput?.focus()
       } else {
         const nextVault = visibleVaults[currentIndex + 1]
         if (nextVault) {
           const nextInput = document.querySelector(
             `input[name="${nextVault}-v0"]`,
-          ) as HTMLInputElement
+          )
           nextInput?.focus()
         }
       }
@@ -117,7 +117,7 @@ function RecordScreen() {
         const targetIdx = Math.min(valueIndex, VAULT_CONFIG[nextVault] - 1)
         const nextInput = document.querySelector(
           `input[name="${nextVault}-v${targetIdx}"]`,
-        ) as HTMLInputElement
+        )
         nextInput?.focus()
       }
     }
@@ -128,20 +128,20 @@ function RecordScreen() {
         const targetIdx = Math.min(valueIndex, VAULT_CONFIG[prevVault] - 1)
         const prevInput = document.querySelector(
           `input[name="${prevVault}-v${targetIdx}"]`,
-        ) as HTMLInputElement
+        )
         prevInput?.focus()
       }
     }
     if (e.key === 'ArrowRight' && valueIndex < capacity - 1) {
       const nextInput = document.querySelector(
         `input[name="${vault}-v${valueIndex + 1}"]`,
-      ) as HTMLInputElement
+      )
       nextInput?.focus()
     }
     if (e.key === 'ArrowLeft' && valueIndex > 0) {
       const prevInput = document.querySelector(
         `input[name="${vault}-v${valueIndex - 1}"]`,
-      ) as HTMLInputElement
+      )
       prevInput?.focus()
     }
   }
@@ -217,6 +217,8 @@ function RecordScreen() {
     return (
       <button
         onClick={() => toggleVault(vault)}
+        aria-pressed={isSelected}
+        aria-label={`금고 ${vault} ${isSelected ? '선택 해제' : '선택'}`}
         className={`flex flex-col items-center justify-center gap-0.5 p-2 md:p-3 border rounded-sm min-h-[52px] md:min-h-[64px] btn-press ${
           isSelected
             ? 'bg-linear-to-br from-primary to-primary-container text-on-primary border-primary shadow-lg z-10 vault-selected'
@@ -257,6 +259,8 @@ function RecordScreen() {
       <div className={`relative h-0 z-10 ${className || ''}`}>
         <button
           onClick={() => setHorizontalWall(isSelected ? null : value)}
+          aria-pressed={isSelected}
+          aria-label={`가로벽 ${value} ${isSelected ? '해제' : '설치'}`}
           className="absolute left-0 right-0 -top-[8px] h-[16px] flex items-center cursor-pointer group"
           title={`가로벽 ${value}`}
         >
@@ -286,6 +290,8 @@ function RecordScreen() {
       <div className={`relative w-0 z-10 ${className || ''}`}>
         <button
           onClick={() => setVerticalWall(isSelected ? null : value)}
+          aria-pressed={isSelected}
+          aria-label={`세로벽 ${value} ${isSelected ? '해제' : '설치'}`}
           className="absolute top-0 bottom-0 -left-[8px] w-[16px] flex flex-col items-center cursor-pointer group"
           title={`세로벽 ${value}`}
         >
@@ -307,7 +313,11 @@ function RecordScreen() {
 
   return (
     <div className="flex-1 flex flex-col w-full min-w-0">
-      <FloatingActions actions={[{ icon: 'history', label: '작전 이력 보기', onClick: toggleHistory }]} />
+      <FloatingActions
+        actions={[
+          { icon: 'history', label: '작전 이력 보기', onClick: toggleHistory },
+        ]}
+      />
 
       {/* 작전 이력 패널 (History Panel) */}
       <div
@@ -405,11 +415,16 @@ function RecordScreen() {
                                   <span className="text-[0.625rem] font-black text-on-surface-variant px-2 py-1">
                                     {vault}
                                   </span>
-                                  {vals.filter((v) => v !== '').map((val, i) => (
-                                    <span key={i} className="text-[0.625rem] font-black text-primary px-1.5 py-1 border-l border-outline-variant/10">
-                                      {val}
-                                    </span>
-                                  ))}
+                                  {vals
+                                    .filter((v) => v !== '')
+                                    .map((val, i) => (
+                                      <span
+                                        key={i}
+                                        className="text-[0.625rem] font-black text-primary px-1.5 py-1 border-l border-outline-variant/10"
+                                      >
+                                        {val}
+                                      </span>
+                                    ))}
                                 </div>
                               ))}
                           </div>
@@ -456,6 +471,8 @@ function RecordScreen() {
                       <button
                         key={h}
                         onClick={() => setTargetHouse(h)}
+                        aria-pressed={targetHouse === h}
+                        aria-label={`집 ${h}`}
                         className={`flex-1 py-2 text-xs font-bold rounded-sm border btn-press ${targetHouse === h ? 'bg-primary text-on-primary border-primary' : 'bg-surface-container-low text-on-surface/40 border-outline-variant/20 hover:border-primary/40'}`}
                       >
                         {h}
@@ -596,6 +613,7 @@ function RecordScreen() {
                   <button
                     onClick={() => setStartPoint('A')}
                     aria-label="침투 지점 A 선택"
+                    aria-pressed={startPoint === 'A'}
                     className="flex-1 flex items-center px-1 group transition-all"
                     title="침투 지점 A (10x 방)"
                   >
@@ -605,6 +623,7 @@ function RecordScreen() {
                           ? 'text-error drop-shadow-[0_0_8px_rgba(255,100,100,0.8)]'
                           : 'text-on-surface/15 group-hover:text-error/40'
                       }`}
+                      aria-hidden="true"
                     >
                       chevron_left
                     </span>
@@ -612,6 +631,7 @@ function RecordScreen() {
                   <button
                     onClick={() => setStartPoint('B')}
                     aria-label="침투 지점 B 선택"
+                    aria-pressed={startPoint === 'B'}
                     className="flex-1 flex items-center px-1 group transition-all"
                     title="침투 지점 B (11x 방)"
                   >
@@ -621,6 +641,7 @@ function RecordScreen() {
                           ? 'text-error drop-shadow-[0_0_8px_rgba(255,100,100,0.8)]'
                           : 'text-on-surface/15 group-hover:text-error/40'
                       }`}
+                      aria-hidden="true"
                     >
                       chevron_left
                     </span>
@@ -671,7 +692,10 @@ function RecordScreen() {
                     <>
                       {Array.from({ length: MAX_CAPACITY }, (_, i) => {
                         const isSlotAvailable = i < VAULT_CONFIG[v]
-                        const isUnlocked = i === 0 || (vaultValues[v][i - 1] !== '' && isValidValue(vaultValues[v][i - 1]))
+                        const isUnlocked =
+                          i === 0 ||
+                          (vaultValues[v][i - 1] !== '' &&
+                            isValidValue(vaultValues[v][i - 1]))
                         const isEnabled = isSlotAvailable && isUnlocked
                         return (
                           <div key={i} className="px-1.5 relative">
@@ -679,10 +703,12 @@ function RecordScreen() {
                               <>
                                 <input
                                   name={`${v}-v${i}`}
+                                  aria-label={`${v} 금고 슬롯 ${i + 1}`}
                                   className={`w-full border text-center font-black rounded-sm py-2.5 md:py-3 outline-none text-base md:text-lg transition-all ${
                                     !isEnabled
                                       ? 'bg-surface-container-low border-outline-variant/5 text-on-surface/15 cursor-not-allowed'
-                                      : vaultValues[v][i] !== '' && !isValidValue(vaultValues[v][i])
+                                      : vaultValues[v][i] !== '' &&
+                                          !isValidValue(vaultValues[v][i])
                                         ? 'bg-surface-container-lowest border-error ring-1 ring-error/20 text-primary'
                                         : 'bg-surface-container-lowest border-outline-variant/10 text-primary input-glow focus:ring-1 focus:ring-primary/20'
                                   }`}
