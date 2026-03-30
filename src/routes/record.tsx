@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
-import { Topbar } from '../components/Layout'
+import { FloatingActions } from '../components/Layout'
 import { WallMiniMap } from '../components/WallMiniMap'
 
 const VAULT_CONFIG: Record<string, number> = {
@@ -306,8 +306,8 @@ function RecordScreen() {
   const visibleVaults = VAULT_NUMBERS.filter((v) => selectedVaults.includes(v))
 
   return (
-    <div className="flex-1 flex flex-col w-full min-w-0 pt-16 md:pt-20">
-      <Topbar rightIcon="history" onRightIconClick={toggleHistory} />
+    <div className="flex-1 flex flex-col w-full min-w-0">
+      <FloatingActions actions={[{ icon: 'history', label: '작전 이력 보기', onClick: toggleHistory }]} />
 
       {/* 작전 이력 패널 (History Panel) */}
       <div

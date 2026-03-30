@@ -47,22 +47,20 @@ export const Sidebar = () => {
     );
 };
 
-export const Topbar = ({ rightIcon = 'settings', onRightIconClick }: { rightIcon?: string, onRightIconClick?: () => void }) => {
+export const FloatingActions = ({ actions }: { actions: { icon: string, label: string, onClick?: () => void }[] }) => {
     return (
-        <header className="flex justify-between items-center w-full px-4 md:px-6 py-3 md:py-4 max-w-none bg-background/95 backdrop-blur-sm shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] z-50 fixed top-0 left-0 right-0">
-            <div className="text-primary font-headline text-base md:text-xl font-black uppercase tracking-widest leading-none">
-                대도의 비밀 장부
-            </div>
-            <div className="flex items-center gap-4">
+        <div className="fixed top-4 right-4 md:top-6 md:right-6 z-50 flex items-center gap-2">
+            {actions.map((action) => (
                 <button
-                  onClick={onRightIconClick}
-                  aria-label={rightIcon === 'history' ? '작전 이력 보기' : '설정'}
-                  className="text-on-surface/60 hover:text-primary transition-colors duration-300 p-2 -mr-2 hover:bg-surface-container-high rounded-sm active:scale-90"
+                    key={action.icon}
+                    onClick={action.onClick}
+                    aria-label={action.label}
+                    className="text-on-surface/40 hover:text-primary transition-colors duration-300 p-2 hover:bg-surface-container-high/80 backdrop-blur-sm rounded-sm active:scale-90"
                 >
-                    <span className="material-symbols-outlined text-[24px]">{rightIcon}</span>
+                    <span className="material-symbols-outlined text-[22px]">{action.icon}</span>
                 </button>
-            </div>
-        </header>
+            ))}
+        </div>
     );
 };
 

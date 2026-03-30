@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
-import { Topbar } from '../components/Layout'
+import { FloatingActions } from '../components/Layout'
 import { WallMiniMap } from '../components/WallMiniMap'
 
 export const Route = createFileRoute('/summary' as any)({
@@ -64,8 +64,8 @@ function SummaryScreen() {
   }
 
   return (
-    <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden w-full pt-16 md:pt-20">
-      <Topbar />
+    <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden w-full">
+      <FloatingActions actions={[{ icon: 'settings', label: '설정' }]} />
       <main className="flex-1 px-4 md:px-12 py-8 md:py-20 max-w-7xl mx-auto w-full pb-24 md:pb-12">
         {/* 헤더 섹션 */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-12 mb-10 md:mb-20 items-end">

@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
-import { Topbar } from '../components/Layout'
+import { FloatingActions } from '../components/Layout'
 
 export const Route = createFileRoute('/' as any)({
   component: HomeScreen,
@@ -34,8 +34,8 @@ function HomeScreen() {
   }
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen relative overflow-hidden blueprint-bg w-full pt-16 md:pt-20">
-      <Topbar />
+    <div className="flex-1 flex flex-col min-h-screen relative overflow-hidden blueprint-bg w-full">
+      <FloatingActions actions={[{ icon: 'settings', label: '설정' }]} />
       <main className="flex-1 flex flex-col items-start justify-center px-5 md:px-24 py-10 md:py-20 relative z-10">
         <div className="absolute top-0 right-0 w-1/2 h-full pointer-events-none opacity-20 hidden lg:block">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-primary/20 rounded-full orbit-ring" style={{ '--orbit-duration': '90s' } as React.CSSProperties}></div>
