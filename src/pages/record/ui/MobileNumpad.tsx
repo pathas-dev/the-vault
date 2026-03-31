@@ -20,7 +20,7 @@ export function MobileNumpad({
   return (
     <>
       <div className="fixed inset-0 bg-transparent" onClick={onClose} />
-      <div className="relative bg-surface-container-high shadow-[0_-4px_24px_rgba(0,0,0,0.4)] pb-6 pt-3 px-4">
+      <div className="@container relative bg-surface-container-high shadow-[0_-4px_24px_rgba(0,0,0,0.4)] pb-6 pt-3 px-4">
         {/* 현재 편집 슬롯 표시 */}
         <div className="flex items-center justify-between mb-3 px-1">
           <div className="flex items-center gap-2">
@@ -49,30 +49,30 @@ export function MobileNumpad({
             <button
               key={d}
               onClick={() => onDigit(d)}
-              className="py-3.5 bg-surface-container rounded-sm text-lg font-black text-on-surface btn-press active:bg-surface-container-highest"
+              className="py-3 @sm:py-4 @md:py-5 bg-surface-container rounded-sm text-base @sm:text-lg @md:text-xl font-black text-on-surface btn-press active:bg-surface-container-highest"
             >
               {d}
             </button>
           ))}
           <button
             onClick={onBackspace}
-            className="py-3.5 bg-surface-container rounded-sm font-black text-on-surface/60 btn-press active:bg-surface-container-highest flex items-center justify-center"
+            className="py-3 @sm:py-4 @md:py-5 bg-surface-container rounded-sm font-black text-on-surface/60 btn-press active:bg-surface-container-highest flex items-center justify-center"
             aria-label="지우기"
           >
-            <span className="material-symbols-outlined text-xl">backspace</span>
+            <span className="material-symbols-outlined text-xl @md:text-2xl">backspace</span>
           </button>
           <button
             onClick={() => onDigit('0')}
-            className="py-3.5 bg-surface-container rounded-sm text-lg font-black text-on-surface btn-press active:bg-surface-container-highest"
+            className="py-3 @sm:py-4 @md:py-5 bg-surface-container rounded-sm text-base @sm:text-lg @md:text-xl font-black text-on-surface btn-press active:bg-surface-container-highest"
           >
             0
           </button>
           <button
             onClick={onConfirm}
-            className="py-3.5 gold-gradient rounded-sm text-lg font-black text-on-primary btn-press"
+            className="py-3 @sm:py-4 @md:py-5 gold-gradient rounded-sm text-base @sm:text-lg @md:text-xl font-black text-on-primary btn-press"
             aria-label="다음"
           >
-            <span className="material-symbols-outlined text-xl">check</span>
+            <span className="material-symbols-outlined text-xl @md:text-2xl">check</span>
           </button>
         </div>
       </div>

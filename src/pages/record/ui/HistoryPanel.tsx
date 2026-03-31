@@ -17,7 +17,7 @@ export function HistoryPanel({ isOpen, rounds, onClose }: HistoryPanelProps) {
         onClick={onClose}
       />
       <div
-        className={`absolute inset-y-0 right-0 size-full max-w-md bg-surface-container-high/90 backdrop-blur-[20px] shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`history-panel absolute inset-y-0 right-0 size-full max-w-md bg-surface-container-high/90 backdrop-blur-[20px] shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         <div className="flex flex-col h-full bg-linear-to-b from-surface-container-high/40 to-transparent">
           <div className="flex justify-between items-center px-6 py-8 bg-surface-container-highest/30">

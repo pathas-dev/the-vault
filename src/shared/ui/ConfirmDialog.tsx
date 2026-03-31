@@ -23,7 +23,7 @@ export function ConfirmDialog({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center"
+      className="dialog-overlay fixed inset-0 z-50 flex items-center justify-center"
       role="dialog"
       aria-modal="true"
     >
@@ -31,7 +31,7 @@ export function ConfirmDialog({
         className="absolute inset-0 bg-background/60 backdrop-blur-sm"
         onClick={onCancel}
       />
-      <div className="relative bg-surface-container-high rounded-sm p-6 md:p-8 shadow-2xl max-w-sm mx-4 space-y-4">
+      <div className="dialog-content relative bg-surface-container-high rounded-sm p-6 md:p-8 shadow-2xl max-w-sm mx-4 space-y-4">
         <h3 className="serif-text text-lg font-black text-primary">{title}</h3>
         <p
           className="text-sm text-on-surface-variant leading-relaxed"

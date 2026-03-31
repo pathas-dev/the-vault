@@ -137,6 +137,36 @@
   }
 }
 
+/* View Transitions */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: fade-out 150ms ease-out;
+}
+
+::view-transition-new(root) {
+  animation: fade-in 200ms ease-in;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
 @layer utilities {
   .blueprint-bg {
     background-image: radial-gradient(
@@ -321,6 +351,90 @@
     }
     .stagger-in {
       opacity: 1;
+    }
+  }
+
+  /* === @starting-style 진입 애니메이션 === */
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* ConfirmDialog 오버레이 */
+    .dialog-overlay {
+      opacity: 1;
+      transition: opacity 200ms ease-out;
+
+      @starting-style {
+        opacity: 0;
+      }
+    }
+
+    /* ConfirmDialog 콘텐츠 */
+    .dialog-content {
+      opacity: 1;
+      transform: scale(1);
+      transition:
+        opacity 200ms ease-out,
+        transform 200ms ease-out;
+
+      @starting-style {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+    }
+
+    /* HistoryPanel 슬라이드-인 드로어 */
+    .history-panel {
+      transform: translateX(0);
+      transition: transform 300ms ease-out;
+
+      @starting-style {
+        transform: translateX(100%);
+      }
+    }
+  }
+
+  /* BottomSheet 슬라이드-업 */
+  .bottom-sheet {
+    transform: translateY(0);
+    transition: transform 300ms ease-out;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .bottom-sheet {
+      @starting-style {
+        transform: translateY(100%);
+      }
+    }
+  }
+
+  /* 라운드 전환 골드 플래시 */
+  @keyframes round-flash-pulse {
+    0% { opacity: 0; }
+    30% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  .round-flash::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    background: radial-gradient(ellipse at center, rgba(255, 198, 55, 0.12) 0%, transparent 70%);
+    animation: round-flash-pulse 600ms ease-out forwards;
+  }
+
+  /* reduced motion: @starting-style 애니메이션 즉시 표시 */
+  @media (prefers-reduced-motion: reduce) {
+    .dialog-overlay,
+    .dialog-content {
+      transition: none;
+    }
+    .history-panel,
+    .bottom-sheet {
+      transition: none;
+    }
+    .round-flash::after {
+      animation: none;
     }
   }
 }
