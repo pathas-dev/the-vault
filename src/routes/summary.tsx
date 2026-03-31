@@ -1,4 +1,8 @@
-import { createFileRoute, useBlocker, useNavigate } from '@tanstack/react-router'
+import {
+  createFileRoute,
+  useBlocker,
+  useNavigate,
+} from '@tanstack/react-router'
 import { useState, useEffect, Fragment } from 'react'
 import { FloatingActions } from '../components/Layout'
 import { WallMiniMap } from '../components/WallMiniMap'
@@ -189,14 +193,9 @@ function SummaryScreen() {
                       <table className="w-full text-left border-collapse">
                         <thead>
                           <tr className="bg-surface-container-highest/20 text-label-sm font-bold text-primary uppercase tracking-widest">
-                            <th className="p-4">
-                              금고
-                            </th>
+                            <th className="p-4">금고</th>
                             {Array.from({ length: MAX_CAPACITY }, (_, i) => (
-                              <th
-                                key={i}
-                                className="p-3 text-center"
-                              >
+                              <th key={i} className="p-3 text-center">
                                 {['I', 'II', 'III'][i]}
                               </th>
                             ))}
@@ -268,9 +267,14 @@ function SummaryScreen() {
       {/* 뒤로가기 차단 다이얼로그 */}
       {status === 'blocked' && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-background/60 backdrop-blur-sm" onClick={reset} />
+          <div
+            className="absolute inset-0 bg-background/60 backdrop-blur-sm"
+            onClick={reset}
+          />
           <div className="relative bg-surface-container-high rounded-sm p-6 md:p-8 shadow-2xl max-w-sm mx-4 space-y-4">
-            <h3 className="serif-text text-lg font-black text-primary">작전 이탈 확인</h3>
+            <h3 className="serif-text text-lg font-black text-primary">
+              작전 이탈 확인
+            </h3>
             <p className="text-sm text-on-surface-variant leading-relaxed">
               결산 페이지를 벗어납니다.
               <br />
@@ -297,13 +301,17 @@ function SummaryScreen() {
       {/* 새 작전 시작 확인 다이얼로그 */}
       {showResetConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-background/60 backdrop-blur-sm" onClick={() => setShowResetConfirm(false)} />
+          <div
+            className="absolute inset-0 bg-background/60 backdrop-blur-sm"
+            onClick={() => setShowResetConfirm(false)}
+          />
           <div className="relative bg-surface-container-high rounded-sm p-6 md:p-8 shadow-2xl max-w-sm mx-4 space-y-4">
-            <h3 className="serif-text text-lg font-black text-primary">새 작전 시작</h3>
+            <h3 className="serif-text text-lg font-black text-primary">
+              새 작전 시작
+            </h3>
             <p className="text-sm text-on-surface-variant leading-relaxed">
               모든 작전 기록이 삭제됩니다.
-              <br />
-              새 작전을 시작하시겠습니까?
+              <br />새 작전을 시작하시겠습니까?
             </p>
             <div className="flex gap-3 pt-2">
               <button
@@ -316,7 +324,7 @@ function SummaryScreen() {
                 onClick={confirmReset}
                 className="flex-1 py-3 gold-gradient text-on-primary font-bold text-sm rounded-sm btn-press"
               >
-                새 작전 시작
+                확인
               </button>
             </div>
           </div>
