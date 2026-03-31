@@ -136,7 +136,7 @@ export function FloorPlan({
           </div>
 
           {/* Entry points: right side of 1xx */}
-          <div className="flex flex-col self-stretch gap-1 ml-1.5 md:ml-2">
+          <div className="flex flex-col self-stretch gap-0.5 md:gap-1 ml-0.5 md:ml-2">
             {(['A', 'B'] as const).map((point) => {
               const isActive = startPoint === point
               return (
@@ -145,14 +145,14 @@ export function FloorPlan({
                   onClick={() => onStartPointChange(point)}
                   aria-label={`침투 지점 ${point} 선택`}
                   aria-pressed={isActive}
-                  className={`flex-1 flex flex-col items-center justify-center px-1 md:px-2 rounded-sm transition-all duration-300 cursor-pointer group ${
+                  className={`flex-1 flex flex-col items-center justify-center px-px md:px-2 rounded-sm transition-all duration-300 cursor-pointer group ${
                     isActive
                       ? 'bg-intrusion/10 border border-intrusion/40 shadow-[0_0_16px_rgba(255,45,85,0.15)]'
                       : 'border border-dashed border-on-surface/10 hover:border-intrusion/30 hover:bg-intrusion/5'
                   }`}
                 >
                   <span
-                    className={`material-symbols-outlined text-xs md:text-sm transition-all duration-300 rotate-180 ${
+                    className={`material-symbols-outlined text-[10px] md:text-sm transition-all duration-300 rotate-180 ${
                       isActive ? 'text-intrusion' : 'text-on-surface/20 group-hover:text-intrusion/40'
                     }`}
                     style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}
