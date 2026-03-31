@@ -248,20 +248,10 @@
     box-shadow: none;
   }
 
-  /* 골드 보더 글로우 — input focus */
-  @keyframes border-glow {
-    0%,
-    100% {
-      border-color: var(--color-primary);
-      box-shadow: 0 0 6px rgba(255, 198, 55, 0.15);
-    }
-    50% {
-      border-color: var(--color-primary-container);
-      box-shadow: 0 0 12px rgba(255, 198, 55, 0.25);
-    }
-  }
+  /* 골드 포커스 — input focus (정적, DESIGN.md 준수: outline at 40% opacity) */
   .input-glow:focus {
-    animation: border-glow 2s ease-in-out infinite;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(255, 198, 55, 0.1);
   }
 
   /* 스태거 진입 애니메이션 */
@@ -330,7 +320,6 @@
   /* reduced motion 대응 */
   @media (prefers-reduced-motion: reduce) {
     .vault-selected,
-    .input-glow:focus,
     .stagger-in,
     .orbit-ring {
       animation: none;

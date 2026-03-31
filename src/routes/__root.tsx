@@ -38,6 +38,14 @@ export const Route = createRootRoute({
     ],
   }),
   shellComponent: RootDocument,
+  notFoundComponent: () => (
+    <div className="flex flex-col items-center justify-center min-h-screen gap-4">
+      <span className="material-symbols-outlined text-6xl text-primary/30">lock</span>
+      <h1 className="serif-text text-2xl font-black text-primary">접근 불가</h1>
+      <p className="text-on-surface-variant text-sm">존재하지 않는 경로입니다.</p>
+      <a href="/" className="text-sm text-primary font-bold hover:underline">작전 본부로 복귀</a>
+    </div>
+  ),
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {

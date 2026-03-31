@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
+import { createFileRoute, useBlocker, useNavigate, useSearch } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
 import { z } from 'zod'
 import { FloatingActions } from '../components/Layout'
@@ -69,19 +69,13 @@ function RecordScreen() {
     }
   }, [roundParam, navigate])
 
-  // --- History Lock: Prevent Browser Back ---
-  useEffect(() => {
-    // Push dummy state to the history stack
-    window.history.pushState(null, '', window.location.href)
-
-    const handlePopState = () => {
-      // If user clicks back, push state again to stay on current page
-      window.history.pushState(null, '', window.location.href)
-    }
-
-    window.addEventListener('popstate', handlePopState)
-    return () => window.removeEventListener('popstate', handlePopState)
-  }, [currentRound]) // Re-lock on every round change
+  // 게임 진행 중 뒤로가기(POP) 차단 + 입력 데이터 있을 때 탭 닫기 경고
+  const hasUnsavedData = selectedVaults.length > 0 || Object.values(vaultValues).some(vals => vals.some(v => v !== ''))
+  const { proceed, reset, status } = useBlocker({
+    shouldBlockFn: ({ action }) => action === 'BACK',
+    withResolver: true,
+    enableBeforeUnload: () => hasUnsavedData,
+  })
 
   // Handle initialization and reset on round 1 or refresh
   useEffect(() => {
@@ -197,7 +191,7 @@ function RecordScreen() {
 
     if (currentRound < 7) {
       // Navigate to next round via URL (replace to prevent going back)
-      navigate({ to: '/', search: { round: currentRound + 1 }, replace: true })
+      navigate({ to: '/', search: { round: currentRound + 1 } })
       
       // Reset current round state
       setViewMode('input')
@@ -209,7 +203,7 @@ function RecordScreen() {
       setVaultValues(initVaultValues())
       window.scrollTo(0, 0)
     } else {
-      navigate({ to: '/summary', replace: true })
+      navigate({ to: '/summary' })
     }
   }
 
@@ -296,7 +290,7 @@ function RecordScreen() {
           onClick={() => setHorizontalWall(isSelected ? null : value)}
           aria-pressed={isSelected}
           aria-label={`가로벽 ${value} ${isSelected ? '해제' : '설치'}`}
-          className="absolute inset-x-0 -top-2 h-4 flex items-center cursor-pointer group"
+          className="absolute inset-x-0 -top-4 h-8 flex items-center cursor-pointer group"
           title={`가로벽 ${value}`}
         >
           <div className="h-0.5 flex-1 bg-outline-variant/25" />
@@ -327,7 +321,7 @@ function RecordScreen() {
           onClick={() => setVerticalWall(isSelected ? null : value)}
           aria-pressed={isSelected}
           aria-label={`세로벽 ${value} ${isSelected ? '해제' : '설치'}`}
-          className="absolute inset-y-0 -left-2 w-4 flex flex-col items-center cursor-pointer group"
+          className="absolute inset-y-0 -left-4 w-8 flex flex-col items-center cursor-pointer group"
           title={`세로벽 ${value}`}
         >
           <div className="w-0.5 flex-1 bg-outline-variant/25" />
@@ -356,17 +350,17 @@ function RecordScreen() {
 
       {/* 작전 이력 패널 (History Panel) */}
       <div
-        className={`fixed inset-0 z-100 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${isHistoryOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${isHistoryOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
       >
         <div
           className="absolute inset-0 bg-background/60 backdrop-blur-sm"
           onClick={() => setIsHistoryOpen(false)}
         />
         <div
-          className={`absolute inset-y-0 right-0 size-full max-w-md bg-surface-container-high/90 backdrop-blur-[20px] shadow-2xl border-l border-outline-variant/10 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${isHistoryOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          className={`absolute inset-y-0 right-0 size-full max-w-md bg-surface-container-high/90 backdrop-blur-[20px] shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${isHistoryOpen ? 'translate-x-0' : 'translate-x-full'}`}
         >
           <div className="flex flex-col h-full bg-linear-to-b from-surface-container-high/40 to-transparent">
-            <div className="flex justify-between items-center px-6 py-8 border-b border-outline-variant/5">
+            <div className="flex justify-between items-center px-6 py-8 bg-surface-container-highest/30">
               <div>
                 <span className="text-primary text-label-sm font-bold tracking-[0.4em] uppercase block opacity-60 mb-1">
                   Mission Log
@@ -378,13 +372,14 @@ function RecordScreen() {
               <button
                 onClick={() => setIsHistoryOpen(false)}
                 aria-label="작전 이력 닫기"
-                className="p-2 hover:bg-white/5 rounded-full transition-colors group"
+                className="p-2 hover:bg-white/5 rounded-sm transition-colors group"
               >
                 <span className="material-symbols-outlined text-on-surface/40 group-hover:text-primary">
                   close
                 </span>
               </button>
             </div>
+
 
             <div className="flex-1 overflow-y-auto custom-scrollbar px-6 py-8">
               {historyRounds.length === 0 ? (
@@ -413,7 +408,7 @@ function RecordScreen() {
                         </span>
                       </div>
 
-                      <div className="bg-surface-container-highest/50 rounded-sm p-4 space-y-4 border border-outline-variant/10 shadow-lg">
+                      <div className="bg-surface-container-highest/50 rounded-sm p-4 space-y-4 shadow-lg">
                         <div className="flex items-center gap-4">
                           <div className="space-y-1">
                             <p className="text-label-xs font-bold text-on-surface/30 uppercase tracking-widest">
@@ -435,7 +430,7 @@ function RecordScreen() {
                           </div>
                         </div>
 
-                        <div className="pt-3 border-t border-outline-variant/5">
+                        <div className="pt-3 mt-3 bg-surface-container-low/30 -mx-4 px-4 rounded-sm">
                           <p className="text-label-xs font-bold text-on-surface/30 uppercase tracking-widest mb-2">
                             Secured Loot (Units)
                           </p>
@@ -471,7 +466,7 @@ function RecordScreen() {
               )}
             </div>
 
-            <div className="p-8 border-t border-outline-variant/5 opacity-30">
+            <div className="p-8 bg-surface-container-highest/20 opacity-30">
               <p className="text-label-xs font-black tracking-[0.4em] uppercase text-center">
                 Protocol V-7 Active
               </p>
@@ -545,16 +540,19 @@ function RecordScreen() {
         {/* 금고 배치도 (Vault Floor Plan) */}
         {viewMode === 'input' && (
           <section className="mb-8 md:mb-12">
-            <div className="flex items-center gap-2.5 mb-4 md:mb-6">
+            <div className="flex items-center gap-2.5 mb-2 md:mb-3">
               <div className="h-px w-6 bg-primary/40"></div>
               <label className="text-label-xs font-bold tracking-[0.4em] uppercase text-primary/60">
                 은닉 금고
               </label>
             </div>
+            <p className="text-label-sm text-on-surface-variant/50 mb-4 md:mb-6">
+              금고를 탭하여 선택 · 벽과 침투 지점(A/B)을 설정 · 하단 숫자는 수용량
+            </p>
 
             <div className="bg-surface-container-low p-1.5 md:p-6 rounded-sm border border-outline-variant/10 overflow-x-auto">
               <div
-                className="flex min-w-fit mx-auto"
+                className="flex w-full mx-auto"
                 style={{ maxWidth: '740px' }}
               >
                 {/* Room 401 */}
@@ -719,7 +717,7 @@ function RecordScreen() {
               ).map((v) => (
                 <div
                   key={v}
-                  className="items-center py-3 md:py-4 px-5 md:px-10 hover:bg-surface-container-high group border-b border-outline-variant/10 last:border-0 transition-colors"
+                  className="items-center py-3 md:py-4 px-5 md:px-10 hover:bg-surface-container-high group even:bg-surface-container-low/30 transition-colors"
                   style={{
                     display: 'grid',
                     gridTemplateColumns: `100px repeat(${MAX_CAPACITY}, 1fr)`,
@@ -767,7 +765,7 @@ function RecordScreen() {
                                 />
                                 {vaultValues[v][i] !== '' &&
                                   !isValidValue(vaultValues[v][i]) && (
-                                    <p className="absolute -bottom-4 inset-x-0 text-label-xs text-error font-black text-center animate-pulse">
+                                    <p className="absolute -bottom-4 inset-x-0 text-label-xs text-error font-black text-center">
                                       1-100
                                     </p>
                                   )}
@@ -871,6 +869,35 @@ function RecordScreen() {
           </button>
         )}
       </div>
+
+      {/* 내비게이션 차단 확인 다이얼로그 */}
+      {status === 'blocked' && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-background/60 backdrop-blur-sm" onClick={reset} />
+          <div className="relative bg-surface-container-high rounded-sm p-6 md:p-8 shadow-2xl max-w-sm mx-4 space-y-4">
+            <h3 className="serif-text text-lg font-black text-primary">작전 이탈 확인</h3>
+            <p className="text-sm text-on-surface-variant leading-relaxed">
+              입력 중인 데이터가 사라집니다.
+              <br />
+              정말 이탈하시겠습니까?
+            </p>
+            <div className="flex gap-3 pt-2">
+              <button
+                onClick={reset}
+                className="flex-1 py-3 bg-surface-container-low text-on-surface/60 font-bold text-sm rounded-sm btn-press hover:bg-surface-container"
+              >
+                계속 작전
+              </button>
+              <button
+                onClick={proceed}
+                className="flex-1 py-3 bg-error-container text-on-error-container font-bold text-sm rounded-sm btn-press"
+              >
+                이탈
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div
         className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]"

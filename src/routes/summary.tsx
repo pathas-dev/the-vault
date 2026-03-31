@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, useBlocker, useNavigate } from '@tanstack/react-router'
 import { useState, useEffect, Fragment } from 'react'
 import { FloatingActions } from '../components/Layout'
 import { WallMiniMap } from '../components/WallMiniMap'
@@ -35,24 +35,22 @@ const MAX_CAPACITY = 3
 function SummaryScreen() {
   const navigate = useNavigate()
   const [rounds, setRounds] = useState<RoundData[]>([])
+  const [showResetConfirm, setShowResetConfirm] = useState(false)
+
+  // 뒤로가기 차단
+  const { proceed, reset, status } = useBlocker({
+    shouldBlockFn: ({ action }) => action === 'BACK',
+    withResolver: true,
+    enableBeforeUnload: false,
+  })
 
   useEffect(() => {
     setRounds(getSavedRounds())
-    
-    // --- History Lock: Prevent Browser Back ---
-    // Push dummy state to the history stack
-    window.history.pushState(null, '', window.location.href)
-
-    const handlePopState = () => {
-      // If user clicks back, push state again to stay on current page
-      window.history.pushState(null, '', window.location.href)
-    }
-
-    window.addEventListener('popstate', handlePopState)
-    return () => window.removeEventListener('popstate', handlePopState)
   }, [])
 
-  const handleReset = () => {
+  const handleReset = () => setShowResetConfirm(true)
+
+  const confirmReset = () => {
     clearSavedRounds()
     navigate({ to: '/', search: { round: 1 }, replace: true })
   }
@@ -87,15 +85,15 @@ function SummaryScreen() {
             <span className="text-primary/60 text-label-sm font-bold tracking-[0.4em] uppercase mb-2 block">
               Operation Complete
             </span>
-            <h2 className="noto-serif text-3xl md:text-5xl font-black gold-text-gradient leading-tight tracking-tight">
+            <h2 className="noto-serif text-3xl md:text-5xl font-black text-primary leading-tight tracking-tight">
               최종 결산
             </h2>
           </div>
-          <div className="bg-surface-container-high/50 border border-outline-variant/15 px-5 py-4 md:px-8 md:py-6 rounded-sm">
+          <div className="bg-surface-container-high/50 px-5 py-4 md:px-8 md:py-6 rounded-sm">
             <p className="text-label-sm font-bold text-primary/40 uppercase tracking-widest mb-1">
               Total Value
             </p>
-            <p className="noto-serif text-3xl md:text-4xl font-black gold-text-gradient tabular-nums">
+            <p className="noto-serif text-3xl md:text-4xl font-black text-primary tabular-nums">
               {calculateTotal().toLocaleString()}{' '}
               <span className="text-sm tracking-widest">V</span>
             </p>
@@ -107,11 +105,11 @@ function SummaryScreen() {
           {rounds.map((round, idx) => (
             <section
               key={idx}
-              className="bg-surface-container-low rounded-sm overflow-hidden border border-outline-variant/10 shadow-xl card-lift stagger-in"
+              className="bg-surface-container-low rounded-sm overflow-hidden shadow-xl card-lift stagger-in"
               style={{ animationDelay: `${idx * 100}ms` }}
             >
               {/* 라운드 헤더 */}
-              <div className="px-4 md:px-8 py-4 md:py-6 border-b border-outline-variant/10 bg-surface-container-high/50">
+              <div className="px-4 md:px-8 py-4 md:py-6 bg-surface-container-high/50">
                 <div className="flex items-center justify-between flex-wrap gap-3">
                   <h3 className="noto-serif text-xl md:text-2xl font-black tracking-tight text-primary flex items-center gap-3">
                     <span className="text-xs opacity-40 font-bold uppercase tracking-widest">
@@ -204,7 +202,7 @@ function SummaryScreen() {
                             ))}
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-outline-variant/5">
+                        <tbody>
                           {activeVaults.map((v, vIdx) => {
                             const vals = round.vaultValues[v] || []
                             return (
@@ -266,6 +264,64 @@ function SummaryScreen() {
           작전 시작
         </button>
       </div>
+
+      {/* 뒤로가기 차단 다이얼로그 */}
+      {status === 'blocked' && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-background/60 backdrop-blur-sm" onClick={reset} />
+          <div className="relative bg-surface-container-high rounded-sm p-6 md:p-8 shadow-2xl max-w-sm mx-4 space-y-4">
+            <h3 className="serif-text text-lg font-black text-primary">작전 이탈 확인</h3>
+            <p className="text-sm text-on-surface-variant leading-relaxed">
+              결산 페이지를 벗어납니다.
+              <br />
+              이전 화면으로 돌아가시겠습니까?
+            </p>
+            <div className="flex gap-3 pt-2">
+              <button
+                onClick={reset}
+                className="flex-1 py-3 bg-surface-container-low text-on-surface/60 font-bold text-sm rounded-sm btn-press hover:bg-surface-container"
+              >
+                결산 유지
+              </button>
+              <button
+                onClick={proceed}
+                className="flex-1 py-3 bg-error-container text-on-error-container font-bold text-sm rounded-sm btn-press"
+              >
+                이탈
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 새 작전 시작 확인 다이얼로그 */}
+      {showResetConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-background/60 backdrop-blur-sm" onClick={() => setShowResetConfirm(false)} />
+          <div className="relative bg-surface-container-high rounded-sm p-6 md:p-8 shadow-2xl max-w-sm mx-4 space-y-4">
+            <h3 className="serif-text text-lg font-black text-primary">새 작전 시작</h3>
+            <p className="text-sm text-on-surface-variant leading-relaxed">
+              모든 작전 기록이 삭제됩니다.
+              <br />
+              새 작전을 시작하시겠습니까?
+            </p>
+            <div className="flex gap-3 pt-2">
+              <button
+                onClick={() => setShowResetConfirm(false)}
+                className="flex-1 py-3 bg-surface-container-low text-on-surface/60 font-bold text-sm rounded-sm btn-press hover:bg-surface-container"
+              >
+                취소
+              </button>
+              <button
+                onClick={confirmReset}
+                className="flex-1 py-3 gold-gradient text-on-primary font-bold text-sm rounded-sm btn-press"
+              >
+                새 작전 시작
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

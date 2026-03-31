@@ -14,8 +14,7 @@ export function WallMiniMap({
 
   return (
     <div
-      className="flex items-stretch"
-      style={{ width: '130px', height: '56px' }}
+      className="flex items-stretch w-[100px] h-[44px] md:w-[130px] md:h-[56px]"
     >
       {/* 401 */}
       <div className="border border-outline-variant/30 bg-surface-container-lowest/30 self-center w-3 h-7 rounded-sm" />
