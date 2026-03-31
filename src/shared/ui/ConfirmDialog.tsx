@@ -33,10 +33,7 @@ export function ConfirmDialog({
       />
       <div className="dialog-content relative bg-surface-container-high rounded-sm p-6 md:p-8 shadow-2xl max-w-sm mx-4 space-y-4">
         <h3 className="serif-text text-lg font-black text-primary">{title}</h3>
-        <p
-          className="text-sm text-on-surface-variant leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: message.replace(/\n/g, '<br />') }}
-        />
+        <p className="whitespace-pre-line text-sm text-on-surface/70">{message}</p>
         <div className="flex gap-3 pt-2">
           <button
             onClick={onCancel}

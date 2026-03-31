@@ -1,6 +1,7 @@
 import { BarChart, Bar, ResponsiveContainer, Tooltip, XAxis } from 'recharts'
 import type { RoundData } from '@/entities/round'
 import { calculateRoundTotal } from '@/entities/round'
+import { CHART_COLORS } from '@/shared/config'
 
 interface RoundChartProps {
   rounds: RoundData[]
@@ -18,23 +19,23 @@ export function RoundChart({ rounds }: RoundChartProps) {
         <BarChart data={data} barCategoryGap="20%">
           <XAxis
             dataKey="name"
-            tick={{ fill: '#dfe2eb', fontSize: 11 }}
+            tick={{ fill: CHART_COLORS.text, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: '#181c22',
-              border: '1px solid rgba(255,198,55,0.2)',
+              backgroundColor: CHART_COLORS.tooltip,
+              border: `1px solid ${CHART_COLORS.tooltipBorder}`,
               borderRadius: '4px',
-              color: '#dfe2eb',
+              color: CHART_COLORS.text,
               fontSize: 12,
             }}
-            cursor={{ fill: 'rgba(255,198,55,0.05)' }}
+            cursor={{ fill: CHART_COLORS.cursor }}
           />
           <Bar
             dataKey="value"
-            fill="#ffc637"
+            fill={CHART_COLORS.bar}
             radius={[2, 2, 0, 0]}
           />
         </BarChart>

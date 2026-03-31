@@ -392,20 +392,6 @@
     }
   }
 
-  /* BottomSheet 슬라이드-업 */
-  .bottom-sheet {
-    transform: translateY(0);
-    transition: transform 300ms ease-out;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .bottom-sheet {
-      @starting-style {
-        transform: translateY(100%);
-      }
-    }
-  }
-
   /* 라운드 전환 골드 플래시 */
   @keyframes round-flash-pulse {
     0% { opacity: 0; }
@@ -429,8 +415,7 @@
     .dialog-content {
       transition: none;
     }
-    .history-panel,
-    .bottom-sheet {
+    .history-panel {
       transition: none;
     }
     .round-flash::after {
