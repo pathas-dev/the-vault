@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { getSavedRounds, saveRounds, clearSavedRounds } from './storage'
-import { type RoundData } from './schemas'
+import { type RoundData } from '../../entities/round'
 
 describe('storage utility', () => {
   const mockRound: RoundData = {
