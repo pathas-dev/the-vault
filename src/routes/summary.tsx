@@ -189,13 +189,13 @@ function SummaryScreen() {
                       <table className="w-full text-left border-collapse">
                         <thead>
                           <tr className="bg-surface-container-highest/20 text-label-sm font-bold text-primary uppercase tracking-widest">
-                            <th className="p-4 border-r border-outline-variant/5">
+                            <th className="p-4">
                               금고
                             </th>
                             {Array.from({ length: MAX_CAPACITY }, (_, i) => (
                               <th
                                 key={i}
-                                className="p-3 text-center border-r border-outline-variant/5"
+                                className="p-3 text-center"
                               >
                                 {['I', 'II', 'III'][i]}
                               </th>
@@ -212,7 +212,7 @@ function SummaryScreen() {
                                   vIdx % 2 === 0 ? 'bg-on-surface/2' : ''
                                 }
                               >
-                                <td className="p-4 text-label-xs font-bold uppercase text-primary/60 border-r border-outline-variant/5 tracking-widest whitespace-nowrap">
+                                <td className="p-4 text-label-xs font-bold uppercase text-primary/60 tracking-widest whitespace-nowrap">
                                   {v}
                                 </td>
                                 {Array.from(
@@ -220,7 +220,7 @@ function SummaryScreen() {
                                   (_, i) => (
                                     <td
                                       key={i}
-                                      className="p-3 text-center text-sm font-black border-r border-outline-variant/5"
+                                      className="p-3 text-center text-sm font-black"
                                     >
                                       {i < VAULT_CONFIG[v]
                                         ? vals[i] || '-'

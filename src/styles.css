@@ -155,16 +155,6 @@
     );
   }
 
-  .gold-text-gradient {
-    background: linear-gradient(
-      135deg,
-      var(--color-primary) 0%,
-      var(--color-primary-container) 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
   input[type='number']::-webkit-inner-spin-button,
   input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -183,20 +173,6 @@
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background: var(--color-outline-variant);
     border-radius: 2px;
-  }
-
-  .label-micro {
-    font-size: var(--text-label-xs);
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-  }
-
-  .label-small {
-    font-size: var(--text-label-sm);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
   }
 
   /* === Delight: Micro-interactions === */

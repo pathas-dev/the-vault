@@ -484,9 +484,31 @@ function RecordScreen() {
                   ? '현장 상황 보고 (Field Recon)'
                   : '획득물 결산 (Loot Accounting)'}
               </span>
-              <h1 className="serif-text text-2xl md:text-5xl font-black text-primary tracking-tight leading-tight mb-4 md:mb-6">
+              <h1 className="serif-text text-2xl md:text-5xl font-black text-primary tracking-tight leading-tight mb-3 md:mb-4">
                 작전 PHASE {currentRound.toString().padStart(2, '0')} / 07
               </h1>
+
+              {/* 라운드 진행률 표시기 */}
+              <div className="flex items-center gap-1.5 mb-4 md:mb-6">
+                {Array.from({ length: 7 }, (_, i) => {
+                  const round = i + 1
+                  const isCompleted = round < currentRound
+                  const isCurrent = round === currentRound
+                  return (
+                    <div key={round} className="flex items-center gap-1.5">
+                      <div
+                        className={`h-1.5 rounded-full transition-all duration-500 ${
+                          isCurrent
+                            ? 'w-8 md:w-12 bg-primary shadow-[0_0_8px_rgba(255,198,55,0.3)]'
+                            : isCompleted
+                              ? 'w-4 md:w-6 bg-primary/60'
+                              : 'w-4 md:w-6 bg-surface-container-highest'
+                        }`}
+                      />
+                    </div>
+                  )
+                })}
+              </div>
 
               {viewMode === 'input' ? (
                 <div className="space-y-2 md:space-y-3 max-w-xs">
@@ -839,9 +861,20 @@ function RecordScreen() {
               </button>
             )}
           </div>
-          <p className="mt-6 text-on-surface-variant text-label-sm font-black tracking-[0.4em] opacity-30 uppercase">
-            작전 PHASE 0{currentRound} / 07
-          </p>
+          <div className="mt-6 flex items-center justify-center gap-1.5 opacity-30">
+            {Array.from({ length: 7 }, (_, i) => (
+              <div
+                key={i}
+                className={`h-1 rounded-full ${
+                  i + 1 === currentRound
+                    ? 'w-6 bg-primary'
+                    : i + 1 < currentRound
+                      ? 'w-3 bg-primary/60'
+                      : 'w-3 bg-surface-container-highest'
+                }`}
+              />
+            ))}
+          </div>
         </section>
       </main>
 
