@@ -172,20 +172,7 @@ export function RecordScreen() {
         variant="danger"
       />
 
-      {/* 실행 취소 토스트 */}
-      {state.undoInfo && (
-        <div className="fixed bottom-20 md:bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-4 py-3 bg-surface-container-high/95 backdrop-blur-sm rounded-sm shadow-xl border border-outline-variant/10">
-          <span className="text-sm text-on-surface/70">
-            {state.undoInfo.vault}번 금고 해제됨
-          </span>
-          <button
-            onClick={state.executeUndo}
-            className="text-sm font-bold text-primary hover:text-primary-container btn-press"
-          >
-            실행 취소
-          </button>
-        </div>
-      )}
+
 
       <div
         className="fixed inset-0 pointer-events-none z-0 opacity-[0.03] blueprint-bg"

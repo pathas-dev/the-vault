@@ -4,12 +4,6 @@ import { getSavedRounds, saveRounds, clearSavedRounds } from '@/shared/api/stora
 import { initVaultValues, VAULT_CONFIG, TOTAL_ROUNDS } from '@/shared/config'
 import type { RoundData } from '@/entities/round'
 
-interface UndoInfo {
-  vault: string
-  values: string[]
-  timeoutId: ReturnType<typeof setTimeout>
-}
-
 interface RoundState {
   viewMode: 'input' | 'summary'
   isHistoryOpen: boolean
@@ -22,7 +16,6 @@ interface RoundState {
   vaultValues: Record<string, string[]>
   numpadTarget: { vault: string; index: number } | null
   numpadError: boolean
-  undoInfo: UndoInfo | null
 }
 
 type RoundAction =
@@ -40,9 +33,6 @@ type RoundAction =
   | { type: 'SET_NUMPAD_TARGET'; payload: { vault: string; index: number } | null }
   | { type: 'SET_NUMPAD_ERROR'; payload: boolean }
   | { type: 'RESET_ROUND' }
-  | { type: 'SET_UNDO_INFO'; payload: UndoInfo | null }
-  | { type: 'EXECUTE_UNDO' }
-  | { type: 'CLEAR_UNDO' }
 
 function createInitialState(): RoundState {
   return {
@@ -57,7 +47,6 @@ function createInitialState(): RoundState {
     vaultValues: initVaultValues(),
     numpadTarget: null,
     numpadError: false,
-    undoInfo: null,
   }
 }
 
@@ -90,20 +79,7 @@ function roundReducer(state: RoundState, action: RoundAction): RoundState {
     case 'TOGGLE_VAULT': {
       const vault = action.payload
       if (state.selectedVaults.includes(vault)) {
-        const currentValues = state.vaultValues[vault]
-        const hasValues = currentValues.some((v) => v !== '')
         const newNumpadTarget = state.numpadTarget?.vault === vault ? null : state.numpadTarget
-
-        if (hasValues) {
-          // Values exist — defer actual clearing; undo toast will handle it
-          return {
-            ...state,
-            numpadTarget: newNumpadTarget,
-            selectedVaults: state.selectedVaults.filter((v) => v !== vault),
-            // Keep current values intact until undo window expires
-          }
-        }
-
         return {
           ...state,
           numpadTarget: newNumpadTarget,
@@ -135,32 +111,7 @@ function roundReducer(state: RoundState, action: RoundAction): RoundState {
         vaultValues: initVaultValues(),
         numpadTarget: null,
         numpadError: false,
-        undoInfo: null,
       }
-    case 'SET_UNDO_INFO':
-      return { ...state, undoInfo: action.payload }
-    case 'EXECUTE_UNDO': {
-      if (!state.undoInfo) return state
-      const { vault, values } = state.undoInfo
-      return {
-        ...state,
-        selectedVaults: [...state.selectedVaults, vault],
-        vaultValues: { ...state.vaultValues, [vault]: values },
-        undoInfo: null,
-      }
-    }
-    case 'CLEAR_UNDO': {
-      if (!state.undoInfo) return state
-      const { vault } = state.undoInfo
-      return {
-        ...state,
-        vaultValues: {
-          ...state.vaultValues,
-          [vault]: Array(VAULT_CONFIG[vault]).fill(''),
-        },
-        undoInfo: null,
-      }
-    }
     default:
       return state
   }
@@ -183,7 +134,6 @@ export function useRoundState() {
     return () => mq.removeEventListener('change', handler)
   }, [])
 
-  // Force-replace the initial URL to /?round=1 if no round is specified
   useEffect(() => {
     if (roundParam === undefined) {
       navigate({
@@ -194,7 +144,6 @@ export function useRoundState() {
     }
   }, [roundParam, navigate])
 
-  // Navigation blocker
   const hasUnsavedData =
     state.selectedVaults.length > 0 ||
     Object.values(state.vaultValues).some((vals) => vals.some((v) => v !== ''))
@@ -204,7 +153,6 @@ export function useRoundState() {
     enableBeforeUnload: () => hasUnsavedData,
   })
 
-  // Handle initialization and reset on round 1 or refresh
   useEffect(() => {
     const data = getSavedRounds()
 
@@ -281,38 +229,10 @@ export function useRoundState() {
 
   const toggleVault = useCallback(
     (vault: string) => {
-      const currentValues = state.vaultValues[vault]
-      const hasValues = currentValues?.some((v) => v !== '')
-      const isSelected = state.selectedVaults.includes(vault)
-
-      if (isSelected && hasValues) {
-        // Cancel any previous pending undo first
-        if (state.undoInfo) {
-          clearTimeout(state.undoInfo.timeoutId)
-          dispatch({ type: 'CLEAR_UNDO' })
-        }
-
-        const timeoutId = setTimeout(() => {
-          dispatch({ type: 'CLEAR_UNDO' })
-        }, 5000)
-
-        dispatch({
-          type: 'SET_UNDO_INFO',
-          payload: { vault, values: currentValues, timeoutId },
-        })
-      }
-
       dispatch({ type: 'TOGGLE_VAULT', payload: vault })
     },
-    [state.selectedVaults, state.vaultValues, state.undoInfo],
+    [],
   )
-
-  const executeUndo = useCallback(() => {
-    if (state.undoInfo) {
-      clearTimeout(state.undoInfo.timeoutId)
-    }
-    dispatch({ type: 'EXECUTE_UNDO' })
-  }, [state.undoInfo])
 
   const setTargetHouse = useCallback((house: 'A' | 'B' | 'C' | 'D') => {
     dispatch({ type: 'SET_TARGET_HOUSE', payload: house })
@@ -344,18 +264,15 @@ export function useRoundState() {
   }, [])
 
   return {
-    // State
     ...state,
     currentRound,
     isMobile,
     isFinalRound: currentRound === TOTAL_ROUNDS,
 
-    // Blocker
     blockerStatus,
     blockerProceed: proceed,
     blockerReset: reset,
 
-    // Actions
     toggleHistory,
     closeHistory,
     handleVaultValueChange,
@@ -365,7 +282,6 @@ export function useRoundState() {
     handlePhaseSubmit,
     handleNextRound,
     toggleVault,
-    executeUndo,
     setTargetHouse,
     setStartPoint,
     setHorizontalWall,
