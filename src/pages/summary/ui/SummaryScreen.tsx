@@ -6,6 +6,7 @@ import { TOTAL_ROUNDS } from '@/shared/config'
 import { ConfirmDialog } from '@/shared/ui'
 import { getSavedRounds, clearSavedRounds } from '@/shared/api/storage'
 import { RoundCard } from './RoundCard'
+import { RoundChart } from './RoundChart'
 import { CountUpTotal } from './CountUpTotal'
 
 export function SummaryScreen() {
@@ -81,6 +82,9 @@ export function SummaryScreen() {
             </p>
           </div>
         </section>
+
+        {/* 라운드 트렌드 차트 */}
+        {rounds.length > 0 && <RoundChart rounds={rounds} />}
 
         {/* 라운드 카드 목록 */}
         <div className="space-y-6 md:space-y-12">

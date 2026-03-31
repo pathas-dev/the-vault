@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { FloatingActions } from '@/shared/layout'
 import { TOTAL_ROUNDS } from '@/shared/config'
 import { isFormValid } from '@/shared/lib/validation'
+import { useConfetti } from '@/shared/lib'
 import { ConfirmDialog } from '@/shared/ui'
 import { FloorPlan } from './FloorPlan'
 import { VaultValueTable } from './VaultValueTable'
@@ -13,8 +15,21 @@ import { useKeyboardNavigation } from '../model/keyboard-nav'
 export function RecordScreen() {
   const state = useRoundState()
   const { handleKeyDown } = useKeyboardNavigation()
+  const { fire: fireConfetti } = useConfetti()
+  const [roundFlash, setRoundFlash] = useState(false)
 
   const formValid = isFormValid(state.selectedVaults, state.vaultValues)
+  const submitDisabled = !formValid || state.isPhaseSubmitPending
+
+  const handleNextRound = () => {
+    if (state.isFinalRound) {
+      void fireConfetti()
+    } else {
+      setRoundFlash(true)
+      setTimeout(() => setRoundFlash(false), 600)
+    }
+    state.handleNextRound()
+  }
 
   const handleHWallToggle = (value: string) => {
     state.setHorizontalWall(value === '__clear__' ? null : value as 'ㄴ' | 'ㄷ')
@@ -25,7 +40,7 @@ export function RecordScreen() {
   }
 
   return (
-    <div className="flex-1 flex flex-col w-full min-w-0">
+    <div className={`flex-1 flex flex-col w-full min-w-0 ${roundFlash ? 'round-flash' : ''}`}>
       <FloatingActions
         actions={[
           { icon: 'history', label: '작전 이력 보기', onClick: state.toggleHistory },
@@ -83,8 +98,8 @@ export function RecordScreen() {
             <div className="absolute -inset-1 bg-linear-to-r from-primary to-primary-container rounded blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
             {state.viewMode === 'input' ? (
               <button
-                onClick={state.handlePhaseSubmit}
-                disabled={!formValid}
+                onClick={() => state.handlePhaseSubmit()}
+                disabled={submitDisabled}
                 className={`relative flex items-center gap-4 px-12 py-5 ${formValid ? 'bg-linear-to-br from-primary to-primary-container text-on-primary shadow-xl hover:shadow-2xl hover:shadow-primary/20 btn-press' : 'bg-surface-container-highest text-on-surface/10 cursor-not-allowed opacity-40'} text-lg font-black rounded-sm tracking-widest`}
               >
                 <span className="material-symbols-outlined text-xl">
@@ -94,7 +109,7 @@ export function RecordScreen() {
               </button>
             ) : (
               <button
-                onClick={state.handleNextRound}
+                onClick={handleNextRound}
                 className="relative flex items-center gap-4 px-12 py-5 bg-linear-to-br from-tertiary to-tertiary-container text-on-tertiary text-lg font-black rounded-sm shadow-xl hover:shadow-2xl btn-press tracking-widest"
               >
                 <span className="material-symbols-outlined text-xl">
@@ -136,8 +151,8 @@ export function RecordScreen() {
           <div className="px-4 pb-6">
             {state.viewMode === 'input' ? (
               <button
-                onClick={state.handlePhaseSubmit}
-                disabled={!formValid}
+                onClick={() => state.handlePhaseSubmit()}
+                disabled={submitDisabled}
                 className={`w-full flex items-center justify-center gap-3 py-4 font-black text-base rounded-sm shadow-xl ${formValid ? 'bg-linear-to-br from-primary to-primary-container text-on-primary btn-press' : 'bg-surface-container-highest text-on-surface/20 opacity-50'}`}
               >
                 <span className="material-symbols-outlined text-lg">
@@ -147,7 +162,7 @@ export function RecordScreen() {
               </button>
             ) : (
               <button
-                onClick={state.handleNextRound}
+                onClick={handleNextRound}
                 className="w-full flex items-center justify-center gap-3 py-4 bg-linear-to-br from-tertiary to-tertiary-container text-on-tertiary font-black text-base rounded-sm shadow-xl btn-press"
               >
                 <span className="material-symbols-outlined text-lg">

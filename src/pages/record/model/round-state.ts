@@ -1,4 +1,4 @@
-import { useState, useReducer, useEffect, useCallback } from 'react'
+import { useState, useReducer, useEffect, useCallback, useOptimistic, useActionState } from 'react'
 import { useNavigate, useSearch, useBlocker } from '@tanstack/react-router'
 import { getSavedRounds, saveRounds, clearSavedRounds } from '@/shared/api/storage'
 import { initVaultValues, VAULT_CONFIG, TOTAL_ROUNDS } from '@/shared/config'
@@ -124,6 +124,19 @@ export function useRoundState() {
 
   const [state, dispatch] = useReducer(roundReducer, undefined, createInitialState)
 
+  const [optimisticRounds, addOptimisticRound] = useOptimistic(
+    state.historyRounds,
+    (currentRounds: RoundData[], newRound: RoundData) => [...currentRounds, newRound],
+  )
+
+  const [, phaseSubmitAction, isPhaseSubmitPending] = useActionState(
+    async () => {
+      dispatch({ type: 'SET_NUMPAD_TARGET', payload: null })
+      dispatch({ type: 'SET_VIEW_MODE', payload: 'summary' })
+    },
+    undefined,
+  )
+
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -208,11 +221,6 @@ export function useRoundState() {
     dispatch({ type: 'SET_NUMPAD_TARGET', payload: null })
   }, [])
 
-  const handlePhaseSubmit = useCallback(() => {
-    dispatch({ type: 'SET_NUMPAD_TARGET', payload: null })
-    dispatch({ type: 'SET_VIEW_MODE', payload: 'summary' })
-  }, [])
-
   const handleNextRound = useCallback(() => {
     const currentData: RoundData = {
       targetHouse: state.targetHouse,
@@ -221,6 +229,7 @@ export function useRoundState() {
       verticalWall: state.verticalWall,
       vaultValues: state.vaultValues,
     }
+    addOptimisticRound(currentData)
     const allRounds = [...getSavedRounds(), currentData]
     saveRounds(allRounds)
 
@@ -233,7 +242,7 @@ export function useRoundState() {
     } else {
       navigate({ to: '/summary' })
     }
-  }, [state, currentRound, navigate])
+  }, [state, currentRound, navigate, addOptimisticRound])
 
   const toggleVault = useCallback(
     (vault: string) => {
@@ -269,6 +278,7 @@ export function useRoundState() {
   return {
     // State
     ...state,
+    historyRounds: optimisticRounds,
     currentRound,
     isMobile,
     isFinalRound: currentRound === TOTAL_ROUNDS,
@@ -285,7 +295,8 @@ export function useRoundState() {
     handleNumpadDigit,
     handleNumpadBackspace,
     handleNumpadConfirm,
-    handlePhaseSubmit,
+    handlePhaseSubmit: phaseSubmitAction,
+    isPhaseSubmitPending,
     handleNextRound,
     toggleVault,
     setTargetHouse,
