@@ -513,7 +513,7 @@ function RecordScreen() {
         <section className="mb-6 md:mb-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8">
             <div className="max-w-4xl w-full">
-              <span className="text-primary/60 text-label-sm font-bold tracking-[0.4em] uppercase mb-2 md:mb-3 block">
+              <span className={`text-label-sm font-bold tracking-[0.4em] uppercase mb-2 md:mb-3 block transition-colors duration-300 ${viewMode === 'input' ? 'text-primary/60' : 'text-tertiary/80'}`}>
                 {viewMode === 'input'
                   ? '현장 상황 보고 (Field Recon)'
                   : '획득물 결산 (Loot Accounting)'}
@@ -532,9 +532,11 @@ function RecordScreen() {
                     <div key={round} className="flex items-center gap-1.5">
                       <div
                         className={`h-1.5 rounded-full transition-all duration-500 ${
-                          isCurrent
-                            ? 'w-8 md:w-12 bg-primary shadow-[0_0_8px_rgba(255,198,55,0.3)]'
-                            : isCompleted
+                          isCurrent && viewMode === 'summary'
+                            ? 'w-8 md:w-12 bg-tertiary shadow-[0_0_8px_rgba(241,201,125,0.3)]'
+                            : isCurrent
+                              ? 'w-8 md:w-12 bg-primary shadow-[0_0_8px_rgba(255,198,55,0.3)]'
+                              : isCompleted
                               ? 'w-4 md:w-6 bg-primary/60'
                               : 'w-4 md:w-6 bg-surface-container-highest'
                         }`}

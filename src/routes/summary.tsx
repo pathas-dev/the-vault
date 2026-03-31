@@ -4,7 +4,6 @@ import {
   useNavigate,
 } from '@tanstack/react-router'
 import { useState, useEffect, Fragment } from 'react'
-import { FloatingActions } from '../components/Layout'
 import { WallMiniMap } from '../components/WallMiniMap'
 import { type RoundData } from '../lib/schemas'
 import { clearSavedRounds, getSavedRounds } from '../lib/storage'
@@ -40,6 +39,8 @@ function SummaryScreen() {
   const navigate = useNavigate()
   const [rounds, setRounds] = useState<RoundData[]>([])
   const [showResetConfirm, setShowResetConfirm] = useState(false)
+  const [displayTotal, setDisplayTotal] = useState(0)
+  const [ceremonyDone, setCeremonyDone] = useState(false)
 
   // 뒤로가기 차단
   const { proceed, reset, status } = useBlocker({
@@ -49,7 +50,32 @@ function SummaryScreen() {
   })
 
   useEffect(() => {
-    setRounds(getSavedRounds())
+    const data = getSavedRounds()
+    setRounds(data)
+
+    // 카운트업 애니메이션
+    const total = data.reduce((sum: number, r: RoundData) => {
+      return sum + Object.values(r.vaultValues).reduce(
+        (rSum: number, vals: string[]) => rSum + vals.reduce((s, v) => s + (parseInt(v) || 0), 0), 0)
+    }, 0)
+
+    if (total === 0) { setCeremonyDone(true); return }
+    const duration = 1200
+    const steps = 30
+    const increment = total / steps
+    let current = 0
+    let step = 0
+    const timer = setInterval(() => {
+      step++
+      current = Math.min(Math.round(increment * step), total)
+      setDisplayTotal(current)
+      if (step >= steps) {
+        clearInterval(timer)
+        setDisplayTotal(total)
+        setCeremonyDone(true)
+      }
+    }, duration / steps)
+    return () => clearInterval(timer)
   }, [])
 
   const handleReset = () => setShowResetConfirm(true)
@@ -57,18 +83,6 @@ function SummaryScreen() {
   const confirmReset = () => {
     clearSavedRounds()
     navigate({ to: '/', search: { round: 1 }, replace: true })
-  }
-
-  const calculateTotal = () => {
-    return rounds.reduce((sum: number, r: RoundData) => {
-      const roundSum = Object.values(r.vaultValues).reduce(
-        (rSum: number, vals: string[]) => {
-          return rSum + vals.reduce((s, v) => s + (parseInt(v) || 0), 0)
-        },
-        0,
-      )
-      return sum + roundSum
-    }, 0)
   }
 
   const calculateRoundTotal = (r: RoundData) => {
@@ -81,24 +95,33 @@ function SummaryScreen() {
 
   return (
     <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden w-full">
-      <FloatingActions actions={[{ icon: 'settings', label: '설정' }]} />
       <main className="flex-1 px-4 md:px-12 py-8 md:py-20 max-w-7xl mx-auto w-full pb-24 md:pb-12">
         {/* 헤더 섹션 */}
         <section className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8 mb-8 md:mb-16">
           <div>
-            <span className="text-primary/60 text-label-sm font-bold tracking-[0.4em] uppercase mb-2 block">
-              Operation Complete
+            <span className={`text-label-sm font-bold tracking-[0.4em] uppercase mb-2 block transition-colors duration-700 ${ceremonyDone ? 'text-tertiary/80' : 'text-primary/60'}`}>
+              {ceremonyDone ? 'Mission Accomplished' : 'Operation Complete'}
             </span>
             <h2 className="noto-serif text-3xl md:text-5xl font-black text-primary leading-tight tracking-tight">
               최종 결산
             </h2>
+            {/* 완료 progress bar */}
+            <div className="flex items-center gap-1.5 mt-3">
+              {Array.from({ length: 7 }, (_, i) => (
+                <div
+                  key={i}
+                  className="h-1.5 w-4 md:w-6 rounded-full bg-tertiary/60 stagger-in"
+                  style={{ animationDelay: `${i * 80}ms` }}
+                />
+              ))}
+            </div>
           </div>
           <div className="bg-surface-container-high/50 px-5 py-4 md:px-8 md:py-6 rounded-sm">
             <p className="text-label-sm font-bold text-primary/40 uppercase tracking-widest mb-1">
               Total Value
             </p>
             <p className="noto-serif text-3xl md:text-4xl font-black text-primary tabular-nums">
-              {calculateTotal().toLocaleString()}{' '}
+              {displayTotal.toLocaleString()}{' '}
               <span className="text-sm tracking-widest">V</span>
             </p>
           </div>
