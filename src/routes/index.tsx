@@ -56,6 +56,36 @@ function RecordScreen() {
   const [selectedVaults, setSelectedVaults] = useState<string[]>([])
   const [vaultValues, setVaultValues] =
     useState<Record<string, string[]>>(initVaultValues())
+  const [numpadTarget, setNumpadTarget] = useState<{ vault: string; index: number } | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)')
+    setIsMobile(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
+  // 넘버패드 핸들러
+  const handleNumpadDigit = (digit: string) => {
+    if (!numpadTarget) return
+    const current = vaultValues[numpadTarget.vault][numpadTarget.index]
+    const newVal = current + digit
+    if (newVal.length <= 3 && parseInt(newVal) <= 100) {
+      handleVaultValueChange(numpadTarget.vault, numpadTarget.index, newVal)
+    }
+  }
+
+  const handleNumpadBackspace = () => {
+    if (!numpadTarget) return
+    const current = vaultValues[numpadTarget.vault][numpadTarget.index]
+    handleVaultValueChange(numpadTarget.vault, numpadTarget.index, current.slice(0, -1))
+  }
+
+  const handleNumpadConfirm = () => {
+    setNumpadTarget(null)
+  }
 
   // Force-replace the initial URL to /?round=1 if no round is specified
   // this prevents the user from going back to the "pre-game" state
@@ -174,7 +204,10 @@ function RecordScreen() {
     }
   }
 
-  const handlePhaseSubmit = () => setViewMode('summary')
+  const handlePhaseSubmit = () => {
+    setNumpadTarget(null)
+    setViewMode('summary')
+  }
 
   const handleNextRound = () => {
     const currentData: RoundData = {
@@ -222,6 +255,7 @@ function RecordScreen() {
 
   const toggleVault = (vault: string) => {
     if (selectedVaults.includes(vault)) {
+      if (numpadTarget?.vault === vault) setNumpadTarget(null)
       setSelectedVaults((prev) => prev.filter((v) => v !== vault))
       setVaultValues((prev) => ({
         ...prev,
@@ -766,18 +800,26 @@ function RecordScreen() {
                                   name={`${v}-v${i}`}
                                   aria-label={`${v} 금고 슬롯 ${i + 1}`}
                                   className={`w-full border text-center font-black rounded-sm py-2.5 md:py-3 outline-none text-base md:text-lg transition-all ${
-                                    !isEnabled
-                                      ? 'bg-surface-container-low border-outline-variant/5 text-on-surface/15 cursor-not-allowed'
-                                      : vaultValues[v][i] !== '' &&
-                                          !isValidValue(vaultValues[v][i])
-                                        ? 'bg-surface-container-lowest border-error ring-1 ring-error/20 text-primary'
-                                        : 'bg-surface-container-lowest border-outline-variant/10 text-primary input-glow focus:ring-1 focus:ring-primary/20'
+                                    numpadTarget?.vault === v && numpadTarget?.index === i
+                                      ? 'bg-surface-container-lowest border-primary ring-2 ring-primary/30 text-primary'
+                                      : !isEnabled
+                                        ? 'bg-surface-container-low border-outline-variant/5 text-on-surface/15 cursor-not-allowed'
+                                        : vaultValues[v][i] !== '' &&
+                                            !isValidValue(vaultValues[v][i])
+                                          ? 'bg-surface-container-lowest border-error ring-1 ring-error/20 text-primary'
+                                          : 'bg-surface-container-lowest border-outline-variant/10 text-primary input-glow focus:ring-1 focus:ring-primary/20'
                                   }`}
                                   placeholder={isEnabled ? '—' : ''}
-                                  inputMode="numeric"
+                                  inputMode={isMobile ? 'none' : 'numeric'}
                                   type="number"
+                                  readOnly={isMobile}
                                   disabled={!isEnabled}
                                   value={vaultValues[v][i]}
+                                  onClick={() => {
+                                    if (isMobile && isEnabled) {
+                                      setNumpadTarget({ vault: v, index: i })
+                                    }
+                                  }}
                                   onChange={(e) =>
                                     handleVaultValueChange(v, i, e.target.value)
                                   }
@@ -878,28 +920,94 @@ function RecordScreen() {
         </section>
       </main>
 
-      <div className="md:hidden fixed inset-x-0 bottom-6 px-4 z-40">
-        {viewMode === 'input' ? (
-          <button
-            onClick={handlePhaseSubmit}
-            disabled={!isFormValid}
-            className={`w-full flex items-center justify-center gap-3 py-4 font-black text-base rounded-sm shadow-xl ${isFormValid ? 'bg-linear-to-br from-primary to-primary-container text-on-primary btn-press' : 'bg-surface-container-highest text-on-surface/20 opacity-50'}`}
-          >
-            <span className="material-symbols-outlined text-lg">
-              {isFormValid ? 'verified_user' : 'lock'}
-            </span>{' '}
-            작전 기록 확정
-          </button>
+      <div className="md:hidden fixed inset-x-0 bottom-0 z-40">
+        {numpadTarget && viewMode === 'input' ? (
+          /* 넘버패드 오버레이 */
+          <>
+          <div className="fixed inset-0 bg-transparent" onClick={() => setNumpadTarget(null)} />
+          <div className="relative bg-surface-container-high shadow-[0_-4px_24px_rgba(0,0,0,0.4)] pb-6 pt-3 px-4">
+            {/* 현재 편집 슬롯 표시 */}
+            <div className="flex items-center justify-between mb-3 px-1">
+              <div className="flex items-center gap-2">
+                <span className="serif-text text-sm font-black text-primary">{numpadTarget.vault}</span>
+                <span className="text-label-xs text-on-surface-variant/40 uppercase tracking-widest">
+                  슬롯 {numpadTarget.index + 1}
+                </span>
+              </div>
+              <button
+                onClick={() => setNumpadTarget(null)}
+                className="text-on-surface/40 p-1"
+                aria-label="넘버패드 닫기"
+              >
+                <span className="material-symbols-outlined text-lg">keyboard_hide</span>
+              </button>
+            </div>
+            {/* 현재 값 */}
+            <div className="bg-surface-container-lowest rounded-sm py-3 mb-3 text-center">
+              <span className="serif-text text-2xl font-black text-primary tabular-nums">
+                {vaultValues[numpadTarget.vault][numpadTarget.index] || '—'}
+              </span>
+            </div>
+            {/* 키패드 그리드 */}
+            <div className="grid grid-cols-3 gap-1.5">
+              {['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((d) => (
+                <button
+                  key={d}
+                  onClick={() => handleNumpadDigit(d)}
+                  className="py-3.5 bg-surface-container rounded-sm text-lg font-black text-on-surface btn-press active:bg-surface-container-highest"
+                >
+                  {d}
+                </button>
+              ))}
+              <button
+                onClick={handleNumpadBackspace}
+                className="py-3.5 bg-surface-container rounded-sm font-black text-on-surface/60 btn-press active:bg-surface-container-highest flex items-center justify-center"
+                aria-label="지우기"
+              >
+                <span className="material-symbols-outlined text-xl">backspace</span>
+              </button>
+              <button
+                onClick={() => handleNumpadDigit('0')}
+                className="py-3.5 bg-surface-container rounded-sm text-lg font-black text-on-surface btn-press active:bg-surface-container-highest"
+              >
+                0
+              </button>
+              <button
+                onClick={handleNumpadConfirm}
+                className="py-3.5 gold-gradient rounded-sm text-lg font-black text-on-primary btn-press"
+                aria-label="다음"
+              >
+                <span className="material-symbols-outlined text-xl">check</span>
+              </button>
+            </div>
+          </div>
+          </>
         ) : (
-          <button
-            onClick={handleNextRound}
-            className="w-full flex items-center justify-center gap-3 py-4 bg-linear-to-br from-tertiary to-tertiary-container text-on-tertiary font-black text-base rounded-sm shadow-xl btn-press"
-          >
-            <span className="material-symbols-outlined text-lg">
-              {isFinalRound ? 'analytics' : 'near_me'}
-            </span>{' '}
-            {isFinalRound ? '최종 장부 정리' : '다음 작전'}
-          </button>
+          /* 기존 액션 버튼 */
+          <div className="px-4 pb-6">
+            {viewMode === 'input' ? (
+              <button
+                onClick={handlePhaseSubmit}
+                disabled={!isFormValid}
+                className={`w-full flex items-center justify-center gap-3 py-4 font-black text-base rounded-sm shadow-xl ${isFormValid ? 'bg-linear-to-br from-primary to-primary-container text-on-primary btn-press' : 'bg-surface-container-highest text-on-surface/20 opacity-50'}`}
+              >
+                <span className="material-symbols-outlined text-lg">
+                  {isFormValid ? 'verified_user' : 'lock'}
+                </span>{' '}
+                작전 기록 확정
+              </button>
+            ) : (
+              <button
+                onClick={handleNextRound}
+                className="w-full flex items-center justify-center gap-3 py-4 bg-linear-to-br from-tertiary to-tertiary-container text-on-tertiary font-black text-base rounded-sm shadow-xl btn-press"
+              >
+                <span className="material-symbols-outlined text-lg">
+                  {isFinalRound ? 'analytics' : 'near_me'}
+                </span>{' '}
+                {isFinalRound ? '최종 장부 정리' : '다음 작전'}
+              </button>
+            )}
+          </div>
         )}
       </div>
 
