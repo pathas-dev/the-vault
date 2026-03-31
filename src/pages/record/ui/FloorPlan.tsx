@@ -136,43 +136,41 @@ export function FloorPlan({
           </div>
 
           {/* Entry points: right side of 1xx */}
-          <div className="flex flex-col self-stretch">
-            <button
-              onClick={() => onStartPointChange('A')}
-              aria-label="침투 지점 A 선택"
-              aria-pressed={startPoint === 'A'}
-              className="flex-1 flex items-center px-2 group transition-all"
-              title="침투 지점 A (10x 방)"
-            >
-              <span
-                className={`serif-text text-sm md:text-base font-black transition-all duration-300 ${
-                  startPoint === 'A'
-                    ? 'text-intrusion drop-shadow-[0_0_8px_rgba(255,45,85,0.6)] scale-125'
-                    : 'text-on-surface/15 group-hover:text-intrusion/40'
-                }`}
-                aria-hidden="true"
-              >
-                A
-              </span>
-            </button>
-            <button
-              onClick={() => onStartPointChange('B')}
-              aria-label="침투 지점 B 선택"
-              aria-pressed={startPoint === 'B'}
-              className="flex-1 flex items-center px-2 group transition-all"
-              title="침투 지점 B (11x 방)"
-            >
-              <span
-                className={`serif-text text-sm md:text-base font-black transition-all duration-300 ${
-                  startPoint === 'B'
-                    ? 'text-intrusion drop-shadow-[0_0_8px_rgba(255,45,85,0.6)] scale-125'
-                    : 'text-on-surface/15 group-hover:text-intrusion/40'
-                }`}
-                aria-hidden="true"
-              >
-                B
-              </span>
-            </button>
+          <div className="flex flex-col self-stretch gap-1 ml-1.5 md:ml-2">
+            {(['A', 'B'] as const).map((point) => {
+              const isActive = startPoint === point
+              return (
+                <button
+                  key={point}
+                  onClick={() => onStartPointChange(point)}
+                  aria-label={`침투 지점 ${point} 선택`}
+                  aria-pressed={isActive}
+                  className={`flex-1 flex flex-col items-center justify-center px-1 md:px-2 rounded-sm transition-all duration-300 cursor-pointer group ${
+                    isActive
+                      ? 'bg-intrusion/10 border border-intrusion/40 shadow-[0_0_16px_rgba(255,45,85,0.15)]'
+                      : 'border border-dashed border-on-surface/10 hover:border-intrusion/30 hover:bg-intrusion/5'
+                  }`}
+                >
+                  <span
+                    className={`material-symbols-outlined text-xs md:text-sm transition-all duration-300 rotate-180 ${
+                      isActive ? 'text-intrusion' : 'text-on-surface/20 group-hover:text-intrusion/40'
+                    }`}
+                    style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}
+                  >
+                    arrow_forward
+                  </span>
+                  <span
+                    className={`serif-text text-[10px] md:text-xs font-black transition-all duration-300 ${
+                      isActive
+                        ? 'text-intrusion drop-shadow-[0_0_6px_rgba(255,45,85,0.5)]'
+                        : 'text-on-surface/20 group-hover:text-intrusion/40'
+                    }`}
+                  >
+                    {point}
+                  </span>
+                </button>
+              )
+            })}
           </div>
         </div>
       </div>
