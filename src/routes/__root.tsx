@@ -1,10 +1,27 @@
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
+import { HeadContent, Link, Scripts, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import appCss from '../styles.css?url'
 
+// Static string only — never interpolate variables
 const THEME_INIT_SCRIPT = `(function(){document.documentElement.classList.add('dark');})();`
+
+function ErrorBoundary({ error }: { error: Error }) {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen gap-4">
+      <span className="material-symbols-outlined text-6xl text-error/40">error</span>
+      <h1 className="serif-text text-2xl font-black text-primary">오류가 발생했습니다</h1>
+      <p className="text-on-surface-variant text-sm">{error.message}</p>
+      <button
+        onClick={() => window.location.reload()}
+        className="text-sm text-primary font-bold hover:underline"
+      >
+        다시 시도
+      </button>
+    </div>
+  )
+}
 
 export const Route = createRootRoute({
   head: () => ({
@@ -38,12 +55,13 @@ export const Route = createRootRoute({
     ],
   }),
   shellComponent: RootDocument,
+  errorComponent: ErrorBoundary,
   notFoundComponent: () => (
     <div className="flex flex-col items-center justify-center min-h-screen gap-4">
       <span className="material-symbols-outlined text-6xl text-primary/30">lock</span>
       <h1 className="serif-text text-2xl font-black text-primary">접근 불가</h1>
       <p className="text-on-surface-variant text-sm">존재하지 않는 경로입니다.</p>
-      <a href="/" className="text-sm text-primary font-bold hover:underline">작전 본부로 복귀</a>
+      <Link to="/" className="text-sm text-primary font-bold hover:underline">작전 본부로 복귀</Link>
     </div>
   ),
 })
@@ -57,15 +75,17 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="bg-background text-on-surface min-h-screen selection:bg-primary/30">
         <div className="flex w-full min-h-screen">{children}</div>
-        <TanStackDevtools
-          config={{ position: 'bottom-right' }}
-          plugins={[
-            {
-              name: 'Tanstack Router',
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
+        {import.meta.env.DEV && (
+          <TanStackDevtools
+            config={{ position: 'bottom-right' }}
+            plugins={[
+              {
+                name: 'Tanstack Router',
+                render: <TanStackRouterDevtoolsPanel />,
+              },
+            ]}
+          />
+        )}
         <Scripts />
       </body>
     </html>

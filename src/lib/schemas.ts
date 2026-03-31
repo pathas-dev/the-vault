@@ -1,13 +1,3 @@
-import { z } from 'zod'
-
-export const RoundDataSchema = z.object({
-  targetHouse: z.string(),
-  startPoint: z.string(),
-  horizontalWall: z.string().nullable(),
-  verticalWall: z.string().nullable(),
-  vaultValues: z.record(z.string(), z.array(z.string())),
-})
-
-export const RoundsSchema = z.array(RoundDataSchema)
-
-export type RoundData = z.infer<typeof RoundDataSchema>
+// Re-export from entities for backward compatibility during migration
+export { RoundDataSchema, RoundsSchema } from '../entities/round'
+export type { RoundData } from '../entities/round'
