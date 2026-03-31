@@ -1,4 +1,4 @@
-import { WallMiniMap } from '@/components/WallMiniMap'
+import { WallMiniMap } from '@/shared/ui'
 import type { RoundData } from '@/entities/round'
 
 interface HistoryPanelProps {

@@ -1,4 +1,4 @@
-import { FloatingActions } from '@/components/Layout'
+import { FloatingActions } from '@/shared/layout'
 import { TOTAL_ROUNDS } from '@/shared/config'
 import { isFormValid } from '@/shared/lib/validation'
 import { ConfirmDialog } from '@/shared/ui'

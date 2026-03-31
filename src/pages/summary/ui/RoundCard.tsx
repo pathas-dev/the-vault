@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import type { RoundData } from '@/entities/round'
 import { VAULT_CONFIG, VAULT_NUMBERS, MAX_CAPACITY } from '@/shared/config'
 import { calculateRoundTotal } from '@/entities/round'
-import { WallMiniMap } from '@/components/WallMiniMap'
+import { WallMiniMap } from '@/shared/ui'
 
 interface RoundCardProps {
   round: RoundData
