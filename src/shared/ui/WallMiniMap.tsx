@@ -37,7 +37,7 @@ export function WallMiniMap({
         <div className="border border-l-0 border-outline-variant/15 bg-surface-container-lowest/30 flex-1 rounded-sm" />
         <div className="h-0 relative">
           <div
-            className={`absolute inset-x-0 -top-px h-0.5 rounded-full ${horizontalWall === 'ㄴ' ? wallActive : wallInactive}`}
+            className={`absolute inset-x-0 -top-px h-0.5 rounded-full ${horizontalWall === 'ㄱ' ? wallActive : wallInactive}`}
           />
         </div>
         <div className="border border-l-0 border-t-0 border-outline-variant/15 bg-surface-container-lowest/30 flex-1 rounded-sm" />
@@ -62,7 +62,7 @@ export function WallMiniMap({
         </div>
         <div className="h-0 relative">
           <div
-            className={`absolute inset-x-0 -top-px h-0.5 rounded-full ${horizontalWall === 'ㄷ' ? wallActive : wallInactive}`}
+            className={`absolute inset-x-0 -top-px h-0.5 rounded-full ${horizontalWall === 'ㄴ' ? wallActive : wallInactive}`}
           />
         </div>
         <div className="border border-l-0 border-t-0 border-outline-variant/15 bg-surface-container-lowest/30 flex-1 relative rounded-sm">

@@ -5,7 +5,7 @@ interface RoundHeaderProps {
   totalRounds: number
   targetHouse: 'A' | 'B' | 'C' | 'D'
   viewMode: 'input' | 'summary'
-  horizontalWall: 'ㄴ' | 'ㄷ' | null
+  horizontalWall: 'ㄱ' | 'ㄴ' | null
   verticalWall: 'a' | 'b' | 'c' | 'd' | null
   startPoint: 'A' | 'B'
   onTargetHouseChange: (house: 'A' | 'B' | 'C' | 'D') => void

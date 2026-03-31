@@ -10,7 +10,7 @@ export const VALID_VAULT_NUMBERS = [
 export const RoundDataSchema = z.object({
   targetHouse: z.enum(['A', 'B', 'C', 'D']),
   startPoint: z.enum(['A', 'B']),
-  horizontalWall: z.enum(['ㄴ', 'ㄷ']).nullable(),
+  horizontalWall: z.enum(['ㄱ', 'ㄴ']).nullable(),
   verticalWall: z.enum(['a', 'b', 'c', 'd']).nullable(),
   vaultValues: z.record(
     z.string(),

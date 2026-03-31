@@ -31,7 +31,7 @@ export function RecordScreen() {
   }
 
   const handleHWallToggle = (value: string) => {
-    state.setHorizontalWall(value === '__clear__' ? null : value as 'ㄴ' | 'ㄷ')
+    state.setHorizontalWall(value === '__clear__' ? null : value as 'ㄱ' | 'ㄴ')
   }
 
   const handleVWallToggle = (value: string) => {

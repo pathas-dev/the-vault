@@ -3,7 +3,7 @@ import { HWallButton, VWallButton } from './WallButton'
 
 interface FloorPlanProps {
   selectedVaults: string[]
-  horizontalWall: 'ㄴ' | 'ㄷ' | null
+  horizontalWall: 'ㄱ' | 'ㄴ' | null
   verticalWall: 'a' | 'b' | 'c' | 'd' | null
   startPoint: 'A' | 'B'
   onVaultToggle: (vault: string) => void
@@ -86,8 +86,8 @@ export function FloorPlan({
                 <VaultCell vault="203" className="w-full" isSelected={isVaultSelected('203')} onToggle={onVaultToggle} />
               </div>
             </div>
-            {/* Horizontal wall ㄴ overlay: between 20x and 21x */}
-            <HWallButton value="ㄴ" isSelected={horizontalWall === 'ㄴ'} onToggle={onHWallToggle} />
+            {/* Horizontal wall ㄱ overlay: between 20x and 21x */}
+            <HWallButton value="ㄱ" isSelected={horizontalWall === 'ㄱ'} onToggle={onHWallToggle} />
             {/* Room 21x */}
             <div className="border border-l-0 border-t-0 border-outline-variant/15 bg-surface-container-lowest/30 p-1 md:p-3 flex-1">
               <div className="grid grid-cols-2 grid-rows-2 gap-1 h-full">
@@ -119,8 +119,8 @@ export function FloorPlan({
                 <VaultCell vault="103" className="w-full" isSelected={isVaultSelected('103')} onToggle={onVaultToggle} />
               </div>
             </div>
-            {/* Horizontal wall ㄷ overlay: between 10x and 11x */}
-            <HWallButton value="ㄷ" isSelected={horizontalWall === 'ㄷ'} onToggle={onHWallToggle} />
+            {/* Horizontal wall ㄴ overlay: between 10x and 11x */}
+            <HWallButton value="ㄴ" isSelected={horizontalWall === 'ㄴ'} onToggle={onHWallToggle} />
             {/* Room 11x */}
             <div className="border border-l-0 border-t-0 border-outline-variant/15 bg-surface-container-lowest/30 p-1 md:p-3 flex-1 relative overflow-hidden">
               <div

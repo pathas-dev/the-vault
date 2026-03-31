@@ -36,7 +36,7 @@ export const MAX_CAPACITY = Math.max(...Object.values(VAULT_CONFIG))
 
 export const TARGET_HOUSES = ['A', 'B', 'C', 'D'] as const
 export const START_POINTS = ['A', 'B'] as const
-export const HORIZONTAL_WALLS = ['ㄴ', 'ㄷ'] as const
+export const HORIZONTAL_WALLS = ['ㄱ', 'ㄴ'] as const
 export const VERTICAL_WALLS = ['a', 'b', 'c', 'd'] as const
 
 export function initVaultValues(): Record<string, string[]> {

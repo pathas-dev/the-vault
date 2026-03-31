@@ -10,7 +10,7 @@ interface RoundState {
   historyRounds: RoundData[]
   targetHouse: 'A' | 'B' | 'C' | 'D'
   startPoint: 'A' | 'B'
-  horizontalWall: 'ㄴ' | 'ㄷ' | null
+  horizontalWall: 'ㄱ' | 'ㄴ' | null
   verticalWall: 'a' | 'b' | 'c' | 'd' | null
   selectedVaults: string[]
   vaultValues: Record<string, string[]>
@@ -24,7 +24,7 @@ type RoundAction =
   | { type: 'SET_HISTORY_ROUNDS'; payload: RoundData[] }
   | { type: 'SET_TARGET_HOUSE'; payload: 'A' | 'B' | 'C' | 'D' }
   | { type: 'SET_START_POINT'; payload: 'A' | 'B' }
-  | { type: 'SET_HORIZONTAL_WALL'; payload: 'ㄴ' | 'ㄷ' | null }
+  | { type: 'SET_HORIZONTAL_WALL'; payload: 'ㄱ' | 'ㄴ' | null }
   | { type: 'SET_VERTICAL_WALL'; payload: 'a' | 'b' | 'c' | 'd' | null }
   | { type: 'SET_SELECTED_VAULTS'; payload: string[] }
   | { type: 'SET_VAULT_VALUES'; payload: Record<string, string[]> }
@@ -242,7 +242,7 @@ export function useRoundState() {
     dispatch({ type: 'SET_START_POINT', payload: point })
   }, [])
 
-  const setHorizontalWall = useCallback((wall: 'ㄴ' | 'ㄷ' | null) => {
+  const setHorizontalWall = useCallback((wall: 'ㄱ' | 'ㄴ' | null) => {
     dispatch({ type: 'SET_HORIZONTAL_WALL', payload: wall })
   }, [])
 
