@@ -19,7 +19,6 @@ export function RecordScreen() {
   const [roundFlash, setRoundFlash] = useState(false)
 
   const formValid = isFormValid(state.selectedVaults, state.vaultValues)
-  const submitDisabled = !formValid || state.isPhaseSubmitPending
 
   const handleNextRound = () => {
     if (state.isFinalRound) {
@@ -98,8 +97,8 @@ export function RecordScreen() {
             <div className="absolute -inset-1 bg-linear-to-r from-primary to-primary-container rounded blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
             {state.viewMode === 'input' ? (
               <button
-                onClick={() => state.handlePhaseSubmit()}
-                disabled={submitDisabled}
+                onClick={state.handlePhaseSubmit}
+                disabled={!formValid}
                 className={`relative flex items-center gap-4 px-12 py-5 ${formValid ? 'bg-linear-to-br from-primary to-primary-container text-on-primary shadow-xl hover:shadow-2xl hover:shadow-primary/20 btn-press' : 'bg-surface-container-highest text-on-surface/10 cursor-not-allowed opacity-40'} text-lg font-black rounded-sm tracking-widest`}
               >
                 <span className="material-symbols-outlined text-xl">
@@ -119,20 +118,6 @@ export function RecordScreen() {
               </button>
             )}
           </div>
-          <div className="mt-6 flex items-center justify-center gap-1.5 opacity-30">
-            {Array.from({ length: TOTAL_ROUNDS }, (_, i) => (
-              <div
-                key={i}
-                className={`h-1 rounded-full ${
-                  i + 1 === state.currentRound
-                    ? 'w-6 bg-primary'
-                    : i + 1 < state.currentRound
-                      ? 'w-3 bg-primary/60'
-                      : 'w-3 bg-surface-container-highest'
-                }`}
-              />
-            ))}
-          </div>
         </section>
       </main>
 
@@ -151,8 +136,8 @@ export function RecordScreen() {
           <div className="px-4 pb-6">
             {state.viewMode === 'input' ? (
               <button
-                onClick={() => state.handlePhaseSubmit()}
-                disabled={submitDisabled}
+                onClick={state.handlePhaseSubmit}
+                disabled={!formValid}
                 className={`w-full flex items-center justify-center gap-3 py-4 font-black text-base rounded-sm shadow-xl ${formValid ? 'bg-linear-to-br from-primary to-primary-container text-on-primary btn-press' : 'bg-surface-container-highest text-on-surface/20 opacity-50'}`}
               >
                 <span className="material-symbols-outlined text-lg">
@@ -187,12 +172,23 @@ export function RecordScreen() {
         variant="danger"
       />
 
+      {/* 실행 취소 토스트 */}
+      {state.undoInfo && (
+        <div className="fixed bottom-20 md:bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-4 py-3 bg-surface-container-high/95 backdrop-blur-sm rounded-sm shadow-xl border border-outline-variant/10">
+          <span className="text-sm text-on-surface/70">
+            {state.undoInfo.vault}번 금고 해제됨
+          </span>
+          <button
+            onClick={state.executeUndo}
+            className="text-sm font-bold text-primary hover:text-primary-container btn-press"
+          >
+            실행 취소
+          </button>
+        </div>
+      )}
+
       <div
-        className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBahMjspscmOlRydFeZiCVATXkfw6pEATu-kblpB4U_8PQEydTQeB7dqX-cofBN8Rj1D8nGIP-tDvL1Bzbv6cFxQYognCmXh74BugeJs97eBtH25zbnPZY3x6hf1VbkImgJ68Uw0RG9YP2o7mWGrFtXPMWBntot6cYMJaFv1jPE_A1BveuEzGHoSZqbR-0DCc9_BDp26do3lzs4mYICAdE7PIunrll4h4At9pxGYAoLyB8kWVnmcihNFo80yPv_Vf_3kPRHg0l3ZfBZ')",
-        }}
+        className="fixed inset-0 pointer-events-none z-0 opacity-[0.03] blueprint-bg"
       ></div>
     </div>
   )
