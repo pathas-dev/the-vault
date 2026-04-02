@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FloatingActions } from '@/shared/layout'
 import { TOTAL_ROUNDS } from '@/shared/config'
 import { isFormValid } from '@/shared/lib/validation'
@@ -17,8 +17,18 @@ export function RecordScreen() {
   const { handleKeyDown } = useKeyboardNavigation()
   const { fire: fireConfetti } = useConfetti()
   const [roundFlash, setRoundFlash] = useState(false)
+  const [isVaultMasked, setIsVaultMasked] = useState(false)
 
   const formValid = isFormValid(state.selectedVaults, state.vaultValues)
+
+  // 진입 시 매번 마스킹 상태로 초기화
+  useEffect(() => {
+    if (state.viewMode === 'summary') {
+      setIsVaultMasked(true)
+    } else {
+      setIsVaultMasked(false)
+    }
+  }, [state.viewMode, state.currentRound])
 
   const handleNextRound = () => {
     if (state.isFinalRound) {
@@ -87,8 +97,12 @@ export function RecordScreen() {
             isMobile={state.isMobile}
             numpadTarget={state.numpadTarget}
             onValueChange={state.handleVaultValueChange}
-            onNumpadOpen={(vault, index) => state.setNumpadTarget({ vault, index })}
+            onNumpadOpen={(vault, index) =>
+              state.setNumpadTarget({ vault, index })
+            }
             onKeyDown={handleKeyDown}
+            isMasked={isVaultMasked}
+            onMaskToggle={state.viewMode === 'summary' ? () => setIsVaultMasked(!isVaultMasked) : undefined}
           />
         )}
 
@@ -109,7 +123,11 @@ export function RecordScreen() {
             ) : (
               <button
                 onClick={handleNextRound}
-                className="relative flex items-center gap-4 px-12 py-5 bg-linear-to-br from-tertiary to-tertiary-container text-on-tertiary text-lg font-black rounded-sm shadow-xl hover:shadow-2xl btn-press tracking-widest"
+                className={`relative flex items-center gap-4 px-12 py-5 bg-linear-to-br from-tertiary to-tertiary-container text-on-tertiary text-lg font-black rounded-sm shadow-xl hover:shadow-2xl btn-press tracking-widest transition-all duration-700 ${
+                  isVaultMasked
+                    ? 'shadow-[0_0_25px_rgba(255,198,55,0.45)] blur-[0.6px] brightness-110'
+                    : ''
+                }`}
               >
                 <span className="material-symbols-outlined text-xl">
                   {state.isFinalRound ? 'analytics' : 'near_me'}
@@ -148,7 +166,11 @@ export function RecordScreen() {
             ) : (
               <button
                 onClick={handleNextRound}
-                className="w-full flex items-center justify-center gap-3 py-4 bg-linear-to-br from-tertiary to-tertiary-container text-on-tertiary font-black text-base rounded-sm shadow-xl btn-press"
+                className={`w-full flex items-center justify-center gap-3 py-4 bg-linear-to-br from-tertiary to-tertiary-container text-on-tertiary font-black text-base rounded-sm shadow-xl btn-press transition-all duration-700 ${
+                  isVaultMasked
+                    ? 'shadow-[0_0_20px_rgba(255,198,55,0.4)] blur-[0.5px]'
+                    : ''
+                }`}
               >
                 <span className="material-symbols-outlined text-lg">
                   {state.isFinalRound ? 'analytics' : 'near_me'}
