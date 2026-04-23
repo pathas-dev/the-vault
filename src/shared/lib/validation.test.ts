@@ -14,8 +14,8 @@ describe('isValidValue', () => {
     expect(isValidValue('100')).toBe(true)
   })
 
-  it('returns false for "0" (below range)', () => {
-    expect(isValidValue('0')).toBe(false)
+  it('returns true for "0" (trap)', () => {
+    expect(isValidValue('0')).toBe(true)
   })
 
   it('returns false for "101" (above range)', () => {

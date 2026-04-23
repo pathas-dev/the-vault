@@ -66,12 +66,10 @@ export function RecordScreen() {
         <RoundHeader
           currentRound={state.currentRound}
           totalRounds={TOTAL_ROUNDS}
-          targetHouse={state.targetHouse}
           viewMode={state.viewMode}
           horizontalWall={state.horizontalWall}
           verticalWall={state.verticalWall}
           startPoint={state.startPoint}
-          onTargetHouseChange={state.setTargetHouse}
         />
 
         {/* 금고 배치도 (Vault Floor Plan) */}

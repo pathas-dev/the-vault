@@ -35,14 +35,6 @@ export function RoundCard({ round, index }: RoundCardProps) {
         </div>
         <div className="flex gap-x-5 gap-y-1.5 flex-wrap mt-3">
           <div className="flex items-center gap-1.5">
-            <span className="text-label-xs uppercase font-bold text-on-surface-variant/40 tracking-widest">
-              터는 집:
-            </span>
-            <span className="text-xs font-bold">
-              {round.targetHouse}
-            </span>
-          </div>
-          <div className="flex items-center gap-1.5">
             <WallMiniMap
               horizontalWall={round.horizontalWall}
               verticalWall={round.verticalWall}
@@ -77,8 +69,16 @@ export function RoundCard({ round, index }: RoundCardProps) {
                                 /
                               </span>
                             )}
-                            <span className="noto-serif font-black text-primary text-sm">
-                              {vals[i] || '—'}
+                            <span className={`noto-serif font-black text-sm inline-flex items-center gap-0.5 ${vals[i] === '0' ? 'text-error/80' : 'text-primary'}`}>
+                              {vals[i] === '0' ? (
+                                <>
+                                  <span
+                                    className="material-symbols-outlined text-sm"
+                                    style={{ fontVariationSettings: "'FILL' 1" }}
+                                  >skull</span>
+                                  함정
+                                </>
+                              ) : vals[i] || '—'}
                             </span>
                           </Fragment>
                         ),
@@ -122,7 +122,15 @@ export function RoundCard({ round, index }: RoundCardProps) {
                             className="p-3 text-center text-sm font-black"
                           >
                             {i < VAULT_CONFIG[v]
-                              ? vals[i] || '-'
+                              ? vals[i] === '0'
+                                ? <span className="inline-flex items-center gap-1 text-error/80">
+                                    <span
+                                      className="material-symbols-outlined text-sm"
+                                      style={{ fontVariationSettings: "'FILL' 1" }}
+                                    >skull</span>
+                                    함정
+                                  </span>
+                                : vals[i] || '-'
                               : ''}
                           </td>
                         ),

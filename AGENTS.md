@@ -53,7 +53,7 @@ src/
 │   │   │   ├── VaultValueTable.tsx   # Value input table with validation
 │   │   │   ├── MobileNumpad.tsx      # Mobile numpad overlay with error shake
 │   │   │   ├── HistoryPanel.tsx      # Slide-over round history drawer
-│   │   │   └── RoundHeader.tsx       # Phase title, progress bar, target house selector
+│   │   │   └── RoundHeader.tsx       # Phase title, progress bar
 │   │   ├── model/
 │   │   │   ├── round-state.ts        # useRoundState (useReducer-based state management)
 │   │   │   └── keyboard-nav.ts       # useKeyboardNavigation (Enter/Arrow key input navigation)
@@ -78,7 +78,7 @@ src/
 │
 └── shared/                            # Infrastructure with no business logic
     ├── config/
-    │   └── vault.ts                   # VAULT_CONFIG, VAULT_NUMBERS, TOTAL_ROUNDS, wall/house constants
+    │   └── vault.ts                   # VAULT_CONFIG, VAULT_NUMBERS, TOTAL_ROUNDS, wall constants
     ├── api/
     │   ├── storage.ts                 # sessionStorage CRUD (getSavedRounds, saveRounds, clearSavedRounds)
     │   └── storage.test.ts            # Vitest unit tests (6 tests)
@@ -103,15 +103,16 @@ src/
 ## Key Domain Concepts
 
 **RoundData** — A single round of vault recording:
-- `targetHouse`: `'A' | 'B' | 'C' | 'D'`
 - `startPoint`: `'A' | 'B'`
 - `horizontalWall`: `'ㄴ' | 'ㄷ' | null`
 - `verticalWall`: `'a' | 'b' | 'c' | 'd' | null`
-- `vaultValues`: `Record<string, string[]>` — vault number → value array
+- `vaultValues`: `Record<string, string[]>` — vault number → value array (value `'0'` = trap)
 
-**Vault layout:** 17 vaults across 4 rooms (401, 3xx, 2xx, 1xx). Each vault has a capacity (1-3 values). Configuration in `shared/config/vault.ts`.
+**Vault layout:** 17 vaults across 4 rooms (401, 3xx, 2xx, 1xx). Each vault has a capacity (1-2 values). Configuration in `shared/config/vault.ts`.
 
-**Game flow:** 7 rounds max. Each round: select vaults → set target house → place walls → set entry point → input values → confirm → next round → final summary.
+**Trap:** A vault value of `0` represents a trap (함정). It is displayed as "함정" in all UI views.
+
+**Game flow:** 7 rounds max. Each round: select vaults → place walls → set entry point → input values → confirm → next round → final summary. Target house selection uses a separate physical notice card (예고장).
 
 ---
 

@@ -4,7 +4,6 @@ import { type RoundData } from '../../entities/round'
 
 describe('storage utility', () => {
   const mockRound: RoundData = {
-    targetHouse: 'A',
     startPoint: 'A',
     horizontalWall: null,
     verticalWall: null,

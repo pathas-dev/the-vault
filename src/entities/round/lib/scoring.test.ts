@@ -3,7 +3,6 @@ import { calculateRoundTotal, calculateGrandTotal } from './scoring'
 import type { RoundData } from '../model/round'
 
 const baseRound: Omit<RoundData, 'vaultValues'> = {
-  targetHouse: 'A',
   startPoint: 'A',
   horizontalWall: null,
   verticalWall: null,
@@ -26,10 +25,10 @@ describe('calculateRoundTotal', () => {
       vaultValues: {
         '101': ['30'],
         '103': ['20', '15'],
-        '401': ['10', '5', '8'],
+        '401': ['10', '5'],
       },
     }
-    expect(calculateRoundTotal(round)).toBe(88)
+    expect(calculateRoundTotal(round)).toBe(80)
   })
 
   it('ignores empty strings (treated as 0)', () => {
@@ -54,12 +53,12 @@ describe('calculateGrandTotal', () => {
       { ...baseRound, vaultValues: { '101': ['50'] } },
       { ...baseRound, vaultValues: { '102': ['30'], '103': ['20', '10'] } },
       { ...baseRound, vaultValues: { '201': ['40'] } },
-      { ...baseRound, vaultValues: { '401': ['100', '80', '60'] } },
+      { ...baseRound, vaultValues: { '401': ['100', '80'] } },
       { ...baseRound, vaultValues: { '301': ['70'], '302': ['45', '55'] } },
       { ...baseRound, vaultValues: { '111': ['25'], '113': ['35', '15'] } },
       { ...baseRound, vaultValues: { '212': ['90', '10'] } },
     ]
-    // 50 + 60 + 40 + 240 + 170 + 75 + 100 = 735
-    expect(calculateGrandTotal(rounds)).toBe(735)
+    // 50 + 60 + 40 + 180 + 170 + 75 + 100 = 675
+    expect(calculateGrandTotal(rounds)).toBe(675)
   })
 })

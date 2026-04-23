@@ -69,14 +69,6 @@ export function HistoryPanel({ isOpen, rounds, onClose }: HistoryPanelProps) {
 
                     <div className="bg-surface-container-highest/50 rounded-sm p-4 space-y-4 shadow-lg">
                       <div className="flex items-center gap-4">
-                        <div className="space-y-1">
-                          <p className="text-label-xs font-bold text-on-surface/30 uppercase tracking-widest">
-                            터는 집
-                          </p>
-                          <p className="serif-text text-xl font-black text-primary">
-                            {round.targetHouse}
-                          </p>
-                        </div>
                         <div className="flex-1">
                           <p className="text-label-xs font-bold text-on-surface/30 uppercase tracking-widest mb-1">
                             벽 · 침투
@@ -109,9 +101,17 @@ export function HistoryPanel({ isOpen, rounds, onClose }: HistoryPanelProps) {
                                   .map((val, i) => (
                                     <span
                                       key={i}
-                                      className="text-label-sm font-black text-primary px-1.5 py-1 border-l border-outline-variant/10"
+                                      className={`text-label-sm font-black px-1.5 py-1 border-l border-outline-variant/10 inline-flex items-center gap-0.5 ${val === '0' ? 'text-error/80' : 'text-primary'}`}
                                     >
-                                      {val}
+                                      {val === '0' ? (
+                                        <>
+                                          <span
+                                            className="material-symbols-outlined text-label-sm"
+                                            style={{ fontVariationSettings: "'FILL' 1" }}
+                                          >skull</span>
+                                          함정
+                                        </>
+                                      ) : val}
                                     </span>
                                   ))}
                               </div>

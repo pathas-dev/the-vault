@@ -28,13 +28,11 @@ export const VAULT_CONFIG: Record<string, number> = {
   '302': 2,
   '303': 2,
   '304': 2,
-  '401': 3,
+  '401': 2,
 }
 
 export const VAULT_NUMBERS = Object.keys(VAULT_CONFIG)
 export const MAX_CAPACITY = Math.max(...Object.values(VAULT_CONFIG))
-
-export const TARGET_HOUSES = ['A', 'B', 'C', 'D'] as const
 export const START_POINTS = ['A', 'B'] as const
 export const HORIZONTAL_WALLS = ['ㄱ', 'ㄴ'] as const
 export const VERTICAL_WALLS = ['a', 'b', 'c', 'd'] as const

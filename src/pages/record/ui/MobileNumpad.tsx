@@ -17,6 +17,8 @@ export function MobileNumpad({
   onConfirm,
   onClose,
 }: MobileNumpadProps) {
+  const isTrap = currentValue === '0'
+
   return (
     <>
       <div className="fixed inset-0 bg-transparent" onClick={onClose} />
@@ -38,10 +40,30 @@ export function MobileNumpad({
           </button>
         </div>
         {/* 현재 값 */}
-        <div className={`bg-surface-container-lowest rounded-sm py-3 mb-3 text-center transition-colors duration-150 ${error ? 'bg-error/10 animate-shake' : ''}`}>
-          <span className={`serif-text text-2xl font-black tabular-nums ${error ? 'text-error' : 'text-primary'}`}>
-            {currentValue || '—'}
-          </span>
+        <div className={`rounded-sm py-3 mb-3 text-center transition-all duration-200 ${
+          error
+            ? 'bg-error/10 animate-shake'
+            : isTrap
+              ? 'bg-error/8 border border-error/30'
+              : 'bg-surface-container-lowest'
+        }`}>
+          {isTrap ? (
+            <span className="inline-flex items-center gap-2">
+              <span
+                className="material-symbols-outlined text-error/80 text-2xl"
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              >
+                skull
+              </span>
+              <span className="serif-text text-2xl font-black text-error/80">
+                함정
+              </span>
+            </span>
+          ) : (
+            <span className={`serif-text text-2xl font-black tabular-nums ${error ? 'text-error' : 'text-primary'}`}>
+              {currentValue || '—'}
+            </span>
+          )}
         </div>
         {/* 키패드 그리드 */}
         <div className="grid grid-cols-3 gap-1.5">
@@ -61,11 +83,16 @@ export function MobileNumpad({
           >
             <span className="material-symbols-outlined text-xl @md:text-2xl">backspace</span>
           </button>
+          {/* 0 버튼: 값이 비어있을 때 '함정'으로 표시 */}
           <button
             onClick={() => onDigit('0')}
-            className="py-3 @sm:py-4 @md:py-5 bg-surface-container rounded-sm text-base @sm:text-lg @md:text-xl font-black text-on-surface btn-press active:bg-surface-container-highest"
+            className={`py-3 @sm:py-4 @md:py-5 rounded-sm font-black btn-press ${
+              currentValue === ''
+                ? 'bg-error/10 text-error/70 text-label-sm @sm:text-label-md @md:text-label-lg tracking-wider active:bg-error/20'
+                : 'bg-surface-container text-base @sm:text-lg @md:text-xl text-on-surface active:bg-surface-container-highest'
+            }`}
           >
-            0
+            {currentValue === '' ? '함정' : '0'}
           </button>
           <button
             onClick={onConfirm}

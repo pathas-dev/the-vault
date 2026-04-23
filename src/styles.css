@@ -260,6 +260,15 @@
     box-shadow: 0 0 0 3px rgba(255, 198, 55, 0.1);
   }
 
+  /* 함정 위험 글로우 — 값 0 입력 시 */
+  @keyframes trap-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 180, 171, 0); }
+    50% { box-shadow: 0 0 12px 2px rgba(255, 180, 171, 0.15); }
+  }
+  .trap-glow {
+    animation: trap-pulse 2s ease-in-out infinite;
+  }
+
   /* 스태거 진입 애니메이션 */
   @keyframes fade-up {
     from {
@@ -340,7 +349,8 @@
     .vault-selected,
     .stagger-in,
     .orbit-ring,
-    .animate-shake {
+    .animate-shake,
+    .trap-glow {
       animation: none;
     }
     .card-lift,

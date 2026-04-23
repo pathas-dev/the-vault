@@ -112,23 +112,28 @@ export function VaultValueTable({
                       (vaultValues[v][i - 1] !== '' &&
                         isValidValue(vaultValues[v][i - 1]))
                     const isEnabled = isSlotAvailable && isUnlocked
+                    const isTrap = vaultValues[v][i] === '0'
+                    const isInvalid = vaultValues[v][i] !== '' && !isValidValue(vaultValues[v][i])
                     return (
                       <div key={i} className="px-1.5 relative">
                         {isSlotAvailable ? (
-                          <>
+                          <div className="relative">
                             <input
                               name={`${v}-v${i}`}
                               aria-label={`${v} 금고 슬롯 ${i + 1}`}
                               className={`w-full border text-center font-black rounded-sm py-2.5 md:py-3 outline-none text-base md:text-lg transition-all ${
                                 numpadTarget?.vault === v &&
                                 numpadTarget?.index === i
-                                  ? 'bg-surface-container-lowest border-primary ring-2 ring-primary/30 text-primary'
+                                  ? isTrap
+                                    ? 'bg-error/5 border-error/60 ring-2 ring-error/20 text-transparent'
+                                    : 'bg-surface-container-lowest border-primary ring-2 ring-primary/30 text-primary'
                                   : !isEnabled
                                     ? 'bg-surface-container-low border-outline-variant/5 text-on-surface/15 cursor-not-allowed'
-                                    : vaultValues[v][i] !== '' &&
-                                        !isValidValue(vaultValues[v][i])
-                                      ? 'bg-surface-container-lowest border-error ring-1 ring-error/20 text-primary'
-                                      : 'bg-surface-container-lowest border-outline-variant/10 text-primary input-glow focus:ring-1 focus:ring-primary/20'
+                                    : isTrap
+                                      ? 'bg-error/5 border-error/40 text-transparent trap-glow'
+                                      : isInvalid
+                                        ? 'bg-surface-container-lowest border-error ring-1 ring-error/20 text-primary'
+                                        : 'bg-surface-container-lowest border-outline-variant/10 text-primary input-glow focus:ring-1 focus:ring-primary/20'
                               }`}
                               placeholder={isEnabled ? '—' : ''}
                               inputMode={isMobile ? 'none' : 'numeric'}
@@ -148,13 +153,24 @@ export function VaultValueTable({
                                 onKeyDown(e, v, i, visibleVaults)
                               }
                             />
-                            {vaultValues[v][i] !== '' &&
-                              !isValidValue(vaultValues[v][i]) && (
-                                <p className="absolute -bottom-4 inset-x-0 text-label-xs text-error font-black text-center">
-                                  1-100
-                                </p>
-                              )}
-                          </>
+                            {/* 함정 아이콘 오버레이 */}
+                            {isTrap && (
+                              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <span
+                                  className="material-symbols-outlined text-error/70 text-lg md:text-xl"
+                                  style={{ fontVariationSettings: "'FILL' 1" }}
+                                >
+                                  skull
+                                </span>
+                              </div>
+                            )}
+                            {/* 유효성 에러 */}
+                            {isInvalid && !isTrap && (
+                              <p className="absolute -bottom-4 inset-x-0 text-label-xs text-error font-black text-center">
+                                0-100
+                              </p>
+                            )}
+                          </div>
                         ) : (
                           <div className="w-full py-2.5 md:py-3 text-center text-on-surface/10 text-base">
                             —
@@ -171,7 +187,17 @@ export function VaultValueTable({
                       key={i}
                       className="text-center serif-text font-black text-lg md:text-xl text-primary"
                     >
-                      {i < VAULT_CONFIG[v] ? vaultValues[v][i] || '—' : '—'}
+                      {i < VAULT_CONFIG[v]
+                        ? vaultValues[v][i] === '0'
+                          ? <span className="inline-flex items-center gap-1 text-error/80 text-sm">
+                              <span
+                                className="material-symbols-outlined text-sm"
+                                style={{ fontVariationSettings: "'FILL' 1" }}
+                              >skull</span>
+                              함정
+                            </span>
+                          : vaultValues[v][i] || '—'
+                        : '—'}
                     </div>
                   ))}
                 </>

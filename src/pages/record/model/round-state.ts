@@ -8,7 +8,6 @@ interface RoundState {
   viewMode: 'input' | 'summary'
   isHistoryOpen: boolean
   historyRounds: RoundData[]
-  targetHouse: 'A' | 'B' | 'C' | 'D'
   startPoint: 'A' | 'B'
   horizontalWall: 'ㄱ' | 'ㄴ' | null
   verticalWall: 'a' | 'b' | 'c' | 'd' | null
@@ -22,7 +21,6 @@ type RoundAction =
   | { type: 'SET_VIEW_MODE'; payload: 'input' | 'summary' }
   | { type: 'SET_HISTORY_OPEN'; payload: boolean }
   | { type: 'SET_HISTORY_ROUNDS'; payload: RoundData[] }
-  | { type: 'SET_TARGET_HOUSE'; payload: 'A' | 'B' | 'C' | 'D' }
   | { type: 'SET_START_POINT'; payload: 'A' | 'B' }
   | { type: 'SET_HORIZONTAL_WALL'; payload: 'ㄱ' | 'ㄴ' | null }
   | { type: 'SET_VERTICAL_WALL'; payload: 'a' | 'b' | 'c' | 'd' | null }
@@ -39,7 +37,6 @@ function createInitialState(): RoundState {
     viewMode: 'input',
     isHistoryOpen: false,
     historyRounds: [],
-    targetHouse: 'A',
     startPoint: 'A',
     horizontalWall: null,
     verticalWall: null,
@@ -58,8 +55,7 @@ function roundReducer(state: RoundState, action: RoundAction): RoundState {
       return { ...state, isHistoryOpen: action.payload }
     case 'SET_HISTORY_ROUNDS':
       return { ...state, historyRounds: action.payload }
-    case 'SET_TARGET_HOUSE':
-      return { ...state, targetHouse: action.payload }
+
     case 'SET_START_POINT':
       return { ...state, startPoint: action.payload }
     case 'SET_HORIZONTAL_WALL':
@@ -103,7 +99,6 @@ function roundReducer(state: RoundState, action: RoundAction): RoundState {
       return {
         ...state,
         viewMode: 'input',
-        targetHouse: 'A',
         startPoint: 'A',
         horizontalWall: null,
         verticalWall: null,
@@ -184,6 +179,12 @@ export function useRoundState() {
     (digit: string) => {
       if (!state.numpadTarget) return
       const current = state.vaultValues[state.numpadTarget.vault][state.numpadTarget.index]
+      // 0(함정)은 확정값이므로 추가 입력 차단
+      if (current === '0') {
+        dispatch({ type: 'SET_NUMPAD_ERROR', payload: true })
+        setTimeout(() => dispatch({ type: 'SET_NUMPAD_ERROR', payload: false }), 500)
+        return
+      }
       const newVal = current + digit
       if (newVal.length <= 3 && parseInt(newVal) <= 100) {
         handleVaultValueChange(state.numpadTarget.vault, state.numpadTarget.index, newVal)
@@ -207,7 +208,6 @@ export function useRoundState() {
 
   const handleNextRound = useCallback(() => {
     const currentData: RoundData = {
-      targetHouse: state.targetHouse,
       startPoint: state.startPoint,
       horizontalWall: state.horizontalWall,
       verticalWall: state.verticalWall,
@@ -234,9 +234,7 @@ export function useRoundState() {
     [],
   )
 
-  const setTargetHouse = useCallback((house: 'A' | 'B' | 'C' | 'D') => {
-    dispatch({ type: 'SET_TARGET_HOUSE', payload: house })
-  }, [])
+
 
   const setStartPoint = useCallback((point: 'A' | 'B') => {
     dispatch({ type: 'SET_START_POINT', payload: point })
@@ -282,7 +280,7 @@ export function useRoundState() {
     handlePhaseSubmit,
     handleNextRound,
     toggleVault,
-    setTargetHouse,
+
     setStartPoint,
     setHorizontalWall,
     setVerticalWall,
